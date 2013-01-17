@@ -1,0 +1,25 @@
+#ifndef GLOBAL_H
+#define GLOBAL_H
+
+#define Global extern
+
+
+Global int xp = 10;
+Global int yp = 0;
+Global int zp = 12;
+
+Global int xe = -20;
+Global int ye = 0;
+Global int ze = 15;
+
+Global int xc = 80000;
+Global int yc = 0;
+Global int zc = 0;
+
+Global int mapx = 400;
+Global int mapy = 100;
+
+
+Global int speed = 1;
+
+#endif //GLOBAL_H

@@ -1,0 +1,122 @@
+# depslib dependency file v1.0
+1316543950 source:c:\rpg\game\main.cpp
+	<SDL/SDL.h>
+	<GL/gl.h>
+	<GL/glu.h>
+	<cstdlib>
+	"sdlglutils.h"
+	"freeflycamera.h"
+	"scene.h"
+	"sound.h"
+
+1147265382 c:\rpg\game\sdlglutils.h
+	<GL/gl.h>
+	<SDL/SDL.h>
+
+1151747514 c:\rpg\game\freeflycamera.h
+	"vector3d.h"
+	<SDL/SDL.h>
+	<map>
+	<string>
+
+1151738250 c:\rpg\game\vector3d.h
+
+1316541651 c:\rpg\game\scene.h
+
+1316541831 source:c:\rpg\game\scene.cpp
+	"scene.h"
+	<GL/gl.h>
+	<GL/glu.h>
+	"sdlglutils.h"
+
+1147355034 source:c:\rpg\game\sdlglutils.cpp
+	"sdlglutils.h"
+	<SDL/SDL.h>
+	<SDL/SDL_image.h>
+	<GL/glu.h>
+	<cstring>
+	<cstdlib>
+
+1151737734 source:c:\rpg\game\vector3d.cpp
+	"vector3d.h"
+	<cmath>
+
+1316541613 source:c:\rpg\game\freeflycamera.cpp
+	"freeflycamera.h"
+	<cmath>
+	<GL/glu.h>
+
+1316543878 source:c:\rpg\game\sound.cpp
+	"SDL/SDL.h"
+	"SDL/SDL_mixer.h"
+	<string>
+
+1316542845 c:\rpg\game\sound.h
+
+1316626629 source:c:\rpg\brutalgore\main.cpp
+	<SDL/SDL.h>
+	<GL/gl.h>
+	<GL/glu.h>
+	<cstdlib>
+	<cmath>
+	<string>
+	"SDL/SDL_image.h"
+	"SDL/SDL_ttf.h"
+	"sdlglutils.h"
+	"scene.h"
+	"sound.h"
+	"global.h"
+
+1147265382 c:\rpg\brutalgore\sdlglutils.h
+	<GL/gl.h>
+	<SDL/SDL.h>
+
+1151747514 c:\rpg\brutalgore\freeflycamera.h
+	"vector3d.h"
+	<SDL/SDL.h>
+	<map>
+	<string>
+
+1151738250 c:\rpg\brutalgore\vector3d.h
+
+1316541651 c:\rpg\brutalgore\scene.h
+
+1316542845 c:\rpg\brutalgore\sound.h
+
+1316627215 source:c:\rpg\brutalgore\scene.cpp
+	"scene.h"
+	<GL/gl.h>
+	<GL/glu.h>
+	"sdlglutils.h"
+
+1147355034 source:c:\rpg\brutalgore\sdlglutils.cpp
+	"sdlglutils.h"
+	<SDL/SDL.h>
+	<SDL/SDL_image.h>
+	<GL/glu.h>
+	<cstring>
+	<cstdlib>
+
+1316543878 source:c:\rpg\brutalgore\sound.cpp
+	"SDL/SDL.h"
+	"SDL/SDL_mixer.h"
+	<string>
+
+1151737734 source:c:\rpg\brutalgore\vector3d.cpp
+	"vector3d.h"
+	<cmath>
+
+1316548286 source:c:\rpg\brutalgore\freeflycamera.cpp
+	"freeflycamera.h"
+	<cmath>
+	<GL/glu.h>
+
+1316624132 c:\rpg\brutalgore\global.h
+
+1316593917 c:\rpg\brutalgore\tff.h
+
+1316593923 source:c:\rpg\brutalgore\tff.cpp
+	"SDL/SDL.h"
+	"SDL/SDL_ttf.h"
+	<string>
+
