@@ -62,9 +62,32 @@ void map()
     glVertex3d(mapx,mapy,2); // BAS GAUCHE
     glTexCoord2i(0,10);
     glVertex3d(-30,mapy,2); // BAS DROIT
+    glEnd();/*
+// MUR
+    glBindTexture(GL_TEXTURE_2D, texture[0]);
+    glBegin(GL_QUADS);
+    glTexCoord2i(0,0);
+    glVertex3d(-30,mapy,mapx); // HAUT DROIT
+    glTexCoord2i(10,0);
+    glVertex3d(mapx,mapy,mapx); // HAUT GAUCHE
+    glTexCoord2i(10,10);
+    glVertex3d(mapx,mapy,2); // BAS GAUCHE
+    glTexCoord2i(0,10);
+    glVertex3d(-30,mapy,2); // BAS DROIT
+    glEnd();*/
+
+// ENS
+    glBindTexture(GL_TEXTURE_2D, texture[0]);
+    glBegin(GL_QUADS);
+    glTexCoord2i(0,0);
+    glVertex3d(50,10,40); // HAUT DROIT
+    glTexCoord2i(10,0);
+    glVertex3d(50,-10,40); // HAUT GAUCHE
+    glTexCoord2i(10,10);
+    glVertex3d(50,-10,0); // BAS GAUCHE
+    glTexCoord2i(0,10);
+    glVertex3d(50,10,0); // BAS DROIT
     glEnd();
-
-
 
 
 }
@@ -473,6 +496,416 @@ glBindTexture(GL_TEXTURE_2D, texture[6]);
 
 /* ----------------------------------------------------------- FIN PERSO ---------------------------------------------*/
 
+
+
+
+/* ----------------------------------------------------------- DEBUT ENS ---------------------------------------------*/
+
+void ens(int i)
+{
+
+    /* ------------ CORPS  ----------------*/
+  glBindTexture(GL_TEXTURE_2D, texture[1]);
+
+    glBegin(GL_QUADS);
+    //par terre
+    glTexCoord2d(0,0);
+    glVertex3d(xp,yp-2.5,zp-5);
+    glTexCoord2d(1,0);
+    glVertex3d(xp+1.,yp-2.5,zp-5);
+    glTexCoord2d(1,1);
+    glVertex3d(xp+1,yp+2.5,zp-5);
+    glTexCoord2d(0,1);
+    glVertex3d(xp,yp+2.5,zp-5);
+
+    //face droite
+    glTexCoord2d(0,0);
+    glVertex3d(xp,yp-2.5,zp);
+    glTexCoord2d(1,0);
+    glVertex3d(xp,yp+2.5,zp);
+    glTexCoord2d(1,1);
+    glVertex3d(xp,yp+2.5,zp-5);
+    glTexCoord2d(0,1);
+    glVertex3d(xp,yp-2.5,zp-5);
+
+    //face gauche
+    glTexCoord2d(0,0);
+    glVertex3d(xp+1,yp-2.5,zp);
+    glTexCoord2d(1,0);
+    glVertex3d(xp+1,yp+2.5,zp);
+    glTexCoord2d(1,1);
+    glVertex3d(xp+1,yp+2.5,zp-5);
+    glTexCoord2d(0,1);
+    glVertex3d(xp+1,yp-2.5,zp-5);
+
+    //face face
+    glTexCoord2d(0,0);
+    glVertex3d(xp,yp+2.5,zp);
+    glTexCoord2d(1,0);
+    glVertex3d(xp+1,yp+2.5,zp);
+    glTexCoord2d(1,1);
+    glVertex3d(xp+1,yp+2.5,zp-5);
+    glTexCoord2d(0,1);
+    glVertex3d(xp,yp+2.5,zp-5);
+
+    //face derriere
+    glTexCoord2d(0,0);
+    glVertex3d(xp,yp-2.5,zp);
+    glTexCoord2d(1,0);
+    glVertex3d(xp+1,yp-2.5,zp);
+    glTexCoord2d(1,1);
+    glVertex3d(xp+1,yp-2.5,zp-5);
+    glTexCoord2d(0,1);
+    glVertex3d(xp,yp-2.5,zp-5);
+    //face au ciel
+    glTexCoord2d(0,0);
+    glVertex3d(xp,yp-2.5,zp);
+    glTexCoord2d(1,0);
+    glVertex3d(xp+1,yp-2.5,zp);
+    glTexCoord2d(1,1);
+    glVertex3d(xp+1,yp+2.5,zp);
+    glTexCoord2d(0,1);
+    glVertex3d(xp,yp+2.5,zp);
+
+    glEnd();
+
+
+    /* ------------ Tete  ----------------*/
+glBindTexture(GL_TEXTURE_2D, texture[2]);
+
+    glBegin(GL_QUADS);
+    //par terre
+    glTexCoord2d(0,0);
+    glVertex3d(xp,yp-1.25,zp+2);
+    glTexCoord2d(1,0);
+    glVertex3d(xp+1,yp-1.25,zp+2);
+    glTexCoord2d(1,1);
+    glVertex3d(xp+1,yp+1.25,zp+2);
+    glTexCoord2d(0,1);
+    glVertex3d(xp,yp+1.25,zp+2);
+
+    //face droite
+    glTexCoord2d(0,0);
+    glVertex3d(xp,yp-1.25,zp);
+    glTexCoord2d(1,0);
+    glVertex3d(xp,yp+1.25,zp);
+    glTexCoord2d(1,1);
+    glVertex3d(xp,yp+1.25,zp+2);
+    glTexCoord2d(0,1);
+    glVertex3d(xp,yp-1.25,zp+2);
+
+    //face gauche
+    glTexCoord2d(0,0);
+    glVertex3d(xp+1,yp-1.25,zp);
+    glTexCoord2d(1,0);
+    glVertex3d(xp+1,yp+1.25,zp);
+    glTexCoord2d(1,1);
+    glVertex3d(xp+1,yp+1.25,zp+2);
+    glTexCoord2d(0,1);
+    glVertex3d(xp+1,yp-1.25,zp+2);
+
+    //face face
+    glTexCoord2d(0,0);
+    glVertex3d(xp,yp+1.25,zp);
+    glTexCoord2d(1,0);
+    glVertex3d(xp+1,yp+1.25,zp);
+    glTexCoord2d(1,1);
+    glVertex3d(xp+1,yp+1.25,zp+2);
+    glTexCoord2d(0,1);
+    glVertex3d(xp,yp+1.25,zp+2);
+
+    //face derriere
+    glTexCoord2d(0,0);
+    glVertex3d(xp,yp-1.25,zp);
+    glTexCoord2d(1,0);
+    glVertex3d(xp+1,yp-1.25,zp);
+    glTexCoord2d(1,1);
+    glVertex3d(xp+1,yp-1.25,zp+2);
+    glTexCoord2d(0,1);
+    glVertex3d(xp,yp-1.25,zp+2);
+    //face au ciel
+    glTexCoord2d(0,0);
+    glVertex3d(xp,yp-1.25,zp);
+    glTexCoord2d(1,0);
+    glVertex3d(xp+1,yp-1.25,zp);
+    glTexCoord2d(1,1);
+    glVertex3d(xp+1,yp+1.25,zp);
+    glTexCoord2d(0,1);
+    glVertex3d(xp,yp+1.25,zp);
+
+    glEnd();
+
+
+        /* ------------ Bras gauche  ----------------*/
+glBindTexture(GL_TEXTURE_2D, texture[3]);
+
+    glBegin(GL_QUADS);
+    //par terre
+    glTexCoord2d(0,0);
+    glVertex3d(xp,yp+2.5,zp-5);
+    glTexCoord2d(1,0);
+    glVertex3d(xp+1,yp+2.5,zp-5);
+    glTexCoord2d(1,1);
+    glVertex3d(xp+1,yp+4,zp-5);
+    glTexCoord2d(0,1);
+    glVertex3d(xp,yp+4,zp-5);
+
+    //face droite
+    glTexCoord2d(0,0);
+    glVertex3d(xp,yp+2.5,zp);
+    glTexCoord2d(1,0);
+    glVertex3d(xp,yp+4,zp);
+    glTexCoord2d(1,1);
+    glVertex3d(xp,yp+4,zp-5);
+    glTexCoord2d(0,1);
+    glVertex3d(xp,yp+2.5,zp-5);
+
+    //face gauche
+    glTexCoord2d(0,0);
+    glVertex3d(xp+1,yp+2.5,zp);
+    glTexCoord2d(1,0);
+    glVertex3d(xp+1,yp+4,zp);
+    glTexCoord2d(1,1);
+    glVertex3d(xp+1,yp+4,zp-5);
+    glTexCoord2d(0,1);
+    glVertex3d(xp+1,yp+2.5,zp-5);
+
+    //face face
+    glTexCoord2d(0,0);
+    glVertex3d(xp,yp+4,zp);
+    glTexCoord2d(1,0);
+    glVertex3d(xp+1,yp+4,zp);
+    glTexCoord2d(1,1);
+    glVertex3d(xp+1,yp+4,zp-5);
+    glTexCoord2d(0,1);
+    glVertex3d(xp,yp+4,zp-5);
+
+    //face derriere
+    glTexCoord2d(0,0);
+    glVertex3d(xp,yp+2.5,zp);
+    glTexCoord2d(1,0);
+    glVertex3d(xp+1,yp+2.5,zp);
+    glTexCoord2d(1,1);
+    glVertex3d(xp+1,yp+2.5,zp-5);
+    glTexCoord2d(0,1);
+    glVertex3d(xp,yp+2.5,zp-5);
+    //face au ciel
+    glTexCoord2d(0,0);
+    glVertex3d(xp,yp+2.5,zp);
+    glTexCoord2d(1,0);
+    glVertex3d(xp+1,yp+2.5,zp);
+    glTexCoord2d(1,1);
+    glVertex3d(xp+1,yp+4,zp);
+    glTexCoord2d(0,1);
+    glVertex3d(xp,yp+4,zp);
+
+    glEnd();
+
+        /* ------------ Bras droit ----------------*/
+glBindTexture(GL_TEXTURE_2D, texture[4]);
+
+    glBegin(GL_QUADS);
+    //par terre
+    glTexCoord2d(0,0);
+    glVertex3d(xp,yp-2.5,zp-5);
+    glTexCoord2d(1,0);
+    glVertex3d(xp+1,yp-2.5,zp-5);
+    glTexCoord2d(1,1);
+    glVertex3d(xp+1,yp-4,zp-5);
+    glTexCoord2d(0,1);
+    glVertex3d(xp,yp-4,zp-5);
+
+    //face droite
+    glTexCoord2d(0,0);
+    glVertex3d(xp,yp-2.5,zp);
+    glTexCoord2d(1,0);
+    glVertex3d(xp,yp-4,zp);
+    glTexCoord2d(1,1);
+    glVertex3d(xp,yp-4,zp-5);
+    glTexCoord2d(0,1);
+    glVertex3d(xp,yp-2.5,zp-5);
+
+    //face gauche
+    glTexCoord2d(0,0);
+    glVertex3d(xp+1,yp-2.5,zp);
+    glTexCoord2d(1,0);
+    glVertex3d(xp+1,yp-4,zp);
+    glTexCoord2d(1,1);
+    glVertex3d(xp+1,yp-4,zp-5);
+    glTexCoord2d(0,1);
+    glVertex3d(xp+1,yp-2.5,zp-5);
+
+    //face face
+    glTexCoord2d(0,0);
+    glVertex3d(xp,yp-4,zp);
+    glTexCoord2d(1,0);
+    glVertex3d(xp+1,yp-4,zp);
+    glTexCoord2d(1,1);
+    glVertex3d(xp+1,yp-4,zp-5);
+    glTexCoord2d(0,1);
+    glVertex3d(xp,yp-4,zp-5);
+
+    //face derriere
+    glTexCoord2d(0,0);
+    glVertex3d(xp,yp-2.5,zp);
+    glTexCoord2d(1,0);
+    glVertex3d(xp+1,yp-2.5,zp);
+    glTexCoord2d(1,1);
+    glVertex3d(xp+1,yp-2.5,zp-5);
+    glTexCoord2d(0,1);
+    glVertex3d(xp,yp-2.5,zp-5);
+    //face au ciel
+    glTexCoord2d(0,0);
+    glVertex3d(xp,yp-2.5,zp);
+    glTexCoord2d(1,0);
+    glVertex3d(xp+1,yp-2.5,zp);
+    glTexCoord2d(1,1);
+    glVertex3d(xp+1,yp-4,zp);
+    glTexCoord2d(0,1);
+    glVertex3d(xp,yp-4,zp);
+
+    glEnd();
+
+    /* ------------ Jambe gauche  ----------------*/
+glBindTexture(GL_TEXTURE_2D, texture[5]);
+
+    glBegin(GL_QUADS);
+    //par terre
+    glTexCoord2d(0,0);
+    glVertex3d(xp,yp,zp-10);
+    glTexCoord2d(1,0);
+    glVertex3d(xp+1,yp,zp-10);
+    glTexCoord2d(1,1);
+    glVertex3d(xp+1,yp+2.5,zp-10);
+    glTexCoord2d(0,1);
+    glVertex3d(xp,yp+2.5,zp-10);
+
+    //face droite
+    glTexCoord2d(0,0);
+    glVertex3d(xp,yp,zp-5);
+    glTexCoord2d(1,0);
+    glVertex3d(xp,yp+2.5,zp-5);
+    glTexCoord2d(1,1);
+    glVertex3d(xp,yp+2.5,zp-10);
+    glTexCoord2d(0,1);
+    glVertex3d(xp,yp,zp-10);
+
+    //face gauche
+    glTexCoord2d(0,0);
+    glVertex3d(xp+1,yp,zp-5);
+    glTexCoord2d(1,0);
+    glVertex3d(xp+1,yp+2.5,zp-5);
+    glTexCoord2d(1,1);
+    glVertex3d(xp+1,yp+2.5,zp-10);
+    glTexCoord2d(0,1);
+    glVertex3d(xp+1,yp,zp-10);
+
+    //face face
+    glTexCoord2d(0,0);
+    glVertex3d(xp,yp+2.5,zp-5);
+    glTexCoord2d(1,0);
+    glVertex3d(xp+1,yp+2.5,zp-5);
+    glTexCoord2d(1,1);
+    glVertex3d(xp+1,yp+2.5,zp-10);
+    glTexCoord2d(0,1);
+    glVertex3d(xp,yp+2.5,zp-10);
+
+    //face derriere
+    glTexCoord2d(0,0);
+    glVertex3d(xp,yp,zp-5);
+    glTexCoord2d(1,0);
+    glVertex3d(xp+1,yp,zp-5);
+    glTexCoord2d(1,1);
+    glVertex3d(xp+1,yp,zp-10);
+    glTexCoord2d(0,1);
+    glVertex3d(xp,yp,zp-10);
+    //face au ciel
+    glTexCoord2d(0,0);
+    glVertex3d(xp,yp,zp-5);
+    glTexCoord2d(1,0);
+    glVertex3d(xp+1,yp,zp-5);
+    glTexCoord2d(1,1);
+    glVertex3d(xp+1,yp+2.5,zp-5);
+    glTexCoord2d(0,1);
+    glVertex3d(xp,yp+2.5,zp-5);
+
+    glEnd();
+
+
+
+    /* ------------ Jambe droite  ----------------*/
+glBindTexture(GL_TEXTURE_2D, texture[6]);
+
+    glBegin(GL_QUADS);
+    //par terre
+    glTexCoord2d(0,0);
+    glVertex3d(xp,yp,zp-10);
+    glTexCoord2d(1,0);
+    glVertex3d(xp+1,yp,zp-10);
+    glTexCoord2d(1,1);
+    glVertex3d(xp+1,yp-2.5,zp-10);
+    glTexCoord2d(0,1);
+    glVertex3d(xp,yp-2.5,zp-10);
+
+    //face droite
+    glTexCoord2d(0,0);
+    glVertex3d(xp,yp,zp-5);
+    glTexCoord2d(1,0);
+    glVertex3d(xp,yp-2.5,zp-5);
+    glTexCoord2d(1,1);
+    glVertex3d(xp,yp-2.5,zp-10);
+    glTexCoord2d(0,1);
+    glVertex3d(xp,yp,zp-10);
+
+    //face gauche
+    glTexCoord2d(0,0);
+    glVertex3d(xp+1,yp,zp-5);
+    glTexCoord2d(1,0);
+    glVertex3d(xp+1,yp-2.5,zp-5);
+    glTexCoord2d(1,1);
+    glVertex3d(xp+1,yp-2.5,zp-10);
+    glTexCoord2d(0,1);
+    glVertex3d(xp+1,yp,zp-10);
+
+    //face face
+    glTexCoord2d(0,0);
+    glVertex3d(xp,yp-2.5,zp-5);
+    glTexCoord2d(1,0);
+    glVertex3d(xp+1,yp-2.5,zp-5);
+    glTexCoord2d(1,1);
+    glVertex3d(xp+1,yp-2.5,zp-10);
+    glTexCoord2d(0,1);
+    glVertex3d(xp,yp-2.5,zp-10);
+
+    //face derriere
+    glTexCoord2d(0,0);
+    glVertex3d(xp,yp,zp-5);
+    glTexCoord2d(1,0);
+    glVertex3d(xp+1,yp,zp-5);
+    glTexCoord2d(1,1);
+    glVertex3d(xp+1,yp,zp-10);
+    glTexCoord2d(0,1);
+    glVertex3d(xp,yp,zp-10);
+    //face au ciel
+    glTexCoord2d(0,0);
+    glVertex3d(xp,yp,zp-5);
+    glTexCoord2d(1,0);
+    glVertex3d(xp+1,yp,zp-5);
+    glTexCoord2d(1,1);
+    glVertex3d(xp+1,yp-2.5,zp-5);
+    glTexCoord2d(0,1);
+    glVertex3d(xp,yp-2.5,zp-5);
+
+    glEnd();
+
+}
+
+
+/* ----------------------------------------------------------- FIN ENS ---------------------------------------------*/
+
+
+
+
 void dessinerScene()
 {
 
@@ -488,7 +921,6 @@ void dessinerScene()
     glTexCoord2d(0,1);
     glVertex3d(500,1000,-1000); // BAS GAUCHE
     glEnd();
-
 
     perso();
     map();
