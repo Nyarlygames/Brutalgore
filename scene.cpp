@@ -5,7 +5,7 @@
 #include "sdlglutils.h"
 
 
-GLuint texture[8];
+GLuint texture[9];
 extern int xp;
 extern int yp;
 extern int zp;
@@ -18,6 +18,7 @@ void chargerTextures()
 
     //Corps
     texture[1] = loadTexture("img/bo.jpg");
+    texture[8] = loadTexture("img/ens.png");
 
     // Tete
     texture[2] = loadTexture("img/he.jpg");
@@ -62,7 +63,7 @@ void map()
     glVertex3d(mapx,mapy,2); // BAS GAUCHE
     glTexCoord2i(0,10);
     glVertex3d(-30,mapy,2); // BAS DROIT
-    glEnd();/*
+    glEnd();
 // MUR
     glBindTexture(GL_TEXTURE_2D, texture[0]);
     glBegin(GL_QUADS);
@@ -74,18 +75,18 @@ void map()
     glVertex3d(mapx,mapy,2); // BAS GAUCHE
     glTexCoord2i(0,10);
     glVertex3d(-30,mapy,2); // BAS DROIT
-    glEnd();*/
+    glEnd();
 
 // ENS
-    glBindTexture(GL_TEXTURE_2D, texture[0]);
+    glBindTexture(GL_TEXTURE_2D, texture[8]);
     glBegin(GL_QUADS);
-    glTexCoord2i(0,0);
+    glTexCoord2i(0,1);
     glVertex3d(50,10,40); // HAUT DROIT
-    glTexCoord2i(10,0);
+    glTexCoord2i(1,1);
     glVertex3d(50,-10,40); // HAUT GAUCHE
-    glTexCoord2i(10,10);
+    glTexCoord2i(1,0);
     glVertex3d(50,-10,0); // BAS GAUCHE
-    glTexCoord2i(0,10);
+    glTexCoord2i(0,0);
     glVertex3d(50,10,0); // BAS DROIT
     glEnd();
 
