@@ -4,17 +4,23 @@
 	<File name="freeflycamera.cpp" open="0" top="0" tabpos="1">
 		<Cursor position="3692" topLine="103" />
 	</File>
-	<File name="global.h" open="1" top="1" tabpos="3">
-		<Cursor position="389" topLine="0" />
+	<File name="global.h" open="1" top="0" tabpos="3">
+		<Cursor position="339" topLine="0" />
 	</File>
 	<File name="main.cpp" open="1" top="0" tabpos="1">
-		<Cursor position="646" topLine="18" />
+		<Cursor position="259" topLine="0" />
+	</File>
+	<File name="move.cpp" open="1" top="1" tabpos="6">
+		<Cursor position="0" topLine="0" />
+	</File>
+	<File name="move.h" open="1" top="0" tabpos="7">
+		<Cursor position="36" topLine="0" />
 	</File>
 	<File name="scene.cpp" open="1" top="0" tabpos="2">
-		<Cursor position="345" topLine="465" />
+		<Cursor position="0" topLine="0" />
 	</File>
 	<File name="scene.h" open="1" top="0" tabpos="4">
-		<Cursor position="36" topLine="0" />
+		<Cursor position="0" topLine="0" />
 	</File>
 	<File name="sdlglutils.cpp" open="1" top="0" tabpos="5">
 		<Cursor position="5319" topLine="171" />

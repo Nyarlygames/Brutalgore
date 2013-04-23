@@ -22,9 +22,9 @@ Global int mapy = 100;
 
 Global int speed = 1;
 
-struct Game {
+/*struct Game {
 	bool    serv;
 	SDL_Surface *screen;
-};
+};*/
 
 #endif //GLOBAL_H

@@ -53,7 +53,7 @@
 
 1316542845 c:\rpg\game\sound.h
 
-1316626629 source:c:\rpg\brutalgore\main.cpp
+1318333205 source:c:\rpg\brutalgore\main.cpp
 	<SDL/SDL.h>
 	<GL/gl.h>
 	<GL/glu.h>
@@ -111,7 +111,7 @@
 	<cmath>
 	<GL/glu.h>
 
-1316624132 c:\rpg\brutalgore\global.h
+1318333152 c:\rpg\brutalgore\global.h
 
 1316593917 c:\rpg\brutalgore\tff.h
 
@@ -119,4 +119,133 @@
 	"SDL/SDL.h"
 	"SDL/SDL_ttf.h"
 	<string>
+
+1318332207 c:\rpg\brutalgore\move.h
+
+1318333182 source:c:\rpg\brutalgore\move.cpp
+	"global.h"
+
+1316551886 source:f:\brutalgore\freeflycamera.cpp
+	"freeflycamera.h"
+	<cmath>
+	<GL/glu.h>
+
+1151751114 f:\brutalgore\freeflycamera.h
+	"vector3d.h"
+	<SDL/SDL.h>
+	<map>
+	<string>
+
+1151741850 f:\brutalgore\vector3d.h
+
+1318336805 source:f:\brutalgore\main.cpp
+	<SDL/SDL.h>
+	<GL/gl.h>
+	<GL/glu.h>
+	<cstdlib>
+	<cmath>
+	<string>
+	"SDL/SDL_image.h"
+	"SDL/SDL_ttf.h"
+	"sdlglutils.h"
+	"scene.h"
+	"sound.h"
+	"global.h"
+
+1147268982 f:\brutalgore\sdlglutils.h
+	<GL/gl.h>
+	<SDL/SDL.h>
+
+1316545251 f:\brutalgore\scene.h
+
+1316546445 f:\brutalgore\sound.h
+
+1318336752 f:\brutalgore\global.h
+
+1318336823 source:f:\brutalgore\move.cpp
+
+1316630923 source:f:\brutalgore\scene.cpp
+	"scene.h"
+	<GL/gl.h>
+	<GL/glu.h>
+	"sdlglutils.h"
+
+1147358634 source:f:\brutalgore\sdlglutils.cpp
+	"sdlglutils.h"
+	<SDL/SDL.h>
+	<SDL/SDL_image.h>
+	<GL/glu.h>
+	<cstring>
+	<cstdlib>
+
+1316547478 source:f:\brutalgore\sound.cpp
+	"SDL/SDL.h"
+	"SDL/SDL_mixer.h"
+	<string>
+
+1151741334 source:f:\brutalgore\vector3d.cpp
+	"vector3d.h"
+	<cmath>
+
+1316551886 source:c:\users\nyarlytv\documents\github\brutalgore\freeflycamera.cpp
+	"freeflycamera.h"
+	<cmath>
+	<GL/glu.h>
+
+1151751114 c:\users\nyarlytv\documents\github\brutalgore\freeflycamera.h
+	"vector3d.h"
+	<SDL/SDL.h>
+	<map>
+	<string>
+
+1151741850 c:\users\nyarlytv\documents\github\brutalgore\vector3d.h
+
+1366751568 source:c:\users\nyarlytv\documents\github\brutalgore\main.cpp
+	<SDL/SDL.h>
+	<GL/gl.h>
+	<GL/glu.h>
+	<cstdlib>
+	<cmath>
+	<string>
+	"SDL/SDL_image.h"
+	"SDL/SDL_ttf.h"
+	"sdlglutils.h"
+	"scene.h"
+	"sound.h"
+	"global.h"
+
+1147268982 c:\users\nyarlytv\documents\github\brutalgore\sdlglutils.h
+	<GL/gl.h>
+	<SDL/SDL.h>
+
+1316545251 c:\users\nyarlytv\documents\github\brutalgore\scene.h
+
+1316546445 c:\users\nyarlytv\documents\github\brutalgore\sound.h
+
+1318336752 c:\users\nyarlytv\documents\github\brutalgore\global.h
+
+1318336823 source:c:\users\nyarlytv\documents\github\brutalgore\move.cpp
+
+1316630923 source:c:\users\nyarlytv\documents\github\brutalgore\scene.cpp
+	"scene.h"
+	<GL/gl.h>
+	<GL/glu.h>
+	"sdlglutils.h"
+
+1147358634 source:c:\users\nyarlytv\documents\github\brutalgore\sdlglutils.cpp
+	"sdlglutils.h"
+	<SDL/SDL.h>
+	<SDL/SDL_image.h>
+	<GL/glu.h>
+	<cstring>
+	<cstdlib>
+
+1316547478 source:c:\users\nyarlytv\documents\github\brutalgore\sound.cpp
+	"SDL/SDL.h"
+	"SDL/SDL_mixer.h"
+	<string>
+
+1151741334 source:c:\users\nyarlytv\documents\github\brutalgore\vector3d.cpp
+	"vector3d.h"
+	<cmath>
 

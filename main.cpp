@@ -5,8 +5,8 @@
 #include <cmath>
 #include <string>
 
-#include <SDL/SDL_image.h>
-#include <SDL/SDL_ttf.h>
+#include "SDL/SDL_image.h"
+#include "SDL/SDL_ttf.h"
 #include "sdlglutils.h"
 #include "scene.h"
 #include "sound.h"
@@ -193,7 +193,6 @@ int main( int argc, char* args[] )
     {
         return 1;
     }
-
     /*
     //cursor
     cursor = load_image( "img/cursor.png" );*/
@@ -204,14 +203,14 @@ int main( int argc, char* args[] )
     opt= TTF_RenderText_Solid( font, "Options", textColor );
     cursor = TTF_RenderText_Solid( font2, "=", textColor );
 
-
+/*
 
     //Application des surfaces(images) sur l'ecran
     apply_surface( 0, 0, background, screen );
     apply_surface( 20, HAUTEUR_FENETRE/4, cursor, screen );
     apply_surface( 50, HAUTEUR_FENETRE*3/4, launch, screen );
     apply_surface( 50, HAUTEUR_FENETRE*2/4, lan, screen );
-    apply_surface( 50, HAUTEUR_FENETRE/4, opt, screen );
+    apply_surface( 50, HAUTEUR_FENETRE/4, opt, screen );*/
 
     //mise à jour de l'ecran
     if( SDL_Flip( screen ) == -1 )
@@ -362,6 +361,7 @@ int game()
                     exit(0);
                     break;
                    case SDLK_UP:
+/*                    movelegs("up");*/
                     fup = true;
                     fdown = false;
                     break;

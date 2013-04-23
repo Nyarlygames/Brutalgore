@@ -31,6 +31,8 @@
 		<Unit filename="freeflycamera.h" />
 		<Unit filename="global.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="move.cpp" />
+		<Unit filename="move.h" />
 		<Unit filename="scene.cpp" />
 		<Unit filename="scene.h" />
 		<Unit filename="sdlglutils.cpp" />
