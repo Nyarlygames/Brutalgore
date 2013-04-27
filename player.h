@@ -9,6 +9,7 @@ class Player
     public:
     int x,y,z = 0;
     int id;
+    SDL_Rect lookat;
     //Le constructeur permettant l'initialisation des variables
     Player();
 

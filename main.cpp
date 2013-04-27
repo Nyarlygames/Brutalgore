@@ -379,7 +379,16 @@ int main( int argc, char* args[] )
 
 int game(int nbplayers)
 {
+	// opengl lighting initialization
+	glDisable( GL_LIGHTING );
+	glEnable( GL_LIGHT0 );
 
+	float lightpos[]	= { 10.0, 10.0, 100.0 };
+	float lightcolor[]	= { 1.0, 1.0, 1.0, 1.0 };
+
+	glLightfv( GL_LIGHT0, GL_POSITION, lightpos );
+	glLightfv( GL_LIGHT0, GL_DIFFUSE, lightcolor );
+	glLightfv( GL_LIGHT0, GL_SPECULAR, lightcolor );
     bool fright = false;
     bool fleft = false;
     bool fdown = false;
@@ -438,7 +447,13 @@ int game(int nbplayers)
                     case SDLK_ESCAPE:
                     exit(0);
                     break;
-                   case SDLK_UP:
+                    case SDLK_SPACE:
+                        xc = 10;
+                        yc = -10;
+                        xe = -xp;
+                        ye = 10;
+                    break;
+                    case SDLK_UP:
 /*                    movelegs("up");*/
                     fup = true;
                     fdown = false;
@@ -576,7 +591,7 @@ void DrawGL( SDL_Surface *ecran)
 
     glMatrixMode( GL_MODELVIEW );
     glLoadIdentity( );
-    gluLookAt(xp-50,yp,zp+10,
+    gluLookAt(xp+xe,yp+ye,zp+ze,
              xc,yc,zc,
               0,0,1);
     ens->show();

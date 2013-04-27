@@ -187,7 +187,7 @@
 	"vector3d.h"
 	<cmath>
 
-1366917048 source:c:\users\nyarlytv\documents\github\brutalgore\freeflycamera.cpp
+1367086329 source:c:\users\nyarlytv\documents\github\brutalgore\freeflycamera.cpp
 	"freeflycamera.h"
 	<cmath>
 	<GL/glu.h>
@@ -200,7 +200,7 @@
 
 1366917048 c:\users\nyarlytv\documents\github\brutalgore\vector3d.h
 
-1367082864 source:c:\users\nyarlytv\documents\github\brutalgore\main.cpp
+1367098724 source:c:\users\nyarlytv\documents\github\brutalgore\main.cpp
 	<SDL/SDL.h>
 	<GL/gl.h>
 	<GL/glu.h>
@@ -225,11 +225,11 @@
 
 1366917048 c:\users\nyarlytv\documents\github\brutalgore\sound.h
 
-1367072193 c:\users\nyarlytv\documents\github\brutalgore\global.h
+1367083682 c:\users\nyarlytv\documents\github\brutalgore\global.h
 
 1366917048 source:c:\users\nyarlytv\documents\github\brutalgore\move.cpp
 
-1367072929 source:c:\users\nyarlytv\documents\github\brutalgore\scene.cpp
+1367086318 source:c:\users\nyarlytv\documents\github\brutalgore\scene.cpp
 	"scene.h"
 	<GL/gl.h>
 	<GL/glu.h>
@@ -276,7 +276,7 @@
 
 1367074400 c:\users\nyarlytv\documents\github\brutalgore\ens.h
 
-1367082039 c:\users\nyarlytv\documents\github\brutalgore\player.h
+1367083309 c:\users\nyarlytv\documents\github\brutalgore\player.h
 
 1367082871 source:c:\users\nyarlytv\documents\github\brutalgore\game.cpp
 	"SDL/SDL.h"
@@ -288,15 +288,70 @@
 	"game.h"
 	"player.h"
 
-1367082823 source:c:\users\nyarlytv\documents\github\brutalgore\player.cpp
+1367100782 source:c:\users\nyarlytv\documents\github\brutalgore\player.cpp
 	"SDL/SDL.h"
 	"SDL/SDL_image.h"
 	<GL/gl.h>
 	<GL/glu.h>
+	<GL/glut.h>
 	"sdlglutils.h"
 	<string>
 	"player.h"
+	"md2.h"
 
 1367080818 c:\users\nyarlytv\documents\github\brutalgore\game.h
 	"player.h"
+
+1367101088 source:c:\users\nyarlytv\documents\github\brutalgore\md2.cpp
+	<GL/glut.h>
+	<fstream>
+	"md2.h"
+	"texture.h"
+	"anorms.h"
+	"anormtab.h"
+
+1367101041 c:\users\nyarlytv\documents\github\brutalgore\md2.h
+
+1042480006 c:\users\nyarlytv\documents\github\brutalgore\texture.h
+	<list>
+	<string>
+
+1042480244 c:\users\nyarlytv\documents\github\brutalgore\anorms.h
+
+1042480246 c:\users\nyarlytv\documents\github\brutalgore\anormtab.h
+
+1367099749 c:\users\nyarlytv\documents\github\brutalgore\timer.h
+	<GL/glut.h>
+
+1042479968 source:c:\users\nyarlytv\documents\github\brutalgore\texture.cpp
+	<GL/glut.h>
+	"texture.h"
+	"bmp.h"
+	"tga.h"
+	"pcx.h"
+
+1042582546 c:\users\nyarlytv\documents\github\brutalgore\bmp.h
+	<windows.h>
+
+1042582550 c:\users\nyarlytv\documents\github\brutalgore\tga.h
+	<windows.h>
+
+1042582546 c:\users\nyarlytv\documents\github\brutalgore\pcx.h
+
+1042585172 source:c:\users\nyarlytv\documents\github\brutalgore\bmp.cpp
+	<fstream>
+	"bmp.h"
+
+1042584312 source:c:\users\nyarlytv\documents\github\brutalgore\pcx.cpp
+	<fstream>
+	"pcx.h"
+
+1042585172 source:c:\users\nyarlytv\documents\github\brutalgore\tga.cpp
+	<fstream>
+	"tga.h"
+
+988234426 c:\users\nyarlytv\documents\github\brutalgore\glut.h
+	<windows.h>
+	<GL/gl.h>
+	<GL/glu.h>
 

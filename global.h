@@ -8,9 +8,9 @@ Global int xp = 10;
 Global int yp = 0;
 Global int zp = 12;
 
-Global int xe = -20;
+Global int xe = -30;
 Global int ye = 0;
-Global int ze = 15;
+Global int ze = 10;
 
 Global int xc = 80000;
 Global int yc = 0;

@@ -3,9 +3,11 @@
 #include "SDL/SDL_image.h"
 #include <GL/gl.h>
 #include <GL/glu.h>
+#include <GL/glut.h>
 #include "sdlglutils.h"
 #include <string>
 #include "player.h"
+#include "md2.h"
 
 extern int xp;
 extern int yp;
@@ -13,6 +15,9 @@ extern int zp;
 
 extern int mapy;
 extern int mapx;
+CMD2Model		Ogro;
+CMD2Model		Weapon;
+bool			bAnimated	= true;
 
 
 Player::Player()
@@ -38,6 +43,26 @@ Player::Player()
 
     // Jambe droit
     texture[6] = loadTexture("img/rl.jpg");
+
+
+    // load and initialize the Ogros model
+	Ogro.LoadModel( "models/Ogros.md2", -30, 0 , 20);
+	Ogro.LoadSkin( "models/igdosh.pcx" );
+//	Ogro.LoadModel( "models/grunt.md2" );
+//	Ogro.LoadSkin( "models/grunt.pcx" );
+//	Ogro.LoadModel( "models/cybrpnk/tris.md2" );
+//	Ogro.LoadSkin( "models/cybrpnk/vicious.pcx" );
+	Ogro.SetAnim( 0 );
+	Ogro.ScaleModel( 0.5);
+
+	// load and initialize Ogros' weapon model
+	Weapon.LoadModel( "models/Weapon.md2", -30, 0 , 20);
+	Weapon.LoadSkin( "models/Weapon.pcx" );
+//	Weapon.LoadModel( "models/cybrpnk/weapon.md2" );
+//	Weapon.LoadSkin( "models/cybrpnk/weapon.pcx" );
+	Weapon.SetAnim( STAND );
+	Weapon.ScaleModel( 0.5 );
+
     /*
     //Initialisation des variables de mouvement
     offSet = 0;
@@ -79,6 +104,9 @@ void Player::handle_events()
 
 void Player::show()
 {
+	float timesec = SDL_GetTicks() / 1000.0;
+	Ogro.DrawModel( bAnimated ? timesec : 0.0 );
+	Weapon.DrawModel( bAnimated ? timesec : 0.0 );
     if (id == 0) {
         x = xp;
         y = yp;
