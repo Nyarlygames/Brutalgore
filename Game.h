@@ -1,23 +1,14 @@
 #ifndef GAME_H
 #define GAME_H
+#include "player.h"
 
 class Game
 {
-    private:
-    int offSet;
-
-    //sa vitesse de deplacement
-    int velocity;
-
-    //sa frame courante
-    int frame;
-
-    //Son statut d'animation
-    int status;
-
     public:
     //Le constructeur permettant l'initialisation des variables
-    Game(Player *playerset);
+    Game(int pcount);
+    int nbplayers;
+    Player **players;
 
   //  void handle_events();
 

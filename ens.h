@@ -4,16 +4,8 @@
 class Ennemy
 {
     private:
-    int offSet;
-
-    //sa vitesse de deplacement
-    int velocity;
-
-    //sa frame courante
-    int frame;
-
-    //Son statut d'animation
-    int status;
+    int x,y,z;
+    GLuint texture[9];
 
     public:
     //Le constructeur permettant l'initialisation des variables
@@ -22,7 +14,7 @@ class Ennemy
   //  void handle_events();
 
     //montrer le personnage
-    void show(int a, int b, int c);
+    void show();
 };
 
 #endif //ENS_H

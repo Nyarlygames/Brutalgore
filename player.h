@@ -4,25 +4,19 @@
 class Player
 {
     private:
-    int offSet;
-
-    //sa vitesse de deplacement
-    int velocity;
-
-    //sa frame courante
-    int frame;
-
-    //Son statut d'animation
-    int status;
+    GLuint texture[9];
 
     public:
+    int x,y,z = 0;
+    int id;
     //Le constructeur permettant l'initialisation des variables
-    Player(int a, int b, int c);
+    Player();
 
   //  void handle_events();
 
     //montrer le personnage
-    void show(int a, int b, int c);
+    void show();
 };
+
 
 #endif //PLAYER_H

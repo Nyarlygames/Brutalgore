@@ -42,7 +42,7 @@ TTF_Font *font2;
 //La couleur du font-
 SDL_Color textColor = { 200, 0, 0 };
 void DrawGL( SDL_Surface * ecran);
-int game();
+int game(int nbplayers);
 
 bool handle_event(bool fup, bool fright, bool fleft, bool fdown, int speed);
 
@@ -153,7 +153,7 @@ void clean_up()
     //Liberation des surfaces
     SDL_FreeSurface( background );
     SDL_FreeSurface( cursor );
-    SDL_FreeSurface( launch );
+    SDL_FreeSurface( lan );
     SDL_FreeSurface( opt );
 
     //On ferme le font qu'on a utilisé
@@ -166,6 +166,101 @@ void clean_up()
     SDL_Quit();
 }
 
+/* ------------------------------------------------------------- SELECTION ------------------------------------------------*/
+int selection(int from){
+    SDL_Rect bg;
+    SDL_Rect cursorl;
+    SDL_Surface *pcount = NULL;
+    bool quit = false;
+    int nbplayers = 0;
+    cursorl.x = 20;
+    cursorl.y = HAUTEUR_FENETRE/4;
+    pcount = TTF_RenderText_Solid( font, "1", textColor );
+    bg.x = 0;
+    bg.y = 0;
+
+    while( quit == false )
+    {
+        SDL_Flip(screen);
+        SDL_BlitSurface( background, NULL, screen, &bg );
+        SDL_BlitSurface( pcount, NULL, screen, &cursorl );
+        while( SDL_PollEvent( &event ) )
+        {
+              switch(event.type)
+            {
+                case SDL_QUIT:
+                    quit = true;
+                break;
+                case SDL_KEYDOWN:
+                switch (event.key.keysym.sym)
+                {/*
+                    case SDLK_KP0:
+                        pcount = TTF_RenderText_Solid( font, "0", textColor );*/
+                        break;
+                    case SDLK_KP1:
+                        pcount = TTF_RenderText_Solid( font, "1", textColor );
+                        nbplayers = 1;
+                        break;
+                    case SDLK_KP2:
+                        pcount = TTF_RenderText_Solid( font, "2", textColor );
+                        nbplayers = 2;
+                        break;
+                    case SDLK_KP3:
+                        pcount = TTF_RenderText_Solid( font, "3", textColor );
+                        nbplayers = 3;
+                        break;
+                    case SDLK_KP4:
+                        pcount = TTF_RenderText_Solid( font, "4", textColor );
+                        nbplayers = 4;
+                        break;
+                    case SDLK_KP5:
+                        pcount = TTF_RenderText_Solid( font, "5", textColor );
+                        nbplayers = 5;
+                        break;
+                    case SDLK_KP6:
+                        pcount = TTF_RenderText_Solid( font, "6", textColor );
+                        nbplayers = 6;
+                        break;
+                    case SDLK_KP7:
+                        pcount = TTF_RenderText_Solid( font, "7", textColor );
+                        nbplayers = 7;
+                        break;
+                    case SDLK_KP8:
+                        pcount = TTF_RenderText_Solid( font, "8", textColor );
+                        nbplayers = 8;
+                        break;
+                    case SDLK_KP9:
+                        pcount = TTF_RenderText_Solid( font, "9", textColor );
+                        nbplayers = 9;
+                        break;
+                    break;
+                    case SDLK_ESCAPE:
+                    quit=true;
+                    break;
+                    case SDLK_UP:
+                    if (cursorl.y > HAUTEUR_FENETRE/4)
+                        cursorl.y -= (HAUTEUR_FENETRE/4);
+                    else
+                        cursorl.y = (HAUTEUR_FENETRE/4);
+                    break;
+                    case SDLK_DOWN:
+                    if (cursorl.y < HAUTEUR_FENETRE*3/4)
+                        cursorl.y += (HAUTEUR_FENETRE/4);
+                    else
+                        cursorl.y = (HAUTEUR_FENETRE*3/4);
+                    break;
+                    case SDLK_RETURN:
+                    if (cursorl.y == HAUTEUR_FENETRE/4)
+                    {
+                       game(nbplayers);
+                    }
+                    break;
+                }
+            }
+        }
+    }
+    return (0);
+}
 int main( int argc, char* args[] )
 {
     SDL_Rect optos;
@@ -238,7 +333,8 @@ int main( int argc, char* args[] )
               switch(event.type)
             {
                 case SDL_QUIT:
-                quit=true;
+                    clean_up();
+                    quit=true;
                 break;
                 case SDL_KEYDOWN:
                 switch (event.key.keysym.sym)
@@ -261,8 +357,7 @@ int main( int argc, char* args[] )
                     case SDLK_RETURN:
                     if (cursorl.y == HAUTEUR_FENETRE/4)
                     {
-                        clean_up();
-                        game();
+                        selection(1);
                     }
                     if (cursorl.y == HAUTEUR_FENETRE*2/4)
                     {
@@ -280,42 +375,16 @@ int main( int argc, char* args[] )
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* ------------------------------------------------------------- GAME ------------------------------------------------*/
 
-int game()
+int game(int nbplayers)
 {
 
     bool fright = false;
     bool fleft = false;
     bool fdown = false;
     bool fup = false;
+    Player  *players[nbplayers];
     SDL_Surface *ecran = NULL;
 
     const Uint32 time_per_frame = 1000/FPS;
@@ -345,10 +414,8 @@ int game()
 
     ens = new Ennemy(55,10,40);
     ens = new Ennemy(50,10,30);*/
-    for (int i = 0; i < 1; i++) {
-        player = new Player(50,10,40);
-    }
-    gameobj = new Game(player);
+    player = new Player();
+    gameobj = new Game(nbplayers);
     chargerTextures();
 
     last_time = SDL_GetTicks();
@@ -475,26 +542,26 @@ bool handle_event(bool fup, bool fright, bool fleft, bool fdown, int speed)
         if (fright)
             yp += speed;
         else
-            yp -= speed;;
+            yp -= speed;
     };
     if ( keystate[SDLK_DOWN] && keystate[SDLK_UP] )
     {
         if (fdown)
             xp += speed;
         else
-            xp -= speed;;
+            xp -= speed;
     };
 
 
 /* --------------------------------------------- SINGLE KEY ---------------------------------------------*/
     if ( keystate[SDLK_DOWN] )
-        xp -= speed;;
+        xp -= speed;
 
     if (keystate[SDLK_UP] )
         xp += speed;
 
     if ( keystate[SDLK_RIGHT])
-        yp -= speed;;
+        yp -= speed;
 
     if ( keystate[SDLK_LEFT])
         yp += speed;
@@ -512,8 +579,11 @@ void DrawGL( SDL_Surface *ecran)
     gluLookAt(xp-50,yp,zp+10,
              xc,yc,zc,
               0,0,1);
-    ens->show(50,10,40);
-    player->show(0,0,0);
+    ens->show();
+    for (int i = 0; i < gameobj->nbplayers; i++) {
+        gameobj->players[i]->show();
+    }
+    player->show();
     dessinerScene();
     SDL_GL_SwapBuffers();
 }

@@ -200,7 +200,7 @@
 
 1366917048 c:\users\nyarlytv\documents\github\brutalgore\vector3d.h
 
-1367073801 source:c:\users\nyarlytv\documents\github\brutalgore\main.cpp
+1367082864 source:c:\users\nyarlytv\documents\github\brutalgore\main.cpp
 	<SDL/SDL.h>
 	<GL/gl.h>
 	<GL/glu.h>
@@ -265,19 +265,30 @@
 	<GL/gl.h>
 	<GL/glu.h>
 
-1367072794 source:c:\users\nyarlytv\documents\github\brutalgore\ens.cpp
+1367074429 source:c:\users\nyarlytv\documents\github\brutalgore\ens.cpp
 	"SDL/SDL.h"
 	"SDL/SDL_image.h"
 	<GL/gl.h>
 	<GL/glu.h>
 	"sdlglutils.h"
 	<string>
+	"ens.h"
 
-1367072905 c:\users\nyarlytv\documents\github\brutalgore\ens.h
+1367074400 c:\users\nyarlytv\documents\github\brutalgore\ens.h
 
-1367073068 c:\users\nyarlytv\documents\github\brutalgore\player.h
+1367082039 c:\users\nyarlytv\documents\github\brutalgore\player.h
 
-1367073683 source:c:\users\nyarlytv\documents\github\brutalgore\game.cpp
+1367082871 source:c:\users\nyarlytv\documents\github\brutalgore\game.cpp
+	"SDL/SDL.h"
+	"SDL/SDL_image.h"
+	<GL/gl.h>
+	<GL/glu.h>
+	"sdlglutils.h"
+	<string>
+	"game.h"
+	"player.h"
+
+1367082823 source:c:\users\nyarlytv\documents\github\brutalgore\player.cpp
 	"SDL/SDL.h"
 	"SDL/SDL_image.h"
 	<GL/gl.h>
@@ -286,13 +297,6 @@
 	<string>
 	"player.h"
 
-1367073307 source:c:\users\nyarlytv\documents\github\brutalgore\player.cpp
-	"SDL/SDL.h"
-	"SDL/SDL_image.h"
-	<GL/gl.h>
-	<GL/glu.h>
-	"sdlglutils.h"
-	<string>
-
-1367073761 c:\users\nyarlytv\documents\github\brutalgore\game.h
+1367080818 c:\users\nyarlytv\documents\github\brutalgore\game.h
+	"player.h"
 

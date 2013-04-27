@@ -5,6 +5,7 @@
 #include <GL/glu.h>
 #include "sdlglutils.h"
 #include <string>
+#include "player.h"
 
 extern int xp;
 extern int yp;
@@ -13,34 +14,12 @@ extern int zp;
 extern int mapy;
 extern int mapx;
 
-//Notre personnage
-class Player
+
+Player::Player()
 {
-    private:
-    GLuint texture[9];
-    int offSet;
-
-    //sa vitesse de deplacement
-    int velocity;
-
-    //sa frame courante
-    int frame;
-
-    //Son statut d'animation
-    int status;
-
-    public:
-    //Le constructeur permettant l'initialisation des variables
-    Player(int a, int b, int c);
-
-    void handle_events();
-
-    //montrer le personnage
-    void show(int a, int b, int c);
-};
-
-Player::Player(int a,int b,int c)
-{
+    x = 10;
+    y = 20;
+    z = 12.5;
     //Corps
     texture[1] = loadTexture("img/bo.jpg");
 
@@ -75,7 +54,7 @@ Player::Player(int a,int b,int c)
 void Player::handle_events()
 {/*
     //Si une touche est préssée
-    if( event.type == SDL_KEYDOWN )
+    if( event.tye == SDL_KEYDOWN )
     {
         //mise à jour de la velocité
         switch( event.key.keysym.sym )
@@ -86,7 +65,7 @@ void Player::handle_events()
         }
     }
     //si une touche est relachée
-    else if( event.type == SDL_KEYUP )
+    else if( event.tye == SDL_KEYUP )
     {
         //Mise à jour de la velocité
         switch( event.key.keysym.sym )
@@ -98,69 +77,77 @@ void Player::handle_events()
     }
 }*/
 
-void Player::show(int a, int b, int c)
+void Player::show()
 {
+    if (id == 0) {
+        x = xp;
+        y = yp;
+        z = zp;
+    }
+    else {
+        y = 8*id;
+    }
     glBindTexture(GL_TEXTURE_2D, texture[1]);
 
     glBegin(GL_QUADS);
     //par terre
     glTexCoord2d(0,0);
-    glVertex3d(xp,yp-2.5,zp-5);
+    glVertex3d(x,y-2.5,z-5);
     glTexCoord2d(1,0);
-    glVertex3d(xp+1.,yp-2.5,zp-5);
+    glVertex3d(x+1.,y-2.5,z-5);
     glTexCoord2d(1,1);
-    glVertex3d(xp+1,yp+2.5,zp-5);
+    glVertex3d(x+1,y+2.5,z-5);
     glTexCoord2d(0,1);
-    glVertex3d(xp,yp+2.5,zp-5);
+    glVertex3d(x,y+2.5,z-5);
 
     //face droite
     glTexCoord2d(0,0);
-    glVertex3d(xp,yp-2.5,zp);
+    glVertex3d(x,y-2.5,z);
     glTexCoord2d(1,0);
-    glVertex3d(xp,yp+2.5,zp);
+    glVertex3d(x,y+2.5,z);
     glTexCoord2d(1,1);
-    glVertex3d(xp,yp+2.5,zp-5);
+    glVertex3d(x,y+2.5,z-5);
     glTexCoord2d(0,1);
-    glVertex3d(xp,yp-2.5,zp-5);
+    glVertex3d(x,y-2.5,z-5);
 
     //face gauche
     glTexCoord2d(0,0);
-    glVertex3d(xp+1,yp-2.5,zp);
+    glVertex3d(x+1,y-2.5,z);
     glTexCoord2d(1,0);
-    glVertex3d(xp+1,yp+2.5,zp);
+    glVertex3d(x+1,y+2.5,z);
     glTexCoord2d(1,1);
-    glVertex3d(xp+1,yp+2.5,zp-5);
+    glVertex3d(x+1,y+2.5,z-5);
     glTexCoord2d(0,1);
-    glVertex3d(xp+1,yp-2.5,zp-5);
+    glVertex3d(x+1,y-2.5,z-5);
 
     //face face
     glTexCoord2d(0,0);
-    glVertex3d(xp,yp+2.5,zp);
+    glVertex3d(x,y+2.5,z);
     glTexCoord2d(1,0);
-    glVertex3d(xp+1,yp+2.5,zp);
+    glVertex3d(x+1,y+2.5,z);
     glTexCoord2d(1,1);
-    glVertex3d(xp+1,yp+2.5,zp-5);
+    glVertex3d(x+1,y+2.5,z-5);
     glTexCoord2d(0,1);
-    glVertex3d(xp,yp+2.5,zp-5);
+    glVertex3d(x,y+2.5,z-5);
 
     //face derriere
     glTexCoord2d(0,0);
-    glVertex3d(xp,yp-2.5,zp);
+    glVertex3d(x,y-2.5,z);
     glTexCoord2d(1,0);
-    glVertex3d(xp+1,yp-2.5,zp);
+    glVertex3d(x+1,y-2.5,z);
     glTexCoord2d(1,1);
-    glVertex3d(xp+1,yp-2.5,zp-5);
+    glVertex3d(x+1,y-2.5,z-5);
     glTexCoord2d(0,1);
-    glVertex3d(xp,yp-2.5,zp-5);
+    glVertex3d(x,y-2.5,z-5);
     //face au ciel
     glTexCoord2d(0,0);
-    glVertex3d(xp,yp-2.5,zp);
+    glVertex3d(x,y-2.5,z);
     glTexCoord2d(1,0);
-    glVertex3d(xp+1,yp-2.5,zp);
+    glVertex3d(x+1,y-2.5,z);
     glTexCoord2d(1,1);
-    glVertex3d(xp+1,yp+2.5,zp);
+    glVertex3d(x+1,y+2.5,z);
     glTexCoord2d(0,1);
-    glVertex3d(xp,yp+2.5,zp);
+    glVertex3d(x,y+2.5,z);
 
     glEnd();
 
@@ -171,62 +158,62 @@ glBindTexture(GL_TEXTURE_2D, texture[2]);
     glBegin(GL_QUADS);
     //par terre
     glTexCoord2d(0,0);
-    glVertex3d(xp,yp-1.25,zp+2);
+    glVertex3d(x,y-1.25,z+2);
     glTexCoord2d(1,0);
-    glVertex3d(xp+1,yp-1.25,zp+2);
+    glVertex3d(x+1,y-1.25,z+2);
     glTexCoord2d(1,1);
-    glVertex3d(xp+1,yp+1.25,zp+2);
+    glVertex3d(x+1,y+1.25,z+2);
     glTexCoord2d(0,1);
-    glVertex3d(xp,yp+1.25,zp+2);
+    glVertex3d(x,y+1.25,z+2);
 
     //face droite
     glTexCoord2d(0,0);
-    glVertex3d(xp,yp-1.25,zp);
+    glVertex3d(x,y-1.25,z);
     glTexCoord2d(1,0);
-    glVertex3d(xp,yp+1.25,zp);
+    glVertex3d(x,y+1.25,z);
     glTexCoord2d(1,1);
-    glVertex3d(xp,yp+1.25,zp+2);
+    glVertex3d(x,y+1.25,z+2);
     glTexCoord2d(0,1);
-    glVertex3d(xp,yp-1.25,zp+2);
+    glVertex3d(x,y-1.25,z+2);
 
     //face gauche
     glTexCoord2d(0,0);
-    glVertex3d(xp+1,yp-1.25,zp);
+    glVertex3d(x+1,y-1.25,z);
     glTexCoord2d(1,0);
-    glVertex3d(xp+1,yp+1.25,zp);
+    glVertex3d(x+1,y+1.25,z);
     glTexCoord2d(1,1);
-    glVertex3d(xp+1,yp+1.25,zp+2);
+    glVertex3d(x+1,y+1.25,z+2);
     glTexCoord2d(0,1);
-    glVertex3d(xp+1,yp-1.25,zp+2);
+    glVertex3d(x+1,y-1.25,z+2);
 
     //face face
     glTexCoord2d(0,0);
-    glVertex3d(xp,yp+1.25,zp);
+    glVertex3d(x,y+1.25,z);
     glTexCoord2d(1,0);
-    glVertex3d(xp+1,yp+1.25,zp);
+    glVertex3d(x+1,y+1.25,z);
     glTexCoord2d(1,1);
-    glVertex3d(xp+1,yp+1.25,zp+2);
+    glVertex3d(x+1,y+1.25,z+2);
     glTexCoord2d(0,1);
-    glVertex3d(xp,yp+1.25,zp+2);
+    glVertex3d(x,y+1.25,z+2);
 
     //face derriere
     glTexCoord2d(0,0);
-    glVertex3d(xp,yp-1.25,zp);
+    glVertex3d(x,y-1.25,z);
     glTexCoord2d(1,0);
-    glVertex3d(xp+1,yp-1.25,zp);
+    glVertex3d(x+1,y-1.25,z);
     glTexCoord2d(1,1);
-    glVertex3d(xp+1,yp-1.25,zp+2);
+    glVertex3d(x+1,y-1.25,z+2);
     glTexCoord2d(0,1);
-    glVertex3d(xp,yp-1.25,zp+2);
+    glVertex3d(x,y-1.25,z+2);
     //face au ciel
     glTexCoord2d(0,0);
-    glVertex3d(xp,yp-1.25,zp);
+    glVertex3d(x,y-1.25,z);
     glTexCoord2d(1,0);
-    glVertex3d(xp+1,yp-1.25,zp);
+    glVertex3d(x+1,y-1.25,z);
     glTexCoord2d(1,1);
-    glVertex3d(xp+1,yp+1.25,zp);
+    glVertex3d(x+1,y+1.25,z);
     glTexCoord2d(0,1);
-    glVertex3d(xp,yp+1.25,zp);
+    glVertex3d(x,y+1.25,z);
 
     glEnd();
 
@@ -237,62 +224,62 @@ glBindTexture(GL_TEXTURE_2D, texture[3]);
     glBegin(GL_QUADS);
     //par terre
     glTexCoord2d(0,0);
-    glVertex3d(xp,yp+2.5,zp-5);
+    glVertex3d(x,y+2.5,z-5);
     glTexCoord2d(1,0);
-    glVertex3d(xp+1,yp+2.5,zp-5);
+    glVertex3d(x+1,y+2.5,z-5);
     glTexCoord2d(1,1);
-    glVertex3d(xp+1,yp+4,zp-5);
+    glVertex3d(x+1,y+4,z-5);
     glTexCoord2d(0,1);
-    glVertex3d(xp,yp+4,zp-5);
+    glVertex3d(x,y+4,z-5);
 
     //face droite
     glTexCoord2d(0,0);
-    glVertex3d(xp,yp+2.5,zp);
+    glVertex3d(x,y+2.5,z);
     glTexCoord2d(1,0);
-    glVertex3d(xp,yp+4,zp);
+    glVertex3d(x,y+4,z);
     glTexCoord2d(1,1);
-    glVertex3d(xp,yp+4,zp-5);
+    glVertex3d(x,y+4,z-5);
     glTexCoord2d(0,1);
-    glVertex3d(xp,yp+2.5,zp-5);
+    glVertex3d(x,y+2.5,z-5);
 
     //face gauche
     glTexCoord2d(0,0);
-    glVertex3d(xp+1,yp+2.5,zp);
+    glVertex3d(x+1,y+2.5,z);
     glTexCoord2d(1,0);
-    glVertex3d(xp+1,yp+4,zp);
+    glVertex3d(x+1,y+4,z);
     glTexCoord2d(1,1);
-    glVertex3d(xp+1,yp+4,zp-5);
+    glVertex3d(x+1,y+4,z-5);
     glTexCoord2d(0,1);
-    glVertex3d(xp+1,yp+2.5,zp-5);
+    glVertex3d(x+1,y+2.5,z-5);
 
     //face face
     glTexCoord2d(0,0);
-    glVertex3d(xp,yp+4,zp);
+    glVertex3d(x,y+4,z);
     glTexCoord2d(1,0);
-    glVertex3d(xp+1,yp+4,zp);
+    glVertex3d(x+1,y+4,z);
     glTexCoord2d(1,1);
-    glVertex3d(xp+1,yp+4,zp-5);
+    glVertex3d(x+1,y+4,z-5);
     glTexCoord2d(0,1);
-    glVertex3d(xp,yp+4,zp-5);
+    glVertex3d(x,y+4,z-5);
 
     //face derriere
     glTexCoord2d(0,0);
-    glVertex3d(xp,yp+2.5,zp);
+    glVertex3d(x,y+2.5,z);
     glTexCoord2d(1,0);
-    glVertex3d(xp+1,yp+2.5,zp);
+    glVertex3d(x+1,y+2.5,z);
     glTexCoord2d(1,1);
-    glVertex3d(xp+1,yp+2.5,zp-5);
+    glVertex3d(x+1,y+2.5,z-5);
     glTexCoord2d(0,1);
-    glVertex3d(xp,yp+2.5,zp-5);
+    glVertex3d(x,y+2.5,z-5);
     //face au ciel
     glTexCoord2d(0,0);
-    glVertex3d(xp,yp+2.5,zp);
+    glVertex3d(x,y+2.5,z);
     glTexCoord2d(1,0);
-    glVertex3d(xp+1,yp+2.5,zp);
+    glVertex3d(x+1,y+2.5,z);
     glTexCoord2d(1,1);
-    glVertex3d(xp+1,yp+4,zp);
+    glVertex3d(x+1,y+4,z);
     glTexCoord2d(0,1);
-    glVertex3d(xp,yp+4,zp);
+    glVertex3d(x,y+4,z);
 
     glEnd();
 
@@ -302,62 +289,62 @@ glBindTexture(GL_TEXTURE_2D, texture[4]);
     glBegin(GL_QUADS);
     //par terre
     glTexCoord2d(0,0);
-    glVertex3d(xp,yp-2.5,zp-5);
+    glVertex3d(x,y-2.5,z-5);
     glTexCoord2d(1,0);
-    glVertex3d(xp+1,yp-2.5,zp-5);
+    glVertex3d(x+1,y-2.5,z-5);
     glTexCoord2d(1,1);
-    glVertex3d(xp+1,yp-4,zp-5);
+    glVertex3d(x+1,y-4,z-5);
     glTexCoord2d(0,1);
-    glVertex3d(xp,yp-4,zp-5);
+    glVertex3d(x,y-4,z-5);
 
     //face droite
     glTexCoord2d(0,0);
-    glVertex3d(xp,yp-2.5,zp);
+    glVertex3d(x,y-2.5,z);
     glTexCoord2d(1,0);
-    glVertex3d(xp,yp-4,zp);
+    glVertex3d(x,y-4,z);
     glTexCoord2d(1,1);
-    glVertex3d(xp,yp-4,zp-5);
+    glVertex3d(x,y-4,z-5);
     glTexCoord2d(0,1);
-    glVertex3d(xp,yp-2.5,zp-5);
+    glVertex3d(x,y-2.5,z-5);
 
     //face gauche
     glTexCoord2d(0,0);
-    glVertex3d(xp+1,yp-2.5,zp);
+    glVertex3d(x+1,y-2.5,z);
     glTexCoord2d(1,0);
-    glVertex3d(xp+1,yp-4,zp);
+    glVertex3d(x+1,y-4,z);
     glTexCoord2d(1,1);
-    glVertex3d(xp+1,yp-4,zp-5);
+    glVertex3d(x+1,y-4,z-5);
     glTexCoord2d(0,1);
-    glVertex3d(xp+1,yp-2.5,zp-5);
+    glVertex3d(x+1,y-2.5,z-5);
 
     //face face
     glTexCoord2d(0,0);
-    glVertex3d(xp,yp-4,zp);
+    glVertex3d(x,y-4,z);
     glTexCoord2d(1,0);
-    glVertex3d(xp+1,yp-4,zp);
+    glVertex3d(x+1,y-4,z);
     glTexCoord2d(1,1);
-    glVertex3d(xp+1,yp-4,zp-5);
+    glVertex3d(x+1,y-4,z-5);
     glTexCoord2d(0,1);
-    glVertex3d(xp,yp-4,zp-5);
+    glVertex3d(x,y-4,z-5);
 
     //face derriere
     glTexCoord2d(0,0);
-    glVertex3d(xp,yp-2.5,zp);
+    glVertex3d(x,y-2.5,z);
     glTexCoord2d(1,0);
-    glVertex3d(xp+1,yp-2.5,zp);
+    glVertex3d(x+1,y-2.5,z);
     glTexCoord2d(1,1);
-    glVertex3d(xp+1,yp-2.5,zp-5);
+    glVertex3d(x+1,y-2.5,z-5);
     glTexCoord2d(0,1);
-    glVertex3d(xp,yp-2.5,zp-5);
+    glVertex3d(x,y-2.5,z-5);
     //face au ciel
     glTexCoord2d(0,0);
-    glVertex3d(xp,yp-2.5,zp);
+    glVertex3d(x,y-2.5,z);
     glTexCoord2d(1,0);
-    glVertex3d(xp+1,yp-2.5,zp);
+    glVertex3d(x+1,y-2.5,z);
     glTexCoord2d(1,1);
-    glVertex3d(xp+1,yp-4,zp);
+    glVertex3d(x+1,y-4,z);
     glTexCoord2d(0,1);
-    glVertex3d(xp,yp-4,zp);
+    glVertex3d(x,y-4,z);
 
     glEnd();
 
@@ -367,62 +354,62 @@ glBindTexture(GL_TEXTURE_2D, texture[5]);
     glBegin(GL_QUADS);
     //par terre
     glTexCoord2d(0,0);
-    glVertex3d(xp,yp,zp-10);
+    glVertex3d(x,y,z-10);
     glTexCoord2d(1,0);
-    glVertex3d(xp+1,yp,zp-10);
+    glVertex3d(x+1,y,z-10);
     glTexCoord2d(1,1);
-    glVertex3d(xp+1,yp+2.5,zp-10);
+    glVertex3d(x+1,y+2.5,z-10);
     glTexCoord2d(0,1);
-    glVertex3d(xp,yp+2.5,zp-10);
+    glVertex3d(x,y+2.5,z-10);
 
     //face droite
     glTexCoord2d(0,0);
-    glVertex3d(xp,yp,zp-5);
+    glVertex3d(x,y,z-5);
     glTexCoord2d(1,0);
-    glVertex3d(xp,yp+2.5,zp-5);
+    glVertex3d(x,y+2.5,z-5);
     glTexCoord2d(1,1);
-    glVertex3d(xp,yp+2.5,zp-10);
+    glVertex3d(x,y+2.5,z-10);
     glTexCoord2d(0,1);
-    glVertex3d(xp,yp,zp-10);
+    glVertex3d(x,y,z-10);
 
     //face gauche
     glTexCoord2d(0,0);
-    glVertex3d(xp+1,yp,zp-5);
+    glVertex3d(x+1,y,z-5);
     glTexCoord2d(1,0);
-    glVertex3d(xp+1,yp+2.5,zp-5);
+    glVertex3d(x+1,y+2.5,z-5);
     glTexCoord2d(1,1);
-    glVertex3d(xp+1,yp+2.5,zp-10);
+    glVertex3d(x+1,y+2.5,z-10);
     glTexCoord2d(0,1);
-    glVertex3d(xp+1,yp,zp-10);
+    glVertex3d(x+1,y,z-10);
 
     //face face
     glTexCoord2d(0,0);
-    glVertex3d(xp,yp+2.5,zp-5);
+    glVertex3d(x,y+2.5,z-5);
     glTexCoord2d(1,0);
-    glVertex3d(xp+1,yp+2.5,zp-5);
+    glVertex3d(x+1,y+2.5,z-5);
     glTexCoord2d(1,1);
-    glVertex3d(xp+1,yp+2.5,zp-10);
+    glVertex3d(x+1,y+2.5,z-10);
     glTexCoord2d(0,1);
-    glVertex3d(xp,yp+2.5,zp-10);
+    glVertex3d(x,y+2.5,z-10);
 
     //face derriere
     glTexCoord2d(0,0);
-    glVertex3d(xp,yp,zp-5);
+    glVertex3d(x,y,z-5);
     glTexCoord2d(1,0);
-    glVertex3d(xp+1,yp,zp-5);
+    glVertex3d(x+1,y,z-5);
     glTexCoord2d(1,1);
-    glVertex3d(xp+1,yp,zp-10);
+    glVertex3d(x+1,y,z-10);
     glTexCoord2d(0,1);
-    glVertex3d(xp,yp,zp-10);
+    glVertex3d(x,y,z-10);
     //face au ciel
     glTexCoord2d(0,0);
-    glVertex3d(xp,yp,zp-5);
+    glVertex3d(x,y,z-5);
     glTexCoord2d(1,0);
-    glVertex3d(xp+1,yp,zp-5);
+    glVertex3d(x+1,y,z-5);
     glTexCoord2d(1,1);
-    glVertex3d(xp+1,yp+2.5,zp-5);
+    glVertex3d(x+1,y+2.5,z-5);
     glTexCoord2d(0,1);
-    glVertex3d(xp,yp+2.5,zp-5);
+    glVertex3d(x,y+2.5,z-5);
 
     glEnd();
 
@@ -434,62 +421,62 @@ glBindTexture(GL_TEXTURE_2D, texture[6]);
     glBegin(GL_QUADS);
     //par terre
     glTexCoord2d(0,0);
-    glVertex3d(xp,yp,zp-10);
+    glVertex3d(x,y,z-10);
     glTexCoord2d(1,0);
-    glVertex3d(xp+1,yp,zp-10);
+    glVertex3d(x+1,y,z-10);
     glTexCoord2d(1,1);
-    glVertex3d(xp+1,yp-2.5,zp-10);
+    glVertex3d(x+1,y-2.5,z-10);
     glTexCoord2d(0,1);
-    glVertex3d(xp,yp-2.5,zp-10);
+    glVertex3d(x,y-2.5,z-10);
 
     //face droite
     glTexCoord2d(0,0);
-    glVertex3d(xp,yp,zp-5);
+    glVertex3d(x,y,z-5);
     glTexCoord2d(1,0);
-    glVertex3d(xp,yp-2.5,zp-5);
+    glVertex3d(x,y-2.5,z-5);
     glTexCoord2d(1,1);
-    glVertex3d(xp,yp-2.5,zp-10);
+    glVertex3d(x,y-2.5,z-10);
     glTexCoord2d(0,1);
-    glVertex3d(xp,yp,zp-10);
+    glVertex3d(x,y,z-10);
 
     //face gauche
     glTexCoord2d(0,0);
-    glVertex3d(xp+1,yp,zp-5);
+    glVertex3d(x+1,y,z-5);
     glTexCoord2d(1,0);
-    glVertex3d(xp+1,yp-2.5,zp-5);
+    glVertex3d(x+1,y-2.5,z-5);
     glTexCoord2d(1,1);
-    glVertex3d(xp+1,yp-2.5,zp-10);
+    glVertex3d(x+1,y-2.5,z-10);
     glTexCoord2d(0,1);
-    glVertex3d(xp+1,yp,zp-10);
+    glVertex3d(x+1,y,z-10);
 
     //face face
     glTexCoord2d(0,0);
-    glVertex3d(xp,yp-2.5,zp-5);
+    glVertex3d(x,y-2.5,z-5);
     glTexCoord2d(1,0);
-    glVertex3d(xp+1,yp-2.5,zp-5);
+    glVertex3d(x+1,y-2.5,z-5);
     glTexCoord2d(1,1);
-    glVertex3d(xp+1,yp-2.5,zp-10);
+    glVertex3d(x+1,y-2.5,z-10);
     glTexCoord2d(0,1);
-    glVertex3d(xp,yp-2.5,zp-10);
+    glVertex3d(x,y-2.5,z-10);
 
     //face derriere
     glTexCoord2d(0,0);
-    glVertex3d(xp,yp,zp-5);
+    glVertex3d(x,y,z-5);
     glTexCoord2d(1,0);
-    glVertex3d(xp+1,yp,zp-5);
+    glVertex3d(x+1,y,z-5);
     glTexCoord2d(1,1);
-    glVertex3d(xp+1,yp,zp-10);
+    glVertex3d(x+1,y,z-10);
     glTexCoord2d(0,1);
-    glVertex3d(xp,yp,zp-10);
+    glVertex3d(x,y,z-10);
     //face au ciel
     glTexCoord2d(0,0);
-    glVertex3d(xp,yp,zp-5);
+    glVertex3d(x,y,z-5);
     glTexCoord2d(1,0);
-    glVertex3d(xp+1,yp,zp-5);
+    glVertex3d(x+1,y,z-5);
     glTexCoord2d(1,1);
-    glVertex3d(xp+1,yp-2.5,zp-5);
+    glVertex3d(x+1,y-2.5,z-5);
     glTexCoord2d(0,1);
-    glVertex3d(xp,yp-2.5,zp-5);
+    glVertex3d(x,y-2.5,z-5);
 
     glEnd();
     /*

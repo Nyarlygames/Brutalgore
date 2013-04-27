@@ -5,35 +5,13 @@
 #include <GL/glu.h>
 #include "sdlglutils.h"
 #include <string>
-
-//Notre personnage
-class Ennemy
-{
-    private:
-    GLuint texture[9];
-    int offSet;
-
-    //sa vitesse de deplacement
-    int velocity;
-
-    //sa frame courante
-    int frame;
-
-    //Son statut d'animation
-    int status;
-
-    public:
-    //Le constructeur permettant l'initialisation des variables
-    Ennemy(int a, int b, int c);
-
-    void handle_events();
-
-    //montrer le personnage
-    void show(int a, int b, int c);
-};
+#include "ens.h"
 
 Ennemy::Ennemy(int a,int b,int c)
 {
+    x = a;
+    y = b;
+    z = c;
     texture[8] = loadTexture("img/ens.png");
     /*
     //Initialisation des variables de mouvement
@@ -74,18 +52,18 @@ void Ennemy::handle_events()
     }
 }*/
 
-void Ennemy::show(int a, int b, int c)
+void Ennemy::show()
 {
     glBindTexture(GL_TEXTURE_2D, texture[8]);
     glBegin(GL_QUADS);
     glTexCoord2i(0,1);
-    glVertex3d(a,b,40); // HAUT DROIT
+    glVertex3d(x,y,40); // HAUT DROIT
     glTexCoord2i(1,1);
-    glVertex3d(a,-b,40); // HAUT GAUCHE
+    glVertex3d(x,-y,40); // HAUT GAUCHE
     glTexCoord2i(1,0);
-    glVertex3d(a,-b,0); // BAS GAUCHE
+    glVertex3d(x,-y,0); // BAS GAUCHE
     glTexCoord2i(0,0);
-    glVertex3d(a,b,0); // BAS DROIT
+    glVertex3d(x,y,0); // BAS DROIT
     glEnd();
 
     /*

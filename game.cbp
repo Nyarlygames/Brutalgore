@@ -27,20 +27,24 @@
 			<Add library="C:\Program Files (x86)\CodeBlocks\MinGW\lib\SDL_mixer.lib" />
 			<Add library="C:\Program Files (x86)\CodeBlocks\MinGW\lib\SDL_ttf.lib" />
 		</Linker>
+		<Unit filename="Game.cpp" />
+		<Unit filename="Game.h" />
+		<Unit filename="ens.cpp" />
+		<Unit filename="ens.h" />
 		<Unit filename="freeflycamera.cpp" />
 		<Unit filename="freeflycamera.h" />
 		<Unit filename="global.h" />
-		<Unit filename="include/Ens.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="move.cpp" />
 		<Unit filename="move.h" />
+		<Unit filename="player.cpp" />
+		<Unit filename="player.h" />
 		<Unit filename="scene.cpp" />
 		<Unit filename="scene.h" />
 		<Unit filename="sdlglutils.cpp" />
 		<Unit filename="sdlglutils.h" />
 		<Unit filename="sound.cpp" />
 		<Unit filename="sound.h" />
-		<Unit filename="src/Ens.cpp" />
 		<Unit filename="vector3d.cpp" />
 		<Unit filename="vector3d.h" />
 		<Extensions>

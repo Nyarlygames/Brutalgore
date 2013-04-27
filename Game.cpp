@@ -5,6 +5,7 @@
 #include <GL/glu.h>
 #include "sdlglutils.h"
 #include <string>
+#include "game.h"
 #include "player.h"
 
 extern int xp;
@@ -14,36 +15,15 @@ extern int zp;
 extern int mapy;
 extern int mapx;
 
-//Notre personnage
-class Game
+Game::Game(int pcount)
 {
-    private:
-    GLuint texture[9];
-    int offSet;
-    Player  *players;
-
-    //sa vitesse de deplacement
-    int velocity;
-
-    //sa frame courante
-    int frame;
-
-    //Son statut d'animation
-    int status;
-
-    public:
-    //Le constructeur permettant l'initialisation des variables
-    Game(Player *playerset);
-
-    void handle_events();
-
-    //montrer le personnage
-    void show(int a, int b, int c);
-};
-
-Game::Game(Player *playerset)
-{
-    players = playerset;
+    nbplayers = pcount;
+    players = (Player **) malloc(sizeof(Player) * nbplayers);
+    for (int i = 0; i < nbplayers; i++) {
+        players[i] = new Player();
+        players[i]->id = i;
+    }
+    players;
     /*
     //Initialisation des variables de mouvement
     offSet = 0;
