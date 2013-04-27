@@ -157,10 +157,10 @@ public:
 
 
 	// functions
-	bool	LoadModel( const char *filename, int a, int b, int c );
+	bool	LoadModel( const char *filename, int a, int b, int c,  int rot );
 	bool	LoadSkin( const char *filename );
 
-	void	DrawModel( float time );
+	void	DrawModel( float time, int a, int b, int c );
 	void	DrawFrame( int frame );
 
 	void	SetAnim( int type );

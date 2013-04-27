@@ -1,11 +1,15 @@
 #ifndef ENS_H
 #define ENS_H
 
+#include "md2.h"
 class Ennemy
 {
     private:
     int x,y,z;
     GLuint texture[9];
+    CMD2Model		Ogro;
+    CMD2Model		Weapon;
+    bool			bAnimated	= true;
 
     public:
     //Le constructeur permettant l'initialisation des variables

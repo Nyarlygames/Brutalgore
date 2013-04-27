@@ -79,7 +79,7 @@ CMD2Model::~CMD2Model( void )
 // LoadModel() - load model from file.
 // ----------------------------------------------
 
-bool CMD2Model::LoadModel( const char *filename, int a, int b, int c )
+bool CMD2Model::LoadModel( const char *filename, int a, int b, int c, int rot )
 {
 	std::ifstream	file;			// file stream
 	md2_t			header;			// md2 header
@@ -92,6 +92,7 @@ bool CMD2Model::LoadModel( const char *filename, int a, int b, int c )
     x = a;
     y = b;
     z = c;
+    angle = rot;
 	// try to open filename
 	file.open( filename, std::ios::in | std::ios::binary );
 
@@ -190,11 +191,15 @@ bool CMD2Model::LoadSkin( const char *filename )
 // DrawModel() - draw the model.
 // ----------------------------------------------
 
-void CMD2Model::DrawModel( float time )
+void CMD2Model::DrawModel( float time ,int a,int b,int c)
 {
 	// animate. calculate current frame and next frame
 	if( time > 0.0 )
 		Animate( time );
+
+    x = a;
+    y = b;
+    z = c;
 
 	glPushMatrix();
 		// rotate the model
@@ -380,7 +385,7 @@ void CMD2Model::DrawFrame( int frame )
 	m_anim.type			= -1;
 
 	// draw the model
-	DrawModel( 1.0 );
+	DrawModel( 1.0, x, y, z );
 }
 
 

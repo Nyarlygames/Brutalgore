@@ -200,7 +200,7 @@
 
 1366917048 c:\users\nyarlytv\documents\github\brutalgore\vector3d.h
 
-1367098724 source:c:\users\nyarlytv\documents\github\brutalgore\main.cpp
+1367105411 source:c:\users\nyarlytv\documents\github\brutalgore\main.cpp
 	<SDL/SDL.h>
 	<GL/gl.h>
 	<GL/glu.h>
@@ -217,7 +217,7 @@
 	"player.h"
 	"game.h"
 
-1366917048 c:\users\nyarlytv\documents\github\brutalgore\sdlglutils.h
+1367101785 c:\users\nyarlytv\documents\github\brutalgore\sdlglutils.h
 	<GL/gl.h>
 	<SDL/SDL.h>
 
@@ -225,7 +225,7 @@
 
 1366917048 c:\users\nyarlytv\documents\github\brutalgore\sound.h
 
-1367083682 c:\users\nyarlytv\documents\github\brutalgore\global.h
+1367105423 c:\users\nyarlytv\documents\github\brutalgore\global.h
 
 1366917048 source:c:\users\nyarlytv\documents\github\brutalgore\move.cpp
 
@@ -236,7 +236,7 @@
 	"ens.h"
 	"sdlglutils.h"
 
-1366917048 source:c:\users\nyarlytv\documents\github\brutalgore\sdlglutils.cpp
+1367101779 source:c:\users\nyarlytv\documents\github\brutalgore\sdlglutils.cpp
 	"sdlglutils.h"
 	<SDL/SDL.h>
 	<SDL/SDL_image.h>
@@ -265,7 +265,7 @@
 	<GL/gl.h>
 	<GL/glu.h>
 
-1367074429 source:c:\users\nyarlytv\documents\github\brutalgore\ens.cpp
+1367105651 source:c:\users\nyarlytv\documents\github\brutalgore\ens.cpp
 	"SDL/SDL.h"
 	"SDL/SDL_image.h"
 	<GL/gl.h>
@@ -274,11 +274,12 @@
 	<string>
 	"ens.h"
 
-1367074400 c:\users\nyarlytv\documents\github\brutalgore\ens.h
+1367102199 c:\users\nyarlytv\documents\github\brutalgore\ens.h
+	"md2.h"
 
-1367083309 c:\users\nyarlytv\documents\github\brutalgore\player.h
+1367104573 c:\users\nyarlytv\documents\github\brutalgore\player.h
 
-1367082871 source:c:\users\nyarlytv\documents\github\brutalgore\game.cpp
+1367104560 source:c:\users\nyarlytv\documents\github\brutalgore\game.cpp
 	"SDL/SDL.h"
 	"SDL/SDL_image.h"
 	<GL/gl.h>
@@ -288,7 +289,7 @@
 	"game.h"
 	"player.h"
 
-1367100782 source:c:\users\nyarlytv\documents\github\brutalgore\player.cpp
+1367105183 source:c:\users\nyarlytv\documents\github\brutalgore\player.cpp
 	"SDL/SDL.h"
 	"SDL/SDL_image.h"
 	<GL/gl.h>
@@ -302,7 +303,7 @@
 1367080818 c:\users\nyarlytv\documents\github\brutalgore\game.h
 	"player.h"
 
-1367101088 source:c:\users\nyarlytv\documents\github\brutalgore\md2.cpp
+1367105657 source:c:\users\nyarlytv\documents\github\brutalgore\md2.cpp
 	<GL/glut.h>
 	<fstream>
 	"md2.h"
@@ -310,7 +311,7 @@
 	"anorms.h"
 	"anormtab.h"
 
-1367101041 c:\users\nyarlytv\documents\github\brutalgore\md2.h
+1367105593 c:\users\nyarlytv\documents\github\brutalgore\md2.h
 
 1042480006 c:\users\nyarlytv\documents\github\brutalgore\texture.h
 	<list>

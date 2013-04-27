@@ -172,7 +172,7 @@ int selection(int from){
     SDL_Rect cursorl;
     SDL_Surface *pcount = NULL;
     bool quit = false;
-    int nbplayers = 0;
+    int nbplayers = 1;
     cursorl.x = 20;
     cursorl.y = HAUTEUR_FENETRE/4;
     pcount = TTF_RenderText_Solid( font, "1", textColor );
@@ -418,12 +418,11 @@ int game(int nbplayers)
     gluPerspective(70,(double)LARGEUR_FENETRE/HAUTEUR_FENETRE,1,1000);
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_TEXTURE_2D);
-    ens = new Ennemy(50,10,40);
+    ens = new Ennemy(-30,0,15);
    /* ens = new Ennemy(50,11,40);
 
     ens = new Ennemy(55,10,40);
     ens = new Ennemy(50,10,30);*/
-    player = new Player();
     gameobj = new Game(nbplayers);
     chargerTextures();
 
@@ -514,16 +513,16 @@ bool handle_event(bool fup, bool fright, bool fleft, bool fdown, int speed)
 {
     Uint8 *keystate = SDL_GetKeyState(NULL);
 
-    if (keystate[SDLK_RIGHT] && (yp-4 < -mapy))
+    if (keystate[SDLK_RIGHT] && (yp-4 < -15*mapy))
         return false;
     else
-        if (keystate[SDLK_LEFT] && (yp+4 > mapy))
+        if (keystate[SDLK_LEFT] && (yp+4 > 15*mapy))
             return false;
         else
-            if (keystate[SDLK_UP] && (xp+10 > mapx))
+            if (keystate[SDLK_UP] && (xp+10 > 15*mapx))
                 return false;
             else
-                if (keystate[SDLK_DOWN] && (xp-2 < -30))
+                if (keystate[SDLK_DOWN] && (xp-2 < -15*30))
                 return false;
 
 
@@ -598,7 +597,6 @@ void DrawGL( SDL_Surface *ecran)
     for (int i = 0; i < gameobj->nbplayers; i++) {
         gameobj->players[i]->show();
     }
-    player->show();
     dessinerScene();
     SDL_GL_SwapBuffers();
 }

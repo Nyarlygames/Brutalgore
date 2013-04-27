@@ -20,8 +20,7 @@ Game::Game(int pcount)
     nbplayers = pcount;
     players = (Player **) malloc(sizeof(Player) * nbplayers);
     for (int i = 0; i < nbplayers; i++) {
-        players[i] = new Player();
-        players[i]->id = i;
+        players[i] = new Player(i);
     }
     players;
     /*

@@ -13,6 +13,18 @@ Ennemy::Ennemy(int a,int b,int c)
     y = b;
     z = c;
     texture[8] = loadTexture("img/ens.png");
+
+    // load and initialize the Ogros model
+	Ogro.LoadModel( "models/Ogros.md2", x, y , z, -180);
+	Ogro.LoadSkin( "models/igdosh.pcx" );
+	Ogro.SetAnim( 0 );
+	Ogro.ScaleModel( 0.5);
+
+	// load and initialize Ogros' weapon model
+	Weapon.LoadModel( "models/Weapon.md2", x, y , z, -180);
+	Weapon.LoadSkin( "models/Weapon.pcx" );
+	Weapon.SetAnim( STAND );
+	Weapon.ScaleModel( 0.5 );
     /*
     //Initialisation des variables de mouvement
     offSet = 0;
@@ -54,6 +66,9 @@ void Ennemy::handle_events()
 
 void Ennemy::show()
 {
+	float timesec = SDL_GetTicks() / 1000.0;
+	Ogro.DrawModel( bAnimated ? timesec : 0.0, x, y, z );
+	Weapon.DrawModel( bAnimated ? timesec : 0.0, x, y, z );
     glBindTexture(GL_TEXTURE_2D, texture[8]);
     glBegin(GL_QUADS);
     glTexCoord2i(0,1);

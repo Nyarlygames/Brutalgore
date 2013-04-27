@@ -20,7 +20,7 @@ Global int mapx = 400;
 Global int mapy = 100;
 
 
-Global int speed = 1;
+Global int speed = 7;
 /*
 
 typedef struct	s_perso

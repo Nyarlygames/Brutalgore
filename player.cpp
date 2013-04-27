@@ -15,16 +15,20 @@ extern int zp;
 
 extern int mapy;
 extern int mapx;
-CMD2Model		Ogro;
+CMD2Model		Soldier;
+CMD2Model		Head;
 CMD2Model		Weapon;
+CMD2Model		Fx;
 bool			bAnimated	= true;
 
 
-Player::Player()
+Player::Player(int index)
 {
-    x = 10;
-    y = 20;
-    z = 12.5;
+    x = -10;
+    y = 0;
+    z = 15;
+    id = index;
+
     //Corps
     texture[1] = loadTexture("img/bo.jpg");
 
@@ -44,25 +48,20 @@ Player::Player()
     // Jambe droit
     texture[6] = loadTexture("img/rl.jpg");
 
-
     // load and initialize the Ogros model
-	Ogro.LoadModel( "models/Ogros.md2", -30, 0 , 20);
-	Ogro.LoadSkin( "models/igdosh.pcx" );
-//	Ogro.LoadModel( "models/grunt.md2" );
-//	Ogro.LoadSkin( "models/grunt.pcx" );
-//	Ogro.LoadModel( "models/cybrpnk/tris.md2" );
-//	Ogro.LoadSkin( "models/cybrpnk/vicious.pcx" );
-	Ogro.SetAnim( 0 );
-	Ogro.ScaleModel( 0.5);
-
-	// load and initialize Ogros' weapon model
-	Weapon.LoadModel( "models/Weapon.md2", -30, 0 , 20);
-	Weapon.LoadSkin( "models/Weapon.pcx" );
-//	Weapon.LoadModel( "models/cybrpnk/weapon.md2" );
-//	Weapon.LoadSkin( "models/cybrpnk/weapon.pcx" );
-	Weapon.SetAnim( STAND );
-	Weapon.ScaleModel( 0.5 );
-
+	Soldier.LoadModel( "models/chaingunner_body.md2", -10, 5*id , 15, -180);
+	Soldier.LoadSkin( "models/chaingunner_body.bmp" );
+	Soldier.SetAnim( 0 );
+	Soldier.ScaleModel( 0.5);
+	Head.LoadModel( "models/chaingunner_head.md2", x, 5*id , z, -180);
+	Head.LoadSkin( "models/chaingunner_head.bmp" );
+	Head.ScaleModel( 0.5);
+	Weapon.LoadModel( "models/chaingunner_weapon.md2", x, 5*id , z, -180);
+	Weapon.LoadSkin( "models/chaingunner_weapon.bmp" );
+	Weapon.ScaleModel( 0.5);
+	Fx.LoadModel( "models/chaingunner_mf.md2", x, 5*id , z, -180);
+	Fx.LoadSkin( "models/chaingunner_mf.bmp" );
+	Fx.ScaleModel( 0.5);
     /*
     //Initialisation des variables de mouvement
     offSet = 0;
@@ -105,8 +104,6 @@ void Player::handle_events()
 void Player::show()
 {
 	float timesec = SDL_GetTicks() / 1000.0;
-	Ogro.DrawModel( bAnimated ? timesec : 0.0 );
-	Weapon.DrawModel( bAnimated ? timesec : 0.0 );
     if (id == 0) {
         x = xp;
         y = yp;
@@ -115,6 +112,11 @@ void Player::show()
     else {
         y = 8*id;
     }
+    Soldier.DrawModel( bAnimated ? timesec : 0.0, x, y, z);
+    Head.DrawModel( bAnimated ? timesec : 0.0, x, y, z);
+    Weapon.DrawModel( bAnimated ? timesec : 0.0, x, y, z );
+    Fx.DrawModel( bAnimated ? timesec : 0.0, x, y, z );
+
     glBindTexture(GL_TEXTURE_2D, texture[1]);
 
     glBegin(GL_QUADS);

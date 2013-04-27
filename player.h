@@ -11,7 +11,7 @@ class Player
     int id;
     SDL_Rect lookat;
     //Le constructeur permettant l'initialisation des variables
-    Player();
+    Player(int index);
 
   //  void handle_events();
 
