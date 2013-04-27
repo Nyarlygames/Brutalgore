@@ -1,11 +1,11 @@
-#include "scene.h"
+//Les fichiers d'entête
+#include "SDL/SDL.h"
+#include "SDL/SDL_image.h"
 #include <GL/gl.h>
 #include <GL/glu.h>
-#include "ens.h"
 #include "sdlglutils.h"
+#include <string>
 
-
-GLuint texture[9];
 extern int xp;
 extern int yp;
 extern int zp;
@@ -13,12 +13,36 @@ extern int zp;
 extern int mapy;
 extern int mapx;
 
-void chargerTextures()
+//Notre personnage
+class Player
 {
+    private:
+    GLuint texture[9];
+    int offSet;
 
+    //sa vitesse de deplacement
+    int velocity;
+
+    //sa frame courante
+    int frame;
+
+    //Son statut d'animation
+    int status;
+
+    public:
+    //Le constructeur permettant l'initialisation des variables
+    Player(int a, int b, int c);
+
+    void handle_events();
+
+    //montrer le personnage
+    void show(int a, int b, int c);
+};
+
+Player::Player(int a,int b,int c)
+{
     //Corps
     texture[1] = loadTexture("img/bo.jpg");
-    texture[8] = loadTexture("img/ens.png");
 
     // Tete
     texture[2] = loadTexture("img/he.jpg");
@@ -35,61 +59,48 @@ void chargerTextures()
 
     // Jambe droit
     texture[6] = loadTexture("img/rl.jpg");
+    /*
+    //Initialisation des variables de mouvement
+    offSet = 0;
+    velocity = 0;
 
+    //Initialisation des variables d'animation
+    frame = 0;
+    status = Player_RIGHT;
 
-    // Background
-    texture[7] = loadTexture("img/background.jpg");
+    //Départ du timer
+    anim.start();*/
+}/*
 
+void Player::handle_events()
+{/*
+    //Si une touche est préssée
+    if( event.type == SDL_KEYDOWN )
+    {
+        //mise à jour de la velocité
+        switch( event.key.keysym.sym )
+        {
+            case SDLK_RIGHT: velocity += (Player_VITESSE / FRAMES_PER_SECOND); break;
+            case SDLK_LEFT: velocity -= (Player_VITESSE / FRAMES_PER_SECOND); break;
+            default: break;
+        }
+    }
+    //si une touche est relachée
+    else if( event.type == SDL_KEYUP )
+    {
+        //Mise à jour de la velocité
+        switch( event.key.keysym.sym )
+        {
+            case SDLK_RIGHT: velocity -= (Player_VITESSE / FRAMES_PER_SECOND); break;
+            case SDLK_LEFT: velocity += (Player_VITESSE / FRAMES_PER_SECOND); break;
+            default: break;
+        }
+    }
+}*/
 
-
-
-    //Sol
-    texture[0] = loadTexture("img/ground.jpg");
-
-}
-
-/* ----------------------------------------------------------- MAP ---------------------------------------------*/
-void map()
+void Player::show(int a, int b, int c)
 {
-    //Sol
-
-    glBindTexture(GL_TEXTURE_2D, texture[0]);
-    glBegin(GL_QUADS);
-    glTexCoord2i(0,0);
-    glVertex3d(-30,-mapy,2); // HAUT DROIT
-    glTexCoord2i(10,0);
-    glVertex3d(mapx,-mapy,2); // HAUT GAUCHE
-    glTexCoord2i(10,10);
-    glVertex3d(mapx,mapy,2); // BAS GAUCHE
-    glTexCoord2i(0,10);
-    glVertex3d(-30,mapy,2); // BAS DROIT
-    glEnd();
-// MUR
-    glBindTexture(GL_TEXTURE_2D, texture[0]);
-    glBegin(GL_QUADS);
-    glTexCoord2i(0,0);
-    glVertex3d(-30,mapy,mapx); // HAUT DROIT
-    glTexCoord2i(10,0);
-    glVertex3d(mapx,mapy,mapx); // HAUT GAUCHE
-    glTexCoord2i(10,10);
-    glVertex3d(mapx,mapy,2); // BAS GAUCHE
-    glTexCoord2i(0,10);
-    glVertex3d(-30,mapy,2); // BAS DROIT
-    glEnd();
-
-// ENS
-    //En1 = Ennemy(50,10,40);
-
-
-}
-/* ----------------------------------------------------------- FIN MAP ---------------------------------------------*/
-
-/* ----------------------------------------------------------- PERSO ---------------------------------------------*/
-
-void perso()
-{
-    /* ------------ CORPS  ----------------*/
-  glBindTexture(GL_TEXTURE_2D, texture[1]);
+    glBindTexture(GL_TEXTURE_2D, texture[1]);
 
     glBegin(GL_QUADS);
     //par terre
@@ -481,56 +492,68 @@ glBindTexture(GL_TEXTURE_2D, texture[6]);
     glVertex3d(xp,yp-2.5,zp-5);
 
     glEnd();
+    /*
+    //Mouvement
+    offSet += velocity;
 
+    //On garde le personnage dans les limites de la fenêtre SDL
+    if( ( offSet < 0 ) || ( offSet + Player_WIDTH > SCREEN_WIDTH ) )
+    {
+        offSet -= velocity;
+    }
+
+    //Si Player bouge à gauche
+    if( velocity < 0 )
+    {
+        //On prend le personnage de profil gauche
+        status = Player_LEFT;
+
+		//S'il est l'heure, on change l'animation
+		if( this->anim.get_ticks() >= Player_DELAI_FRAME ) {
+
+			// On remet le timer à 0
+			anim.start();
+
+			// On passe à la frame suivante
+			frame++;
+		}
+    }
+    //Si Player bouge à droite
+    else if( velocity > 0 )
+    {
+        //On prend le personnage de profil droit
+        status = Player_RIGHT;
+
+		//S'il est l'heure, on change l'animation
+		if( this->anim.get_ticks() >= Player_DELAI_FRAME ) {
+
+			// On remet le timer à 0
+			anim.start();
+
+			// On passe à la frame suivante
+			frame++;
+		}
+    }
+    //Si Player ne bouge plus
+    else
+    {
+        //Restart the animation
+        frame = 1;
+    }
+
+    //Boucle l'animation
+    if( frame >= Player_NB_ANIM )
+    {
+        frame = 0;
+    }
+
+    //Affichage
+    if( status == Player_RIGHT )
+    {
+        apply_surface( offSet, SCREEN_HEIGHT - Player_HEIGHT, Player, screen, &clipsRight[ frame ] );
+    }
+    else if( status == Player_LEFT )
+    {
+        apply_surface( offSet, SCREEN_HEIGHT - Player_HEIGHT, Player, screen, &clipsLeft[ frame ] );
+    }*/
 }
-
-/* ----------------------------------------------------------- FIN PERSO ---------------------------------------------*/
-
-
-
-
-/* ----------------------------------------------------------- DEBUT ENS ---------------------------------------------*/
-
-void En(int a, int b, int c)
-{
-    // A = DISTANCE B = TAILLE
-    glBindTexture(GL_TEXTURE_2D, texture[8]);
-    glBegin(GL_QUADS);
-    glTexCoord2i(0,1);
-    glVertex3d(a,b,40); // HAUT DROIT
-    glTexCoord2i(1,1);
-    glVertex3d(a,-b,40); // HAUT GAUCHE
-    glTexCoord2i(1,0);
-    glVertex3d(a,-b,0); // BAS GAUCHE
-    glTexCoord2i(0,0);
-    glVertex3d(a,b,0); // BAS DROIT
-    glEnd();
-}
-
-
-/* ----------------------------------------------------------- FIN ENS ---------------------------------------------*/
-
-
-
-
-void dessinerScene()
-{
-
-    //Background
-    glBindTexture(GL_TEXTURE_2D, texture[7]);
-    glBegin(GL_QUADS);
-    glTexCoord2d(1,0);
-    glVertex3d(500,-1000,1000); // HAUT DROIT
-    glTexCoord2d(0,0);
-    glVertex3d(500,-1000,-1000); // BAS DROIT
-    glTexCoord2d(1,1);
-    glVertex3d(500,1000,1000); // HAUT GAUCHE
-    glTexCoord2d(0,1);
-    glVertex3d(500,1000,-1000); // BAS GAUCHE
-    glEnd();
-  //  perso();
-    map();
-   // En(50,10,40);
-    //En(100,10,40);
-}
-

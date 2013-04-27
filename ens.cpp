@@ -7,7 +7,7 @@
 #include <string>
 
 //Notre personnage
-class Player
+class Ennemy
 {
     private:
     GLuint texture[9];
@@ -24,7 +24,7 @@ class Player
 
     public:
     //Le constructeur permettant l'initialisation des variables
-    Player(int a, int b, int c);
+    Ennemy(int a, int b, int c);
 
     void handle_events();
 
@@ -32,7 +32,7 @@ class Player
     void show(int a, int b, int c);
 };
 
-Player::Player(int a,int b,int c)
+Ennemy::Ennemy(int a,int b,int c)
 {
     texture[8] = loadTexture("img/ens.png");
     /*
@@ -42,13 +42,13 @@ Player::Player(int a,int b,int c)
 
     //Initialisation des variables d'animation
     frame = 0;
-    status = Player_RIGHT;
+    status = Ennemy_RIGHT;
 
     //Départ du timer
     anim.start();*/
 }/*
 
-void Player::handle_events()
+void Ennemy::handle_events()
 {/*
     //Si une touche est préssée
     if( event.type == SDL_KEYDOWN )
@@ -56,8 +56,8 @@ void Player::handle_events()
         //mise à jour de la velocité
         switch( event.key.keysym.sym )
         {
-            case SDLK_RIGHT: velocity += (Player_VITESSE / FRAMES_PER_SECOND); break;
-            case SDLK_LEFT: velocity -= (Player_VITESSE / FRAMES_PER_SECOND); break;
+            case SDLK_RIGHT: velocity += (Ennemy_VITESSE / FRAMES_PER_SECOND); break;
+            case SDLK_LEFT: velocity -= (Ennemy_VITESSE / FRAMES_PER_SECOND); break;
             default: break;
         }
     }
@@ -67,14 +67,14 @@ void Player::handle_events()
         //Mise à jour de la velocité
         switch( event.key.keysym.sym )
         {
-            case SDLK_RIGHT: velocity -= (Player_VITESSE / FRAMES_PER_SECOND); break;
-            case SDLK_LEFT: velocity += (Player_VITESSE / FRAMES_PER_SECOND); break;
+            case SDLK_RIGHT: velocity -= (Ennemy_VITESSE / FRAMES_PER_SECOND); break;
+            case SDLK_LEFT: velocity += (Ennemy_VITESSE / FRAMES_PER_SECOND); break;
             default: break;
         }
     }
 }*/
 
-void Player::show(int a, int b, int c)
+void Ennemy::show(int a, int b, int c)
 {
     glBindTexture(GL_TEXTURE_2D, texture[8]);
     glBegin(GL_QUADS);
@@ -93,19 +93,19 @@ void Player::show(int a, int b, int c)
     offSet += velocity;
 
     //On garde le personnage dans les limites de la fenêtre SDL
-    if( ( offSet < 0 ) || ( offSet + Player_WIDTH > SCREEN_WIDTH ) )
+    if( ( offSet < 0 ) || ( offSet + Ennemy_WIDTH > SCREEN_WIDTH ) )
     {
         offSet -= velocity;
     }
 
-    //Si Player bouge à gauche
+    //Si Ennemy bouge à gauche
     if( velocity < 0 )
     {
         //On prend le personnage de profil gauche
-        status = Player_LEFT;
+        status = Ennemy_LEFT;
 
 		//S'il est l'heure, on change l'animation
-		if( this->anim.get_ticks() >= Player_DELAI_FRAME ) {
+		if( this->anim.get_ticks() >= Ennemy_DELAI_FRAME ) {
 
 			// On remet le timer à 0
 			anim.start();
@@ -114,14 +114,14 @@ void Player::show(int a, int b, int c)
 			frame++;
 		}
     }
-    //Si Player bouge à droite
+    //Si Ennemy bouge à droite
     else if( velocity > 0 )
     {
         //On prend le personnage de profil droit
-        status = Player_RIGHT;
+        status = Ennemy_RIGHT;
 
 		//S'il est l'heure, on change l'animation
-		if( this->anim.get_ticks() >= Player_DELAI_FRAME ) {
+		if( this->anim.get_ticks() >= Ennemy_DELAI_FRAME ) {
 
 			// On remet le timer à 0
 			anim.start();
@@ -130,7 +130,7 @@ void Player::show(int a, int b, int c)
 			frame++;
 		}
     }
-    //Si Player ne bouge plus
+    //Si Ennemy ne bouge plus
     else
     {
         //Restart the animation
@@ -138,18 +138,18 @@ void Player::show(int a, int b, int c)
     }
 
     //Boucle l'animation
-    if( frame >= Player_NB_ANIM )
+    if( frame >= Ennemy_NB_ANIM )
     {
         frame = 0;
     }
 
     //Affichage
-    if( status == Player_RIGHT )
+    if( status == Ennemy_RIGHT )
     {
-        apply_surface( offSet, SCREEN_HEIGHT - Player_HEIGHT, Player, screen, &clipsRight[ frame ] );
+        apply_surface( offSet, SCREEN_HEIGHT - Ennemy_HEIGHT, Ennemy, screen, &clipsRight[ frame ] );
     }
-    else if( status == Player_LEFT )
+    else if( status == Ennemy_LEFT )
     {
-        apply_surface( offSet, SCREEN_HEIGHT - Player_HEIGHT, Player, screen, &clipsLeft[ frame ] );
+        apply_surface( offSet, SCREEN_HEIGHT - Ennemy_HEIGHT, Ennemy, screen, &clipsLeft[ frame ] );
     }*/
 }

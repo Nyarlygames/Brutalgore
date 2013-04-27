@@ -11,6 +11,9 @@
 #include "scene.h"
 #include "sound.h"
 #include "global.h"
+#include "ens.h"
+#include "player.h"
+#include "game.h"
 
 #define FPS 50
 #define LARGEUR_FENETRE 800
@@ -29,7 +32,9 @@ SDL_Surface *launch = NULL;
 SDL_Surface *lan = NULL;
 SDL_Surface *opt = NULL;
 SDL_Surface *screen = NULL;
-
+Ennemy *ens = NULL;
+Player *player = NULL;
+Game *gameobj = NULL;
 //Le font qu'on va utiliser
 TTF_Font *font;
 TTF_Font *font2;
@@ -328,8 +333,6 @@ int game()
     atexit(SDL_Quit);
     /*playsound("sound/alig.mp3");*/
 
-
-    SDL_WM_SetCaption("SDL GL Application", NULL);
     ecran = SDL_SetVideoMode(LARGEUR_FENETRE, HAUTEUR_FENETRE, 32, SDL_OPENGL);
    /* initFullScreen();*/
     glMatrixMode( GL_PROJECTION );
@@ -337,7 +340,15 @@ int game()
     gluPerspective(70,(double)LARGEUR_FENETRE/HAUTEUR_FENETRE,1,1000);
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_TEXTURE_2D);
+    ens = new Ennemy(50,10,40);
+   /* ens = new Ennemy(50,11,40);
 
+    ens = new Ennemy(55,10,40);
+    ens = new Ennemy(50,10,30);*/
+    for (int i = 0; i < 1; i++) {
+        player = new Player(50,10,40);
+    }
+    gameobj = new Game(player);
     chargerTextures();
 
     last_time = SDL_GetTicks();
@@ -501,6 +512,8 @@ void DrawGL( SDL_Surface *ecran)
     gluLookAt(xp-50,yp,zp+10,
              xc,yc,zc,
               0,0,1);
+    ens->show(50,10,40);
+    player->show(0,0,0);
     dessinerScene();
     SDL_GL_SwapBuffers();
 }

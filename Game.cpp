@@ -5,13 +5,22 @@
 #include <GL/glu.h>
 #include "sdlglutils.h"
 #include <string>
+#include "player.h"
+
+extern int xp;
+extern int yp;
+extern int zp;
+
+extern int mapy;
+extern int mapx;
 
 //Notre personnage
-class Player
+class Game
 {
     private:
     GLuint texture[9];
     int offSet;
+    Player  *players;
 
     //sa vitesse de deplacement
     int velocity;
@@ -24,7 +33,7 @@ class Player
 
     public:
     //Le constructeur permettant l'initialisation des variables
-    Player(int a, int b, int c);
+    Game(Player *playerset);
 
     void handle_events();
 
@@ -32,9 +41,9 @@ class Player
     void show(int a, int b, int c);
 };
 
-Player::Player(int a,int b,int c)
+Game::Game(Player *playerset)
 {
-    texture[8] = loadTexture("img/ens.png");
+    players = playerset;
     /*
     //Initialisation des variables de mouvement
     offSet = 0;
@@ -42,13 +51,13 @@ Player::Player(int a,int b,int c)
 
     //Initialisation des variables d'animation
     frame = 0;
-    status = Player_RIGHT;
+    status = Game_RIGHT;
 
     //Départ du timer
     anim.start();*/
 }/*
 
-void Player::handle_events()
+void Game::handle_events()
 {/*
     //Si une touche est préssée
     if( event.type == SDL_KEYDOWN )
@@ -56,8 +65,8 @@ void Player::handle_events()
         //mise à jour de la velocité
         switch( event.key.keysym.sym )
         {
-            case SDLK_RIGHT: velocity += (Player_VITESSE / FRAMES_PER_SECOND); break;
-            case SDLK_LEFT: velocity -= (Player_VITESSE / FRAMES_PER_SECOND); break;
+            case SDLK_RIGHT: velocity += (Game_VITESSE / FRAMES_PER_SECOND); break;
+            case SDLK_LEFT: velocity -= (Game_VITESSE / FRAMES_PER_SECOND); break;
             default: break;
         }
     }
@@ -67,45 +76,33 @@ void Player::handle_events()
         //Mise à jour de la velocité
         switch( event.key.keysym.sym )
         {
-            case SDLK_RIGHT: velocity -= (Player_VITESSE / FRAMES_PER_SECOND); break;
-            case SDLK_LEFT: velocity += (Player_VITESSE / FRAMES_PER_SECOND); break;
+            case SDLK_RIGHT: velocity -= (Game_VITESSE / FRAMES_PER_SECOND); break;
+            case SDLK_LEFT: velocity += (Game_VITESSE / FRAMES_PER_SECOND); break;
             default: break;
         }
     }
 }*/
 
-void Player::show(int a, int b, int c)
+void Game::show(int a, int b, int c)
 {
-    glBindTexture(GL_TEXTURE_2D, texture[8]);
-    glBegin(GL_QUADS);
-    glTexCoord2i(0,1);
-    glVertex3d(a,b,40); // HAUT DROIT
-    glTexCoord2i(1,1);
-    glVertex3d(a,-b,40); // HAUT GAUCHE
-    glTexCoord2i(1,0);
-    glVertex3d(a,-b,0); // BAS GAUCHE
-    glTexCoord2i(0,0);
-    glVertex3d(a,b,0); // BAS DROIT
-    glEnd();
-
     /*
     //Mouvement
     offSet += velocity;
 
     //On garde le personnage dans les limites de la fenêtre SDL
-    if( ( offSet < 0 ) || ( offSet + Player_WIDTH > SCREEN_WIDTH ) )
+    if( ( offSet < 0 ) || ( offSet + Game_WIDTH > SCREEN_WIDTH ) )
     {
         offSet -= velocity;
     }
 
-    //Si Player bouge à gauche
+    //Si Game bouge à gauche
     if( velocity < 0 )
     {
         //On prend le personnage de profil gauche
-        status = Player_LEFT;
+        status = Game_LEFT;
 
 		//S'il est l'heure, on change l'animation
-		if( this->anim.get_ticks() >= Player_DELAI_FRAME ) {
+		if( this->anim.get_ticks() >= Game_DELAI_FRAME ) {
 
 			// On remet le timer à 0
 			anim.start();
@@ -114,14 +111,14 @@ void Player::show(int a, int b, int c)
 			frame++;
 		}
     }
-    //Si Player bouge à droite
+    //Si Game bouge à droite
     else if( velocity > 0 )
     {
         //On prend le personnage de profil droit
-        status = Player_RIGHT;
+        status = Game_RIGHT;
 
 		//S'il est l'heure, on change l'animation
-		if( this->anim.get_ticks() >= Player_DELAI_FRAME ) {
+		if( this->anim.get_ticks() >= Game_DELAI_FRAME ) {
 
 			// On remet le timer à 0
 			anim.start();
@@ -130,7 +127,7 @@ void Player::show(int a, int b, int c)
 			frame++;
 		}
     }
-    //Si Player ne bouge plus
+    //Si Game ne bouge plus
     else
     {
         //Restart the animation
@@ -138,18 +135,18 @@ void Player::show(int a, int b, int c)
     }
 
     //Boucle l'animation
-    if( frame >= Player_NB_ANIM )
+    if( frame >= Game_NB_ANIM )
     {
         frame = 0;
     }
 
     //Affichage
-    if( status == Player_RIGHT )
+    if( status == Game_RIGHT )
     {
-        apply_surface( offSet, SCREEN_HEIGHT - Player_HEIGHT, Player, screen, &clipsRight[ frame ] );
+        apply_surface( offSet, SCREEN_HEIGHT - Game_HEIGHT, Game, screen, &clipsRight[ frame ] );
     }
-    else if( status == Player_LEFT )
+    else if( status == Game_LEFT )
     {
-        apply_surface( offSet, SCREEN_HEIGHT - Player_HEIGHT, Player, screen, &clipsLeft[ frame ] );
+        apply_surface( offSet, SCREEN_HEIGHT - Game_HEIGHT, Game, screen, &clipsLeft[ frame ] );
     }*/
 }

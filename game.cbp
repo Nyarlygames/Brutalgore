@@ -30,6 +30,7 @@
 		<Unit filename="freeflycamera.cpp" />
 		<Unit filename="freeflycamera.h" />
 		<Unit filename="global.h" />
+		<Unit filename="include/Ens.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="move.cpp" />
 		<Unit filename="move.h" />
@@ -39,11 +40,13 @@
 		<Unit filename="sdlglutils.h" />
 		<Unit filename="sound.cpp" />
 		<Unit filename="sound.h" />
+		<Unit filename="src/Ens.cpp" />
 		<Unit filename="vector3d.cpp" />
 		<Unit filename="vector3d.h" />
 		<Extensions>
 			<code_completion />
 			<debugger />
+			<envvars />
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>
