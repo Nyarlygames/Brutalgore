@@ -53,12 +53,13 @@ int nb_missiles_max = 19;
 
 
 bool spawn_missile() {
-	
-	if (nb_missiles >= nb_missiles_max)
+	if (nb_missiles >= nb_missiles_max - 1)
 		return false;
 	else {
+	nb_missiles++;
+	missiles[nb_missiles] = loadSurface( "img\\missile.png" );
 	/*else {
-	//missile = loadSurface( "img\\missile.png" );
+	//missiles[nb_missiles] = loadSurface( "img\\missile.png" );
 	if (missile == NULL)
 		return false;
 	missiles[nb_missiles] = missile;*/
@@ -206,11 +207,11 @@ void close()
 	menu_item_3 = NULL;
 	SDL_FreeSurface(player);
 	player = NULL;
-	/*for (int  i = nb_missiles; i>=0; i--) {
+	for (int  i = nb_missiles; i>=0; i--) {
 		SDL_FreeSurface(missiles[i]);
-	}*/
+	}
 	// CLEAN MISSILES HERE
-	SDL_FreeSurface(missile);
+//SDL_FreeSurface(missile);
 	//missile = NULL;
     Mix_FreeMusic( mus );
     Mix_CloseAudio();
@@ -355,21 +356,23 @@ int main( int argc, char* args[] )
 				SDL_BlitSurface( menu_item_3, NULL, gScreenSurface, &pos_item_3 );
 				SDL_BlitSurface( player, NULL, gScreenSurface, &pos_player );
 				if (shoot == true){
-					for (int i=0; i<nb_missiles; i++) {
+					//for (int i=0; i<nb_missiles; i++) {
+						int i = 0;
+						while (missiles != NULL && missiles[i] != NULL) {
+							SDL_BlitSurface(missiles[i], NULL, gScreenSurface, &spawn_missiles[i] );
+						if (dest_missiles[i].x <spawn_missiles[i].x)
+							spawn_missiles[i].x--;
+						if (dest_missiles[i].x > spawn_missiles[i].x)
+							spawn_missiles[i].x++;
+						if (dest_missiles[i].y <spawn_missiles[i].y)
+							spawn_missiles[i].y--;
+						if (dest_missiles[i].y > spawn_missiles[i].y)
+							spawn_missiles[i].y++;
+						i++;
+						}
 
-						
-						SDL_BlitSurface(missile, NULL, gScreenSurface, &spawn_missiles[nb_missiles] );
 
-					if (dest_missiles[nb_missiles].x <spawn_missiles[nb_missiles].x)
-						spawn_missiles[nb_missiles].x--;
-					if (dest_missiles[nb_missiles].x > spawn_missiles[nb_missiles].x)
-						spawn_missiles[nb_missiles].x++;
-					if (dest_missiles[nb_missiles].y <spawn_missiles[nb_missiles].y)
-						spawn_missiles[nb_missiles].y--;
-					if (dest_missiles[nb_missiles].y > spawn_missiles[nb_missiles].y)
-						spawn_missiles[nb_missiles].y++;
-
-					}
+					
 				}
 			
 				//Update the surface

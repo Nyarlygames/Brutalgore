@@ -1,4 +1,4 @@
-﻿Build started 03/09/2015 23:04:08.
+﻿Build started 03/09/2015 23:21:32.
      1>Project "D:\Projects\Brutalgore\Brutalgore.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating "Debug\Brutalgore.unsuccessfulbuild" because "AlwaysCreate" was specified.
@@ -19,4 +19,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:00.88
+Time Elapsed 00:00:00.62
