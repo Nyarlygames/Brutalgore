@@ -49,7 +49,42 @@ Mix_Music*	mus = NULL;
 int speed = 1;
 int nb_missiles = -1;
 int nb_missiles_max = 19;
+int damages = 1;
+int hpmenu1 = 5;
+int hpmenu2 = 2;
+int hpmenu3 = 1;
+int hpplayer = 5;
 
+void missile_die(SDL_Surface*	missile) {
+
+}
+
+void missile_hit(SDL_Surface*	target, SDL_Surface*	missile) {
+	if (target == menu_item_3) {
+		hpmenu3 -= damages;
+		if (hpmenu3 == 0) {
+		SDL_FreeSurface(menu_item_3);
+		menu_item_3 = NULL;
+		menu_item_3 = loadSurface( "img\\menu-exit-dead.png" );
+		}
+	}
+	if (target == menu_item_2) {
+		hpmenu2 -= damages;
+		if (hpmenu2 == 0) {
+		SDL_FreeSurface(menu_item_2);
+		menu_item_2 = NULL;
+		menu_item_2 = loadSurface( "img\\menu-options-dead.png" );
+		}
+	}
+	if (target == menu_item_1) {
+		hpmenu1 -= 5;
+		if (hpmenu1 == 0) {
+		SDL_FreeSurface(menu_item_1);
+		menu_item_1 = NULL;
+		menu_item_1 = loadSurface( "img\\menu-play-dead.png" );
+		}
+	}
+}
 
 
 bool spawn_missile() {
@@ -99,7 +134,7 @@ Mix_OpenAudio(22050,AUDIO_S16SYS,2,640);
 //wav2 = Mix_LoadWAV("./mixer/start.wav");
 
 		//Create window
-		gWindow = SDL_CreateWindow( "SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
+		gWindow = SDL_CreateWindow( "BrutalGore", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
 		if( gWindow == NULL )
 		{
 			printf( "Window could not be created! SDL Error: %s\n", SDL_GetError() );
@@ -125,10 +160,8 @@ Mix_OpenAudio(22050,AUDIO_S16SYS,2,640);
 			pos_item_2.y = 400;
 			pos_item_3.x = 600;
 			pos_item_3.y = 800;
-			pos_player.x = 800;
-			pos_player.y = 1000;
-			pos_player.x = 800;
-			pos_player.y = 1000;
+			pos_player.x = 500;
+			pos_player.y = 100;
 		}
 	}
 
@@ -249,6 +282,9 @@ SDL_Surface* loadSurface( std::string path )
 	return optimizedSurface;
 }
 
+//bool isinside(SDL_Rect* target, 
+
+
 int main( int argc, char* args[] )
 {
 	//Start up SDL and create window
@@ -358,7 +394,8 @@ int main( int argc, char* args[] )
 				if (shoot == true){
 					//for (int i=0; i<nb_missiles; i++) {
 						int i = 0;
-						while (missiles != NULL && missiles[i] != NULL) {
+						for (int i=0; i<nb_missiles; i++) {
+						if (missiles[i] != NULL) {
 							SDL_BlitSurface(missiles[i], NULL, gScreenSurface, &spawn_missiles[i] );
 						if (dest_missiles[i].x <spawn_missiles[i].x)
 							spawn_missiles[i].x--;
@@ -368,9 +405,44 @@ int main( int argc, char* args[] )
 							spawn_missiles[i].y--;
 						if (dest_missiles[i].y > spawn_missiles[i].y)
 							spawn_missiles[i].y++;
-						i++;
+
+						if ((spawn_missiles[i].x - dest_missiles[i].x == 0) && (spawn_missiles[i].y - dest_missiles[i].y ==0)){
+							missile_die(missiles[i]);
 						}
 
+						
+						
+						if ((spawn_missiles[i].x + missiles[i]->w >= pos_item_3.x) && (spawn_missiles[i].x + missiles[i]->w <= pos_item_3.x + menu_item_3->w)) {
+							if ((spawn_missiles[i].y + missiles[i]->h >= pos_item_3.y) && (spawn_missiles[i].y + missiles[i]->h <= pos_item_3.y + menu_item_3->h)) 
+							{
+								missile_hit(menu_item_3, missiles[i]);
+			printf( "hit3!\n", nb_missiles );
+							}
+						}
+						if ((spawn_missiles[i].x + missiles[i]->w >= pos_item_1.x) && (spawn_missiles[i].x + missiles[i]->w <= pos_item_1.x + menu_item_1->w)) {
+							if ((spawn_missiles[i].y + missiles[i]->h >= pos_item_1.y) && (spawn_missiles[i].y + missiles[i]->h <= pos_item_1.y + menu_item_1->h)) 
+							{
+								missile_hit(menu_item_1, missiles[i]);
+			printf( "hit1!\n" );
+							}
+						}
+						if ((spawn_missiles[i].x + missiles[i]->w >= pos_item_2.x) && (spawn_missiles[i].x + missiles[i]->w <= pos_item_2.x + menu_item_2->w)) {
+							if ((spawn_missiles[i].y + missiles[i]->h >= pos_item_2.y) && (spawn_missiles[i].y + missiles[i]->h <= pos_item_2.y + menu_item_2->h)) 
+							{
+								missile_hit(menu_item_2, missiles[i]);
+			printf( "hit2!\n" );
+							}
+						}
+						}
+						
+						
+						/*	
+
+						if ((spawn_missiles[i].x == pos_item_3.x) && (spawn_missiles[i].y == pos_item_3.y)){
+							missile_hit(menu_item_3, missiles[i]);
+			printf( "hit!\n" );
+						}*/
+						}
 
 					
 				}

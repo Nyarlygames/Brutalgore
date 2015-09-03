@@ -1,7 +1,7 @@
-﻿Build started 03/09/2015 23:21:32.
+﻿Build started 04/09/2015 00:15:20.
      1>Project "D:\Projects\Brutalgore\Brutalgore.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
-         Creating "Debug\Brutalgore.unsuccessfulbuild" because "AlwaysCreate" was specified.
+         Touching "Debug\Brutalgore.unsuccessfulbuild".
        ClCompile:
          d:\Programs\VS2010\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
          main.cpp
@@ -19,4 +19,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:00.62
+Time Elapsed 00:00:00.83
