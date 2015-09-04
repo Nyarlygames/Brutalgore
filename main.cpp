@@ -45,7 +45,13 @@ SDL_Rect pos_player;
 SDL_Rect spawn_missiles[20];
 SDL_Rect dest_missiles[20];
 SDL_Surface*	missiles[20] ;
+SDL_Surface* text = NULL;
+SDL_Surface* message = NULL;
 Mix_Music*	mus = NULL;
+TTF_Font* Sans;
+SDL_Color White = {255, 255, 255};
+SDL_Renderer* renderer;//Déclaration du renderer
+
 int speed = 1;
 int nb_missiles = -1;
 int nb_missiles_max = 19;
@@ -53,10 +59,102 @@ int damages = 1;
 int hpmenu1 = 5;
 int hpmenu2 = 2;
 int hpmenu3 = 1;
+
 int hpplayer = 5;
+SDL_Rect Message_rect; //create a rect
 
 void missile_die(SDL_Surface*	missile) {
 
+}
+bool init()
+{
+	//Initialization flag
+	bool success = true;
+
+	//Initialize SDL
+	if( SDL_Init( SDL_INIT_VIDEO ) )
+	{
+		printf( "SDL could not initialize! SDL Error: %s\n", SDL_GetError() );
+		success = false;
+	}
+	else
+	{
+		 //Create renderer for window
+          /*  renderer = SDL_CreateRenderer( gWindow, -1, SDL_RENDERER_ACCELERATED );
+            if( renderer == NULL )
+            {
+                printf( "Renderer could not be created! SDL Error: %s\n", SDL_GetError() );
+                success = false;
+            } 
+			if( TTF_Init() == -1 ){
+				//Render the text*/
+    message = TTF_RenderText_Solid( Sans, "The quick brown fox jumps over the lazy dog", White );
+    
+    //If there was an error in rendering the text
+    if( message == NULL )
+    {
+        return 1;    
+    }
+
+    
+            printf("nottf");
+		
+		// Inilialize SDL_mixer , exit if fail
+if( SDL_Init(SDL_INIT_AUDIO) < 0 ) exit(1);
+// Setup audio mode
+Mix_OpenAudio(22050,AUDIO_S16SYS,2,640);
+
+
+///ix_Music *mus , *mus2 ;  // Background Music 
+//Mix_Chunk *wav , *wav2 ;  // For Sounds
+//mus = Mix_LoadMUS("./mixer/ff2prlde.mid");
+//wav = Mix_LoadWAV("./mixer/po_p2k.wav");
+//wav2 = Mix_LoadWAV("./mixer/start.wav");
+
+		//Create window
+		gWindow = SDL_CreateWindow( "BrutalGore", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
+		if( gWindow == NULL )
+		{
+			printf( "Window could not be created! SDL Error: %s\n", SDL_GetError() );
+			success = false;
+		}
+		else
+		{
+			//Initialize PNG loading
+			int imgFlags = IMG_INIT_PNG;
+			if( !( IMG_Init( imgFlags ) & imgFlags ) )
+			{
+			printf( "SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError() );
+				success = false;
+			}
+			else
+			{
+				//Get window surface
+				gScreenSurface = SDL_GetWindowSurface( gWindow );
+			}
+			
+
+//SDL_Surface* text = TTF_RenderText_Solid(Sans, "test", White);
+if (text == NULL)
+	printf("notext");
+//SDL_CreateTextureFromSurface(renderer, text);
+
+Message_rect.x = 0;  //controls the rect's x coordinate 
+Message_rect.y = 0; // controls the rect's y coordinte
+Message_rect.w = 100; // controls the width of the rect
+Message_rect.h = 100; // controls the height of the rect
+			pos_item_1.x = 0;
+			pos_item_1.y = 0;
+			pos_item_2.x = 300;
+			pos_item_2.y = 400;
+			pos_item_3.x = 600;
+			pos_item_3.y = 800;
+			pos_player.x = 500;
+			pos_player.y = 100;
+		}
+	}
+
+	return success;
 }
 
 void missile_hit(SDL_Surface*	target, SDL_Surface*	missile) {
@@ -110,63 +208,7 @@ bool spawn_missile() {
 
 
 
-bool init()
-{
-	//Initialization flag
-	bool success = true;
 
-	//Initialize SDL
-	if( SDL_Init( SDL_INIT_VIDEO ) )
-	{
-		printf( "SDL could not initialize! SDL Error: %s\n", SDL_GetError() );
-		success = false;
-	}
-	else
-	{
-		// Inilialize SDL_mixer , exit if fail
-if( SDL_Init(SDL_INIT_AUDIO) < 0 ) exit(1);
-// Setup audio mode
-Mix_OpenAudio(22050,AUDIO_S16SYS,2,640);
-///ix_Music *mus , *mus2 ;  // Background Music 
-//Mix_Chunk *wav , *wav2 ;  // For Sounds
-//mus = Mix_LoadMUS("./mixer/ff2prlde.mid");
-//wav = Mix_LoadWAV("./mixer/po_p2k.wav");
-//wav2 = Mix_LoadWAV("./mixer/start.wav");
-
-		//Create window
-		gWindow = SDL_CreateWindow( "BrutalGore", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
-		if( gWindow == NULL )
-		{
-			printf( "Window could not be created! SDL Error: %s\n", SDL_GetError() );
-			success = false;
-		}
-		else
-		{
-			//Initialize PNG loading
-			int imgFlags = IMG_INIT_PNG;
-			if( !( IMG_Init( imgFlags ) & imgFlags ) )
-			{
-			printf( "SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError() );
-				success = false;
-			}
-			else
-			{
-				//Get window surface
-				gScreenSurface = SDL_GetWindowSurface( gWindow );
-			}
-			pos_item_1.x = 0;
-			pos_item_1.y = 0;
-			pos_item_2.x = 300;
-			pos_item_2.y = 400;
-			pos_item_3.x = 600;
-			pos_item_3.y = 800;
-			pos_player.x = 500;
-			pos_player.y = 100;
-		}
-	}
-
-	return success;
-}
 
 bool loadMedia()
 {
@@ -215,6 +257,9 @@ mus = Mix_LoadMUS("mus/test3.mp3");
 		printf( "Failed to load PNG image!\n" );
 		success = false;
 	}
+	
+    Sans = TTF_OpenFont( "CircleOfDust.ttf", 16 );
+    
 
 	return success;
 }
@@ -442,11 +487,11 @@ int main( int argc, char* args[] )
 							missile_hit(menu_item_3, missiles[i]);
 			printf( "hit!\n" );
 						}*/
+				SDL_BlitSurface(message, NULL, gScreenSurface, &spawn_missiles[i] );
+
 						}
 
-					
 				}
-			
 				//Update the surface
 				SDL_UpdateWindowSurface( gWindow );
 			}
