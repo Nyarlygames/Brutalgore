@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 ﻿Build started 04/09/2015 01:10:22.
+=======
+﻿Build started 03/09/2015 23:21:32.
+>>>>>>> parent of b3e8826... Damages
      1>Project "D:\Projects\Brutalgore\Brutalgore.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating "Debug\Brutalgore.unsuccessfulbuild" because "AlwaysCreate" was specified.
@@ -18,4 +22,8 @@
 
 Build succeeded.
 
+<<<<<<< HEAD
 Time Elapsed 00:00:00.34
+=======
+Time Elapsed 00:00:00.62
+>>>>>>> parent of b3e8826... Damages

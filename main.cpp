@@ -55,6 +55,7 @@ SDL_Renderer* renderer;//Déclaration du renderer
 int speed = 1;
 int nb_missiles = -1;
 int nb_missiles_max = 19;
+<<<<<<< HEAD
 int damages = 1;
 int hpmenu1 = 5;
 int hpmenu2 = 2;
@@ -66,6 +67,34 @@ SDL_Rect Message_rect; //create a rect
 void missile_die(SDL_Surface*	missile) {
 
 }
+=======
+
+
+
+bool spawn_missile() {
+	if (nb_missiles >= nb_missiles_max - 1)
+		return false;
+	else {
+	nb_missiles++;
+	missiles[nb_missiles] = loadSurface( "img\\missile.png" );
+	/*else {
+	//missiles[nb_missiles] = loadSurface( "img\\missile.png" );
+	if (missile == NULL)
+		return false;
+	missiles[nb_missiles] = missile;*/
+	int x,y = -1;
+	spawn_missiles[nb_missiles].x = pos_player.x;
+	spawn_missiles[nb_missiles].y = pos_player.y;
+	SDL_GetMouseState(&x,&y);	
+	dest_missiles[nb_missiles].x = x;
+	dest_missiles[nb_missiles].y = y;	
+	return true;
+	}
+}
+
+
+
+>>>>>>> parent of b3e8826... Damages
 bool init()
 {
 	//Initialization flag
@@ -112,7 +141,7 @@ Mix_OpenAudio(22050,AUDIO_S16SYS,2,640);
 //wav2 = Mix_LoadWAV("./mixer/start.wav");
 
 		//Create window
-		gWindow = SDL_CreateWindow( "BrutalGore", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
+		gWindow = SDL_CreateWindow( "SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
 		if( gWindow == NULL )
 		{
 			printf( "Window could not be created! SDL Error: %s\n", SDL_GetError() );
@@ -149,8 +178,10 @@ Message_rect.h = 100; // controls the height of the rect
 			pos_item_2.y = 400;
 			pos_item_3.x = 600;
 			pos_item_3.y = 800;
-			pos_player.x = 500;
-			pos_player.y = 100;
+			pos_player.x = 800;
+			pos_player.y = 1000;
+			pos_player.x = 800;
+			pos_player.y = 1000;
 		}
 	}
 
@@ -327,9 +358,6 @@ SDL_Surface* loadSurface( std::string path )
 	return optimizedSurface;
 }
 
-//bool isinside(SDL_Rect* target, 
-
-
 int main( int argc, char* args[] )
 {
 	//Start up SDL and create window
@@ -439,8 +467,7 @@ int main( int argc, char* args[] )
 				if (shoot == true){
 					//for (int i=0; i<nb_missiles; i++) {
 						int i = 0;
-						for (int i=0; i<nb_missiles; i++) {
-						if (missiles[i] != NULL) {
+						while (missiles != NULL && missiles[i] != NULL) {
 							SDL_BlitSurface(missiles[i], NULL, gScreenSurface, &spawn_missiles[i] );
 						if (dest_missiles[i].x <spawn_missiles[i].x)
 							spawn_missiles[i].x--;
@@ -450,11 +477,10 @@ int main( int argc, char* args[] )
 							spawn_missiles[i].y--;
 						if (dest_missiles[i].y > spawn_missiles[i].y)
 							spawn_missiles[i].y++;
-
-						if ((spawn_missiles[i].x - dest_missiles[i].x == 0) && (spawn_missiles[i].y - dest_missiles[i].y ==0)){
-							missile_die(missiles[i]);
+						i++;
 						}
 
+<<<<<<< HEAD
 						
 						
 						if ((spawn_missiles[i].x + missiles[i]->w >= pos_item_3.x) && (spawn_missiles[i].x + missiles[i]->w <= pos_item_3.x + menu_item_3->w)) {
@@ -490,6 +516,8 @@ int main( int argc, char* args[] )
 				SDL_BlitSurface(message, NULL, gScreenSurface, &spawn_missiles[i] );
 
 						}
+=======
+>>>>>>> parent of b3e8826... Damages
 
 				}
 				//Update the surface
