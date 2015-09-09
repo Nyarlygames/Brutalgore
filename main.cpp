@@ -6,8 +6,10 @@ and may not be redistributed without written permission.*/
 #include <SDL_ttf.h>
 #include <SDL_image.h>
 #include <SDL_mixer.h>
+#include "include/Player.h"
 #include <stdio.h>
 #include <string>
+#include <sstream>
 
 //Screen dimension constants
 const int SCREEN_WIDTH = 1680;
@@ -42,24 +44,33 @@ SDL_Rect pos_item_1;
 SDL_Rect pos_item_2;
 SDL_Rect pos_item_3;
 SDL_Rect pos_player;
+SDL_Rect message_1;
 SDL_Rect spawn_missiles[20];
 SDL_Rect dest_missiles[20];
-SDL_Surface*	missiles[20] ;
+SDL_Surface*	missiles[20];
+Player player1;
+
+TTF_Font *font = NULL;
+SDL_Surface *message = NULL;
+std::stringstream stuff;
+
 Mix_Music*	mus = NULL;
 int speed = 1;
 int nb_missiles = -1;
-int nb_missiles_max = 19;
+int nb_missiles_max = 20;
 int damages = 1;
 int hpmenu1 = 5;
 int hpmenu2 = 2;
 int hpmenu3 = 1;
 int hpplayer = 5;
+SDL_Color textColor = { 255, 255, 255 };
 
 void missile_die(SDL_Surface*	missile) {
 
 }
 
 void missile_hit(SDL_Surface*	target, SDL_Surface*	missile) {
+//	stuff.pop
 	if (target == menu_item_3) {
 		hpmenu3 -= damages;
 		if (hpmenu3 == 0) {
@@ -133,6 +144,21 @@ Mix_OpenAudio(22050,AUDIO_S16SYS,2,640);
 //wav = Mix_LoadWAV("./mixer/po_p2k.wav");
 //wav2 = Mix_LoadWAV("./mixer/start.wav");
 
+if (TTF_Init() == -1)
+{
+	printf ("TTF failed");
+}
+else
+{
+    font = TTF_OpenFont( "lazy.ttf", 28 );
+	if (font != NULL) {
+		printf("font loaded");
+		stuff << "Test : " << hpmenu1;
+		message = TTF_RenderText_Solid( font, stuff.str().c_str(), textColor );
+	}
+}
+
+
 		//Create window
 		gWindow = SDL_CreateWindow( "BrutalGore", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
 		if( gWindow == NULL )
@@ -156,12 +182,16 @@ Mix_OpenAudio(22050,AUDIO_S16SYS,2,640);
 			}
 			pos_item_1.x = 0;
 			pos_item_1.y = 0;
+			message_1.x = 0;
+			message_1.y = 0;
 			pos_item_2.x = 300;
 			pos_item_2.y = 400;
 			pos_item_3.x = 600;
 			pos_item_3.y = 800;
 			pos_player.x = 500;
 			pos_player.y = 100;
+			player1.pos_player.x = 200;
+			player1.pos_player.y = 100;
 		}
 	}
 
@@ -209,6 +239,12 @@ mus = Mix_LoadMUS("mus/test3.mp3");
 		printf( "Failed to load PNG image!\n" );
 		success = false;
 	}
+	player1.player = loadSurface( "img\\player1.png" );
+	if( player1.player == NULL )
+	{
+		printf( "Failed to load PNG image!\n" );
+		success = false;
+	}
 	missile = loadSurface( "img\\missile.png" );
 	if ( missile == NULL )
 	{
@@ -239,6 +275,7 @@ void close()
 	SDL_FreeSurface(menu_item_3);
 	menu_item_3 = NULL;
 	SDL_FreeSurface(player);
+// free player
 	player = NULL;
 	for (int  i = nb_missiles; i>=0; i--) {
 		SDL_FreeSurface(missiles[i]);
@@ -390,11 +427,13 @@ int main( int argc, char* args[] )
 				SDL_BlitSurface( menu_item_2, NULL, gScreenSurface, &pos_item_2 );
 			
 				SDL_BlitSurface( menu_item_3, NULL, gScreenSurface, &pos_item_3 );
+				SDL_BlitSurface( player1.player, NULL, gScreenSurface, &player1.pos_player);
 				SDL_BlitSurface( player, NULL, gScreenSurface, &pos_player );
+				SDL_BlitSurface( message, NULL, gScreenSurface, &message_1 );
 				if (shoot == true){
 					//for (int i=0; i<nb_missiles; i++) {
 						int i = 0;
-						for (int i=0; i<nb_missiles; i++) {
+						for (int i=0; i<=nb_missiles; i++) {
 						if (missiles[i] != NULL) {
 							SDL_BlitSurface(missiles[i], NULL, gScreenSurface, &spawn_missiles[i] );
 						if (dest_missiles[i].x <spawn_missiles[i].x)
@@ -416,21 +455,18 @@ int main( int argc, char* args[] )
 							if ((spawn_missiles[i].y + missiles[i]->h >= pos_item_3.y) && (spawn_missiles[i].y + missiles[i]->h <= pos_item_3.y + menu_item_3->h)) 
 							{
 								missile_hit(menu_item_3, missiles[i]);
-			printf( "hit3!\n", nb_missiles );
 							}
 						}
 						if ((spawn_missiles[i].x + missiles[i]->w >= pos_item_1.x) && (spawn_missiles[i].x + missiles[i]->w <= pos_item_1.x + menu_item_1->w)) {
 							if ((spawn_missiles[i].y + missiles[i]->h >= pos_item_1.y) && (spawn_missiles[i].y + missiles[i]->h <= pos_item_1.y + menu_item_1->h)) 
 							{
 								missile_hit(menu_item_1, missiles[i]);
-			printf( "hit1!\n" );
 							}
 						}
 						if ((spawn_missiles[i].x + missiles[i]->w >= pos_item_2.x) && (spawn_missiles[i].x + missiles[i]->w <= pos_item_2.x + menu_item_2->w)) {
 							if ((spawn_missiles[i].y + missiles[i]->h >= pos_item_2.y) && (spawn_missiles[i].y + missiles[i]->h <= pos_item_2.y + menu_item_2->h)) 
 							{
 								missile_hit(menu_item_2, missiles[i]);
-			printf( "hit2!\n" );
 							}
 						}
 						}
