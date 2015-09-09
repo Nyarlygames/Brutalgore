@@ -2,11 +2,15 @@
 and may not be redistributed without written permission.*/
 
 //Using SDL, SDL_image, standard IO, and strings
+
+#include "Player.h"
+#include "Gun.h"
+#include "include/Gun.h"
+#include "PlayerController.h"
 #include <SDL.h>
 #include <SDL_ttf.h>
 #include <SDL_image.h>
 #include <SDL_mixer.h>
-#include "include/Player.h"
 #include <stdio.h>
 #include <string>
 #include <sstream>
@@ -40,6 +44,8 @@ SDL_Surface* menu_item_2 = NULL;
 SDL_Surface* menu_item_3 = NULL;
 SDL_Surface* player = NULL;
 SDL_Surface* missile = NULL;
+SDL_Surface* gun1 = NULL;
+SDL_Surface* gun2 = NULL;
 SDL_Rect pos_item_1;
 SDL_Rect pos_item_2;
 SDL_Rect pos_item_3;
@@ -49,6 +55,8 @@ SDL_Rect spawn_missiles[20];
 SDL_Rect dest_missiles[20];
 SDL_Surface*	missiles[20];
 Player player1;
+Gun weap1;
+Gun weap2;
 
 TTF_Font *font = NULL;
 SDL_Surface *message = NULL;
@@ -99,8 +107,10 @@ void missile_hit(SDL_Surface*	target, SDL_Surface*	missile) {
 
 
 bool spawn_missile() {
-	if (nb_missiles >= nb_missiles_max - 1)
+	if (nb_missiles >= nb_missiles_max - 1){
 		return false;
+		//player1.spawn_missile();
+	}
 	else {
 	nb_missiles++;
 	missiles[nb_missiles] = loadSurface( "img\\missile.png" );
@@ -190,8 +200,12 @@ else
 			pos_item_3.y = 800;
 			pos_player.x = 500;
 			pos_player.y = 100;
-			player1.pos_player.x = 200;
-			player1.pos_player.y = 100;
+			player1.pos_player.x = 600;
+			player1.pos_player.x = 300;
+			weap1.pos_gun.x = 600;
+			weap1.pos_gun.x = 300;
+			weap2.pos_gun.x = 20;
+			weap2.pos_gun.x = 20;
 		}
 	}
 
@@ -239,14 +253,26 @@ mus = Mix_LoadMUS("mus/test3.mp3");
 		printf( "Failed to load PNG image!\n" );
 		success = false;
 	}
-	player1.player = loadSurface( "img\\player1.png" );
-	if( player1.player == NULL )
+	player1.player_pic = loadSurface( "img\\player1.png" );
+	if( player1.player_pic == NULL )
 	{
 		printf( "Failed to load PNG image!\n" );
 		success = false;
 	}
 	missile = loadSurface( "img\\missile.png" );
 	if ( missile == NULL )
+	{
+		printf( "Failed to load PNG image!\n" );
+		success = false;
+	}
+	gun1 = loadSurface( "img\\gun1.png" );
+		if ( gun1 == NULL )
+	{
+		printf( "Failed to load PNG image!\n" );
+		success = false;
+	}
+	gun2 = loadSurface( "img\\gun2.png" );
+		if ( gun2 == NULL )
 	{
 		printf( "Failed to load PNG image!\n" );
 		success = false;
@@ -275,6 +301,9 @@ void close()
 	SDL_FreeSurface(menu_item_3);
 	menu_item_3 = NULL;
 	SDL_FreeSurface(player);
+	/*if (player != NULL){
+		player1.onClose();
+	}*/
 // free player
 	player = NULL;
 	for (int  i = nb_missiles; i>=0; i--) {
@@ -338,6 +367,14 @@ int main( int argc, char* args[] )
 		}
 		else
 		{	
+			weap1.gun = gun1;
+			weap2.gun = gun2;
+			//gun1.loadpic(1);
+		//	gun1.boirePotionDeVie (1);
+			//gun1.loadpic(1);
+
+
+
 //Mix_PlayMusic(mus,1); //Music loop=1
 			//Main loop flag
 			bool quit = false;
@@ -366,15 +403,27 @@ int main( int argc, char* args[] )
 									switch( e.key.keysym.sym ){
 										case SDLK_LEFT:
 											pos_player.x -= 10* speed;
+											player1.pos_player.x -=20 * speed;
+											weap1.pos_gun.x -=20 * speed;
+											weap2.pos_gun.x -=20 * speed;
 											break;
 										case SDLK_RIGHT:
 											pos_player.x += 10* speed;
+											player1.pos_player.x +=20 * speed;
+											weap1.pos_gun.x +=20 * speed;
+											weap2.pos_gun.x +=20 * speed;
 											break;
 										case SDLK_UP:
 											pos_player.y -= 10* speed;
+											player1.pos_player.y -=20 * speed;
+											weap1.pos_gun.y -=20 * speed;
+											weap2.pos_gun.y -=20 * speed;
 											break;
 										case SDLK_DOWN:
 											pos_player.y += 10 * speed;
+											player1.pos_player.y +=20 * speed;
+											weap1.pos_gun.y +=20 * speed;
+											weap2.pos_gun.y +=20 * speed;
 											break;
 										case SDLK_ESCAPE:
 											quit=true;
@@ -390,6 +439,8 @@ int main( int argc, char* args[] )
 							  /* Quit the application */
 										if (spawn_missile())
 											shoot =true;
+									/*	if (player1.spawn_missile() == true)
+											player1.shoot =true;*/
 							   break;
 								}
 
@@ -427,9 +478,11 @@ int main( int argc, char* args[] )
 				SDL_BlitSurface( menu_item_2, NULL, gScreenSurface, &pos_item_2 );
 			
 				SDL_BlitSurface( menu_item_3, NULL, gScreenSurface, &pos_item_3 );
-				SDL_BlitSurface( player1.player, NULL, gScreenSurface, &player1.pos_player);
+				SDL_BlitSurface( player1.player_pic, NULL, gScreenSurface, &player1.pos_player);
 				SDL_BlitSurface( player, NULL, gScreenSurface, &pos_player );
-				SDL_BlitSurface( message, NULL, gScreenSurface, &message_1 );
+				SDL_BlitSurface( player1.player_pic, NULL, gScreenSurface, &player1.pos_player);
+				SDL_BlitSurface( weap1.gun, NULL, gScreenSurface, &pos_player );
+				SDL_BlitSurface( weap2.gun, NULL, gScreenSurface, &player1.pos_player );
 				if (shoot == true){
 					//for (int i=0; i<nb_missiles; i++) {
 						int i = 0;

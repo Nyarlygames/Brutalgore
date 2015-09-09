@@ -4,51 +4,38 @@
 #include <stdio.h>
 #include <sstream>
 #include <iostream>
+#include "Gun.h";
 using namespace std;
 
 
 class Player
 {
-	
-    // Attributs
-	SDL_Surface* player;
+	SDL_Surface* player_pic;
 SDL_Surface* missile;
 SDL_Rect pos_item_1;
 SDL_Rect pos_item_2;
 SDL_Rect pos_item_3;
 SDL_Rect pos_player;
+Gun weapon1;
+bool	shoot;
 
-
-
-    int m_vie;
-    int m_mana;
-    string m_nomArme;
-    int m_degatsArme;    
-
-
+/*Player::Player() 
+{
+ pos_player.x = 600;
+ pos_player.y = 300;
+}*/
+ 
     // Méthodes
-    void recevoirDegats(int nbDegats)
+    bool spawn_missile()
     {
-
+		shoot = true;
+		return (shoot);
     }
-
-    void attaquer(Player &cible)
+    void onClose()
     {
-
-    }
-
-    void boirePotionDeVie(int quantitePotion)
-    {
-
-    }
-
-    void changerArme(string nomNouvelleArme, int degatsNouvelleArme)
-    {
-
-    }
-
-    bool estVivant()
-    {
+		if (player_pic != NULL) {
+			SDL_FreeSurface(player_pic);
+		}
 
     }
 
