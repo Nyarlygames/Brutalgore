@@ -14,6 +14,7 @@ and may not be redistributed without written permission.*/
 #include <stdio.h>
 #include <string>
 #include <sstream>
+//#include "include\Toolbox.h"
 
 //Screen dimension constants
 const int SCREEN_WIDTH = 1680;
@@ -29,20 +30,19 @@ bool loadMedia();
 void close();
 
 //Loads individual image
-SDL_Surface* loadSurface( std::string path );
 
 //The window we'll be rendering to
 SDL_Window* gWindow = NULL;
 	
-//The surface contained by the window
-SDL_Surface* gScreenSurface = NULL;
 
 //Current displayed PNG image
+SDL_Surface* gScreenSurface2 = NULL;
 SDL_Surface* background = NULL;
 SDL_Surface* menu_item_1 = NULL;
 SDL_Surface* menu_item_2 = NULL;
 SDL_Surface* menu_item_3 = NULL;
 SDL_Surface* player = NULL;
+SDL_Surface* player_pic = NULL;
 SDL_Surface* missile = NULL;
 SDL_Surface* gun1 = NULL;
 SDL_Surface* gun2 = NULL;
@@ -77,6 +77,33 @@ void missile_die(SDL_Surface*	missile) {
 
 }
 
+SDL_Surface* loadSurface2( std::string path, SDL_Surface*	screen )
+{
+	//The final optimized image
+	SDL_Surface* optimizedSurface = NULL;
+
+	//Load image at specified path
+	SDL_Surface* loadedSurface = IMG_Load( path.c_str() );
+	if( loadedSurface == NULL )
+	{
+		printf( "Unable to load image %s! SDL_image Error: %s\n", path.c_str(), IMG_GetError() );
+	}
+	else
+	{
+		//Convert surface to screen format
+		optimizedSurface = SDL_ConvertSurface( loadedSurface, gScreenSurface2->format, NULL );
+		if( optimizedSurface == NULL )
+		{
+			printf( "Unable to optimize image %s! SDL Error: %s\n", path.c_str(), SDL_GetError() );
+		}
+
+		//Get rid of old loaded surface
+		SDL_FreeSurface( loadedSurface );
+	}
+
+	return optimizedSurface;
+}
+
 void missile_hit(SDL_Surface*	target, SDL_Surface*	missile) {
 //	stuff.pop
 	if (target == menu_item_3) {
@@ -84,7 +111,7 @@ void missile_hit(SDL_Surface*	target, SDL_Surface*	missile) {
 		if (hpmenu3 == 0) {
 		SDL_FreeSurface(menu_item_3);
 		menu_item_3 = NULL;
-		menu_item_3 = loadSurface( "img\\menu-exit-dead.png" );
+		menu_item_3 = loadSurface2( "img\\menu-exit-dead.png", gScreenSurface2);
 		}
 	}
 	if (target == menu_item_2) {
@@ -92,7 +119,7 @@ void missile_hit(SDL_Surface*	target, SDL_Surface*	missile) {
 		if (hpmenu2 == 0) {
 		SDL_FreeSurface(menu_item_2);
 		menu_item_2 = NULL;
-		menu_item_2 = loadSurface( "img\\menu-options-dead.png" );
+		menu_item_2 = loadSurface2( "img\\menu-options-dead.png", gScreenSurface2 );
 		}
 	}
 	if (target == menu_item_1) {
@@ -100,7 +127,7 @@ void missile_hit(SDL_Surface*	target, SDL_Surface*	missile) {
 		if (hpmenu1 == 0) {
 		SDL_FreeSurface(menu_item_1);
 		menu_item_1 = NULL;
-		menu_item_1 = loadSurface( "img\\menu-play-dead.png" );
+		menu_item_1 = loadSurface2( "img\\menu-play-dead.png", gScreenSurface2 );
 		}
 	}
 }
@@ -113,7 +140,7 @@ bool spawn_missile() {
 	}
 	else {
 	nb_missiles++;
-	missiles[nb_missiles] = loadSurface( "img\\missile.png" );
+	missiles[nb_missiles] = loadSurface2( "img\\missile.png", gScreenSurface2 );
 	/*else {
 	//missiles[nb_missiles] = loadSurface( "img\\missile.png" );
 	if (missile == NULL)
@@ -188,7 +215,7 @@ else
 			else
 			{
 				//Get window surface
-				gScreenSurface = SDL_GetWindowSurface( gWindow );
+				gScreenSurface2 = SDL_GetWindowSurface( gWindow );
 			}
 			pos_item_1.x = 0;
 			pos_item_1.y = 0;
@@ -223,58 +250,62 @@ mus = Mix_LoadMUS("mus/test3.mp3");
 		success = false;
 	}
 	//Load PNG surface
-	background = loadSurface( "img\\background.png" );
+	background = loadSurface2( "img\\background.png" , gScreenSurface2);
 	if( background == NULL )
 	{
 		printf( "Failed to load PNG image!\n" );
 		success = false;
 	}
-	menu_item_1 = loadSurface( "img\\menu-play.png" );
+	menu_item_1 = loadSurface2( "img\\menu-play.png", gScreenSurface2 );
 	if( menu_item_1 == NULL )
 	{
 		printf( "Failed to load PNG image!\n" );
 		success = false;
 	}
-	menu_item_2 = loadSurface( "img\\menu-options.png" );
+	menu_item_2 = loadSurface2( "img\\menu-options.png", gScreenSurface2 );
 	if( menu_item_2 == NULL )
 	{
 		printf( "Failed to load PNG image!\n" );
 		success = false;
 	}
-	menu_item_3 = loadSurface( "img\\menu-exit.png" );
+	menu_item_3 = loadSurface2( "img\\menu-exit.png", gScreenSurface2 );
 	if( menu_item_2 == NULL )
 	{
-		printf( "Failed to load PNG image!\n" );
+		printf( "Failed to load PNG image!\n", gScreenSurface2 );
 		success = false;
 	}
-	player = loadSurface( "img\\player.png" );
+	player = loadSurface2( "img\\player.png", gScreenSurface2 );
 	if( player == NULL )
 	{
-		printf( "Failed to load PNG image!\n" );
+		printf( "Failed to load PNG image!\n", gScreenSurface2 );
 		success = false;
 	}
-	player1.player_pic = loadSurface( "img\\player1.png" );
-	if( player1.player_pic == NULL )
+	player_pic = loadSurface2( "img\\player1.png", gScreenSurface2 );
+	if( player_pic == NULL )
 	{
-		printf( "Failed to load PNG image!\n" );
+		printf( "Failed to load PNG image!\n", gScreenSurface2 );
+		SDL_Delay(15000);
 		success = false;
 	}
-	missile = loadSurface( "img\\missile.png" );
+	else {
+		printf("loaded good");
+	}
+	missile = loadSurface2( "img\\missile.png", gScreenSurface2 );
 	if ( missile == NULL )
 	{
-		printf( "Failed to load PNG image!\n" );
+		printf( "Failed to load PNG image!\n" , gScreenSurface2);
 		success = false;
 	}
-	gun1 = loadSurface( "img\\gun1.png" );
+	gun1 = loadSurface2( "img\\gun1.png", gScreenSurface2 );
 		if ( gun1 == NULL )
 	{
-		printf( "Failed to load PNG image!\n" );
+		printf( "Failed to load PNG image!\n", gScreenSurface2 );
 		success = false;
 	}
-	gun2 = loadSurface( "img\\gun2.png" );
+	gun2 = loadSurface2( "img\\gun2.png", gScreenSurface2 );
 		if ( gun2 == NULL )
 	{
-		printf( "Failed to load PNG image!\n" );
+		printf( "Failed to load PNG image!\n", gScreenSurface2 );
 		success = false;
 	}
 
@@ -301,9 +332,9 @@ void close()
 	SDL_FreeSurface(menu_item_3);
 	menu_item_3 = NULL;
 	SDL_FreeSurface(player);
-	/*if (player != NULL){
+	if (player != NULL){
 		player1.onClose();
-	}*/
+	}
 // free player
 	player = NULL;
 	for (int  i = nb_missiles; i>=0; i--) {
@@ -321,32 +352,6 @@ void close()
 	SDL_Quit();
 }
 
-SDL_Surface* loadSurface( std::string path )
-{
-	//The final optimized image
-	SDL_Surface* optimizedSurface = NULL;
-
-	//Load image at specified path
-	SDL_Surface* loadedSurface = IMG_Load( path.c_str() );
-	if( loadedSurface == NULL )
-	{
-		printf( "Unable to load image %s! SDL_image Error: %s\n", path.c_str(), IMG_GetError() );
-	}
-	else
-	{
-		//Convert surface to screen format
-		optimizedSurface = SDL_ConvertSurface( loadedSurface, gScreenSurface->format, NULL );
-		if( optimizedSurface == NULL )
-		{
-			printf( "Unable to optimize image %s! SDL Error: %s\n", path.c_str(), SDL_GetError() );
-		}
-
-		//Get rid of old loaded surface
-		SDL_FreeSurface( loadedSurface );
-	}
-
-	return optimizedSurface;
-}
 
 //bool isinside(SDL_Rect* target, 
 
@@ -367,6 +372,15 @@ int main( int argc, char* args[] )
 		}
 		else
 		{	
+			if (player_pic == NULL){
+				printf("MAISLOL");
+				SDL_Delay (21000);
+			}
+			player1 = Player(gScreenSurface2, missile, player_pic);
+			if (player1.player_img == NULL){
+				printf("MAISLOL");
+				SDL_Delay (21000);
+			}
 			weap1.gun = gun1;
 			weap2.gun = gun2;
 			//gun1.loadpic(1);
@@ -439,8 +453,8 @@ int main( int argc, char* args[] )
 							  /* Quit the application */
 										if (spawn_missile())
 											shoot =true;
-									/*	if (player1.spawn_missile() == true)
-											player1.shoot =true;*/
+										if (player1.spawn_missile() == true)
+											player1.shoot =true;
 							   break;
 								}
 
@@ -471,24 +485,30 @@ int main( int argc, char* args[] )
 				}
 				
 				//Apply the PNG image
-				SDL_BlitSurface( background, NULL, gScreenSurface, NULL );
+				SDL_BlitSurface( background, NULL, gScreenSurface2, NULL );
 				//Apply the PNG image
-				SDL_BlitSurface( menu_item_1, NULL, gScreenSurface, &pos_item_1 );
+				SDL_BlitSurface( menu_item_1, NULL, gScreenSurface2, &pos_item_1 );
 				//Apply the PNG image
-				SDL_BlitSurface( menu_item_2, NULL, gScreenSurface, &pos_item_2 );
+				SDL_BlitSurface( menu_item_2, NULL, gScreenSurface2, &pos_item_2 );
 			
-				SDL_BlitSurface( menu_item_3, NULL, gScreenSurface, &pos_item_3 );
-				SDL_BlitSurface( player1.player_pic, NULL, gScreenSurface, &player1.pos_player);
-				SDL_BlitSurface( player, NULL, gScreenSurface, &pos_player );
-				SDL_BlitSurface( player1.player_pic, NULL, gScreenSurface, &player1.pos_player);
-				SDL_BlitSurface( weap1.gun, NULL, gScreenSurface, &pos_player );
-				SDL_BlitSurface( weap2.gun, NULL, gScreenSurface, &player1.pos_player );
+				SDL_BlitSurface( menu_item_3, NULL, gScreenSurface2, &pos_item_3 );
+				if (player1.player_img != NULL) {
+					SDL_BlitSurface( player1.player_img, NULL, gScreenSurface2, &player1.pos_player);}
+				SDL_BlitSurface( player, NULL, gScreenSurface2, &pos_player );
+				//SDL_BlitSurface( player1.player_pic, NULL, gScreenSurface2, &player1.pos_player);
+				SDL_BlitSurface( weap1.gun, NULL, gScreenSurface2, &pos_player );
+				SDL_BlitSurface( weap2.gun, NULL, gScreenSurface2, &player1.pos_player );
 				if (shoot == true){
 					//for (int i=0; i<nb_missiles; i++) {
 						int i = 0;
 						for (int i=0; i<=nb_missiles; i++) {
 						if (missiles[i] != NULL) {
-							SDL_BlitSurface(missiles[i], NULL, gScreenSurface, &spawn_missiles[i] );
+							SDL_BlitSurface(missiles[i], NULL, gScreenSurface2, &spawn_missiles[i] );
+							if (player1.missile_player == NULL){
+								printf("missile load failed");
+								SDL_Delay(5000);
+							}
+							SDL_BlitSurface(player1.missile_player, NULL, gScreenSurface2, &player1.pos_player );
 						if (dest_missiles[i].x <spawn_missiles[i].x)
 							spawn_missiles[i].x--;
 						if (dest_missiles[i].x > spawn_missiles[i].x)

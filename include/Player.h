@@ -18,26 +18,31 @@ class Player
   //  ~Player();
 
 
-		SDL_Surface* player_pic;
-SDL_Surface* missile;
+		SDL_Surface* player_img;
+SDL_Surface* missile_player;
 SDL_Rect pos_item_1;
 SDL_Rect pos_item_2;
 SDL_Rect pos_item_3;
 SDL_Rect pos_player;
 Gun weapon1;
 bool	shoot;
+SDL_Surface* screen;
+Player();
+Player(SDL_Surface* Screen,SDL_Surface* missile_img,SDL_Surface* player_avatar);
 
-    bool spawn_missile();
-    void onClose ();
-    private:
+    bool spawn_missile()
+    {
+		shoot = true;
+		return (shoot);
+    }
+    void onClose()
+    {
+		if (player_img != NULL) {
+			SDL_FreeSurface(player_img);
+		}
 
-    int m_vie;
-    int m_mana;
-    std::string m_nomArme; //Pas de using namespace std, il faut donc mettrestd:: devant string
-    int m_degatsArme;
-	
-
-
+    }
+	void update() {};
 };
 
 #endif

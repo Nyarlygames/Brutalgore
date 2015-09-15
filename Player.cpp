@@ -5,38 +5,67 @@
 #include <sstream>
 #include <iostream>
 #include "Gun.h";
+#include "include/Player.h";
 using namespace std;
 
 
-class Player
-{
-	SDL_Surface* player_pic;
-SDL_Surface* missile;
-SDL_Rect pos_item_1;
-SDL_Rect pos_item_2;
-SDL_Rect pos_item_3;
-SDL_Rect pos_player;
+	SDL_Surface* player_img;
+SDL_Surface* missile_player;
+SDL_Rect pos_item_1X;
+SDL_Rect pos_item_2X;
+SDL_Rect pos_item_3X;
+SDL_Rect pos_playerX;
 Gun weapon1;
-bool	shoot;
+bool	shoot = false;
+SDL_Surface* screen = NULL;
 
-/*Player::Player() 
+Player::Player() 
 {
  pos_player.x = 600;
  pos_player.y = 300;
-}*/
+}
  
+ 
+Player::Player(SDL_Surface* Screen,SDL_Surface* missile_img,SDL_Surface* player_avatar) 
+{
+	Screen = screen;
+	missile_player = missile_img;
+	player_img = player_avatar;
+	if(player_img == NULL) {
+		printf("penis");
+	}
+	if(player_avatar == NULL) {
+		printf("double");
+	}
+	SDL_Delay(4000);
+	if(missile_player == NULL) {
+		printf("lolilol");
+	}
+	SDL_Delay(4000);
+ pos_player.x = 600;
+ pos_player.y = 300;
+ }
+
     // Méthodes
-    bool spawn_missile()
+    bool spawn_missileX()
     {
-		shoot = true;
-		return (shoot);
+		if (shoot == true) {
+
+			return (shoot);
+		}
+		else {
+			shoot = true;
+			return (shoot);
+
+		}
+
+	
     }
     void onClose()
     {
-		if (player_pic != NULL) {
-			SDL_FreeSurface(player_pic);
+		if (player_img != NULL) {
+			SDL_FreeSurface(player_img);
 		}
-
     }
-
-};
+	void update(){
+	}

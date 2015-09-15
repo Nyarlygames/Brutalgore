@@ -1,4 +1,4 @@
-﻿Build started 09/09/2015 22:32:04.
+﻿Build started 15/09/2015 22:33:57.
      1>Project "D:\Projects\Brutalgore\Brutalgore.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Touching "Debug\Brutalgore.unsuccessfulbuild".
@@ -10,6 +10,7 @@
          Debug\main.obj
          Debug\Player.obj
          Debug\PlayerController.obj
+         LINK : D:\Projects\Brutalgore\Debug\Brutalgore.exe not found or not built by the last incremental link; performing full link
      1>MSVCRTD.lib(cinitexe.obj) : warning LNK4098: defaultlib 'msvcrt.lib' conflicts with use of other libs; use /NODEFAULTLIB:library
          Brutalgore.vcxproj -> D:\Projects\Brutalgore\Debug\Brutalgore.exe
        Manifest:
@@ -21,4 +22,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:00.87
+Time Elapsed 00:00:00.74
