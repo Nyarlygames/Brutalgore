@@ -6,7 +6,6 @@ and may not be redistributed without written permission.*/
 #include "Player.h"
 #include "Gun.h"
 #include "include/Gun.h"
-#include "PlayerController.h"
 #include <SDL.h>
 #include <SDL_ttf.h>
 #include <SDL_image.h>
@@ -42,6 +41,8 @@ SDL_Surface* menu_item_1 = NULL;
 SDL_Surface* menu_item_2 = NULL;
 SDL_Surface* menu_item_3 = NULL;
 SDL_Surface* player_pic = NULL;
+SDL_Surface* player2_pic = NULL;
+SDL_Surface* player3_pic = NULL;
 SDL_Surface* missile = NULL;
 SDL_Surface* gun1 = NULL;
 SDL_Surface* gun2 = NULL;
@@ -52,6 +53,8 @@ SDL_Rect pos_player;
 SDL_Rect player1_pos;
 SDL_Rect message_1;
 Player player1;
+Player player2;
+Player player3;
 Gun weap2;
 
 TTF_Font *font = NULL;
@@ -126,29 +129,6 @@ void missile_hit(SDL_Surface*	target, SDL_Surface*	missile) {
 }
 
 
-bool spawn_missile() {
-	if (player1.nb_missiles >= player1.nb_missiles_max - 1){
-		return false;
-		//player1.spawn_missile();
-	}
-	else {
-	player1.nb_missiles++;
-	player1.missiles[player1.nb_missiles] = loadSurface2( "img\\missile.png", gScreenSurface2 );
-	/*else {
-	//missiles[nb_missiles] = loadSurface( "img\\missile.png" );
-	if (missile == NULL)
-		return false;
-	missiles[nb_missiles] = missile;*/
-	int x,y = -1;
-	player1.spawn_missiles[player1.nb_missiles].x = pos_player.x;
-	player1.spawn_missiles[player1.nb_missiles].y = pos_player.y;
-	SDL_GetMouseState(&x,&y);	
-	player1.dest_missiles[player1.nb_missiles].x = x;
-	player1.dest_missiles[player1.nb_missiles].y = y;	
-	return true;
-	}
-}
-
 
 
 bool init()
@@ -218,10 +198,6 @@ else
 			pos_item_2.y = 400;
 			pos_item_3.x = 600;
 			pos_item_3.y = 800;
-			pos_player.x = 500;
-			pos_player.y = 100;
-			player1_pos.x = 200;
-			player1_pos.y =  250;
 			weap2.pos_gun.x = 20;
 			weap2.pos_gun.x = 20;
 		}
@@ -271,6 +247,18 @@ mus = Mix_LoadMUS("mus/test3.mp3");
 		printf( "Failed to load PNG image!\n", gScreenSurface2 );
 		success = false;
 	}
+	player2_pic = loadSurface2( "img\\player2.png", gScreenSurface2 );
+	if( player2_pic == NULL )
+	{
+		printf( "Failed to load PNG image!\n", gScreenSurface2 );
+		success = false;
+	}
+	player3_pic = loadSurface2( "img\\player3.png", gScreenSurface2 );
+	if( player3_pic == NULL )
+	{
+		printf( "Failed to load PNG image!\n", gScreenSurface2 );
+		success = false;
+	}
 	missile = loadSurface2( "img\\missile.png", gScreenSurface2 );
 	if ( missile == NULL )
 	{
@@ -312,13 +300,9 @@ void close()
 	menu_item_2 = NULL;
 	SDL_FreeSurface(menu_item_3);
 	menu_item_3 = NULL;
-	if (player1.player_img != NULL){
 		player1.onClose();
-	}
-// free player
-	for (int  i = player1.nb_missiles; i>=0; i--) {
-		SDL_FreeSurface(player1.missiles[i]);
-	}
+		player2.onClose();
+		player3.onClose();
 	// CLEAN MISSILES HERE
 //SDL_FreeSurface(missile);
 	//missile = NULL;
@@ -354,7 +338,16 @@ int main( int argc, char* args[] )
 			if (player_pic == NULL){
 				printf("null playerpic before loading player");
 			}
-			player1 = Player(gScreenSurface2, missile, player_pic, player1_pos);
+			SDL_Rect p1_pos, p2_pos, p3_pos, p4_pos;
+			p1_pos.x = 100;
+			p1_pos.y = 300;
+			player1 = Player(gScreenSurface2, missile, player_pic, p1_pos);
+			p2_pos.x = 50;
+			p2_pos.y = 20;
+			player2 = Player(gScreenSurface2, missile, player2_pic, p2_pos);
+			p3_pos.x = 800;
+			p3_pos.y = 700;
+			player3 = Player(gScreenSurface2, missile, player3_pic, p3_pos);
 			weap2.gun = gun2;
 
 
@@ -386,24 +379,24 @@ int main( int argc, char* args[] )
 								case SDL_KEYDOWN :
 									switch( e.key.keysym.sym ){
 										case SDLK_LEFT:
-											pos_player.x -= 10* speed;
-											player1.pos_playerX.x -=20 * speed;
-											weap2.pos_gun.x -=20 * speed;
+											player1.pos_playerX.x -= 20 * player1.speedX;
+											player2.pos_playerX.x -= 20 * player2.speedX;
+											player3.pos_playerX.x -= 20 * player3.speedX;
 											break;
 										case SDLK_RIGHT:
-											pos_player.x += 10* speed;
-											player1.pos_playerX.x +=20 * speed;
-											weap2.pos_gun.x +=20 * speed;
+											player1.pos_playerX.x += 20 * player1.speedX;
+											player2.pos_playerX.x += 20 * player2.speedX;
+											player3.pos_playerX.x += 20 * player3.speedX;
 											break;
 										case SDLK_UP:
-											pos_player.y -= 10* speed;
-											player1.pos_playerX.y -=20 * speed;
-											weap2.pos_gun.y -=20 * speed;
+											player1.pos_playerX.y -= 20 * player1.speedX;
+											player2.pos_playerX.y -= 20 * player2.speedX;
+											player3.pos_playerX.y -= 20 * player3.speedX;
 											break;
 										case SDLK_DOWN:
-											pos_player.y += 10 * speed;
-											player1.pos_playerX.y +=20 * speed;
-											weap2.pos_gun.y +=20 * speed;
+											player1.pos_playerX.y += 20 * player1.speedX;
+											player2.pos_playerX.y += 20 * player2.speedX;
+											player3.pos_playerX.y += 20 * player3.speedX;
 											break;
 										case SDLK_ESCAPE:
 											quit=true;
@@ -424,8 +417,6 @@ int main( int argc, char* args[] )
 
 					}
 				}
-
-				
 				//Apply the PNG image
 				SDL_BlitSurface( background, NULL, gScreenSurface2, NULL );
 				//Apply the PNG image
@@ -434,14 +425,15 @@ int main( int argc, char* args[] )
 				SDL_BlitSurface( menu_item_2, NULL, gScreenSurface2, &pos_item_2 );
 			
 				SDL_BlitSurface( menu_item_3, NULL, gScreenSurface2, &pos_item_3 );
+				
+				player1.update();
+				player2.update();
+				player3.update();
 
-				if (player1.shoot == true) {player1.update();}
 
+				
 
-
-
-				if (player1.player_img != NULL) {
-					SDL_BlitSurface( player1.player_img, NULL, gScreenSurface2, &player1.pos_playerX);}
+			
 				//SDL_BlitSurface( player1.player_pic, NULL, gScreenSurface2, &player1.pos_player);
 				SDL_BlitSurface( weap2.gun, NULL, gScreenSurface2, &player1.pos_playerX );
 					

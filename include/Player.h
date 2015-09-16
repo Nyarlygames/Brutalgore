@@ -8,7 +8,6 @@ using namespace std;
 #include <SDL.h>
 #include <SDL_image.h>
 #include "Gun.h"
-
 class Player
 {
     public:
@@ -30,6 +29,8 @@ int damages;
 SDL_Rect spawn_missiles[20];
 SDL_Rect dest_missiles[20];
 SDL_Surface*	missiles[20];
+int hp;
+int speedX;
 Player();
 Player(SDL_Surface* Screen,SDL_Surface* missile_img,SDL_Surface* player_avatar, SDL_Rect pos_player);
 
@@ -84,6 +85,10 @@ Player(SDL_Surface* Screen,SDL_Surface* missile_img,SDL_Surface* player_avatar, 
 		if (player_img != NULL) {
 			SDL_FreeSurface(player_img);
 		}
+	for (int  i = nb_missiles; i>=0; i--) {
+		if (missiles[i] != NULL){
+			SDL_FreeSurface(missiles[i]);}
+	}
 
     }
 	void update() {
@@ -109,8 +114,102 @@ Player(SDL_Surface* Screen,SDL_Surface* missile_img,SDL_Surface* player_avatar, 
 						}
 					}
 				}
-							else printf("test2");
-	};
+							SDL_BlitSurface(player_img, NULL, screen, &pos_playerX );
+							
+
+	}
+	/*
+	if (SDL_PollEvent( &e ) != 0){
+		switch (e.type) {
+						case SDL_KEYDOWN :
+							//User requests quit
+							switch (e.type) {
+								case SDL_KEYDOWN :
+									switch( e.key.keysym.sym ){
+										case SDLK_LEFT:
+											pos_playerX.x -=10 * speedX;
+											break;
+										case SDLK_RIGHT:
+											pos_playerX.x +=10 * speedX;
+											break;
+										case SDLK_UP:
+											pos_playerX.y -=10;
+											break;
+										case SDLK_DOWN:
+											pos_playerX.y +=10;
+											break;
+										default:
+											break;
+									}
+							}
+						case (SDL_MOUSEBUTTONDOWN):
+							  // If the left button was pressed. 
+						   switch (e.button.button) {
+						   case SDL_BUTTON_LEFT: 
+							   printf("click");
+							   shoot = true;
+										spawn_missileX();
+							   break;
+						   }
+		}
+
+	}*/
+							//update_pos();
+	
+	/*
+void update_pos() {
+	SDL_Event e;
+	bool quit = false;
+			while( !quit )
+			{
+while( SDL_PollEvent( &e ) != 0 )
+				{
+					//User requests quit
+					switch (e.type) {
+						case SDL_QUIT :
+								quit = true;
+							break;
+						case SDL_KEYDOWN :
+							//User requests quit
+							switch (e.type) {
+								case SDL_QUIT :
+										quit = true;
+									break;
+								case SDL_KEYDOWN :
+									switch( e.key.keysym.sym ){
+										case SDLK_LEFT:
+											pos_playerX.x -=20 * speedX;
+											break;
+										case SDLK_RIGHT:
+											pos_playerX.x +=20 * speedX;
+											break;
+										case SDLK_UP:
+											pos_playerX.y -=20 * speedX;
+											break;
+										case SDLK_DOWN:
+											pos_playerX.y +=20 *speedX;
+											break;
+										case SDLK_ESCAPE:
+											quit=true;
+											break;
+										default:
+											break;
+									}
+							}
+						case (SDL_MOUSEBUTTONDOWN):
+							  // If the left button was pressed. 
+						   switch (e.button.button) {
+						   case SDL_BUTTON_LEFT: 
+							   printf("click");
+							   shoot = true;
+										spawn_missileX();
+							   break;
+								}
+
+					}
+}
+			}};*/
 };
+
 
 #endif

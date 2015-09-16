@@ -6,6 +6,7 @@
 #include <iostream>
 #include "Gun.h";
 #include "include/Player.h";
+//#include "PlayerController.h";
 using namespace std;
 
 
@@ -22,6 +23,7 @@ SDL_Surface*	missiles[20];
 int nb_missiles = 0;
 int nb_missiles_max = 20;
 int damages = 1;
+int speedX;
 
 Player::Player() 
 {
@@ -52,11 +54,5 @@ Player::Player(SDL_Surface* Screen,SDL_Surface* missile_img,SDL_Surface* player_
 	}
  pos_player.x = 600;
  pos_player.y = 300;
- }
-
-    void onClose()
-    {
-		if (player_img != NULL) {
-			SDL_FreeSurface(player_img);
-		}
-    }
+ speedX = 10;
+}
