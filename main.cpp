@@ -41,7 +41,6 @@ SDL_Surface* background = NULL;
 SDL_Surface* menu_item_1 = NULL;
 SDL_Surface* menu_item_2 = NULL;
 SDL_Surface* menu_item_3 = NULL;
-SDL_Surface* player = NULL;
 SDL_Surface* player_pic = NULL;
 SDL_Surface* missile = NULL;
 SDL_Surface* gun1 = NULL;
@@ -50,12 +49,9 @@ SDL_Rect pos_item_1;
 SDL_Rect pos_item_2;
 SDL_Rect pos_item_3;
 SDL_Rect pos_player;
+SDL_Rect player1_pos;
 SDL_Rect message_1;
-SDL_Rect spawn_missiles[20];
-SDL_Rect dest_missiles[20];
-SDL_Surface*	missiles[20];
 Player player1;
-Gun weap1;
 Gun weap2;
 
 TTF_Font *font = NULL;
@@ -64,9 +60,6 @@ std::stringstream stuff;
 
 Mix_Music*	mus = NULL;
 int speed = 1;
-int nb_missiles = -1;
-int nb_missiles_max = 20;
-int damages = 1;
 int hpmenu1 = 5;
 int hpmenu2 = 2;
 int hpmenu3 = 1;
@@ -107,7 +100,7 @@ SDL_Surface* loadSurface2( std::string path, SDL_Surface*	screen )
 void missile_hit(SDL_Surface*	target, SDL_Surface*	missile) {
 //	stuff.pop
 	if (target == menu_item_3) {
-		hpmenu3 -= damages;
+		hpmenu3 -= player1.damages;
 		if (hpmenu3 == 0) {
 		SDL_FreeSurface(menu_item_3);
 		menu_item_3 = NULL;
@@ -115,7 +108,7 @@ void missile_hit(SDL_Surface*	target, SDL_Surface*	missile) {
 		}
 	}
 	if (target == menu_item_2) {
-		hpmenu2 -= damages;
+		hpmenu2 -= player1.damages;
 		if (hpmenu2 == 0) {
 		SDL_FreeSurface(menu_item_2);
 		menu_item_2 = NULL;
@@ -134,24 +127,24 @@ void missile_hit(SDL_Surface*	target, SDL_Surface*	missile) {
 
 
 bool spawn_missile() {
-	if (nb_missiles >= nb_missiles_max - 1){
+	if (player1.nb_missiles >= player1.nb_missiles_max - 1){
 		return false;
 		//player1.spawn_missile();
 	}
 	else {
-	nb_missiles++;
-	missiles[nb_missiles] = loadSurface2( "img\\missile.png", gScreenSurface2 );
+	player1.nb_missiles++;
+	player1.missiles[player1.nb_missiles] = loadSurface2( "img\\missile.png", gScreenSurface2 );
 	/*else {
 	//missiles[nb_missiles] = loadSurface( "img\\missile.png" );
 	if (missile == NULL)
 		return false;
 	missiles[nb_missiles] = missile;*/
 	int x,y = -1;
-	spawn_missiles[nb_missiles].x = pos_player.x;
-	spawn_missiles[nb_missiles].y = pos_player.y;
+	player1.spawn_missiles[player1.nb_missiles].x = pos_player.x;
+	player1.spawn_missiles[player1.nb_missiles].y = pos_player.y;
 	SDL_GetMouseState(&x,&y);	
-	dest_missiles[nb_missiles].x = x;
-	dest_missiles[nb_missiles].y = y;	
+	player1.dest_missiles[player1.nb_missiles].x = x;
+	player1.dest_missiles[player1.nb_missiles].y = y;	
 	return true;
 	}
 }
@@ -227,10 +220,8 @@ else
 			pos_item_3.y = 800;
 			pos_player.x = 500;
 			pos_player.y = 100;
-			player1.pos_player.x = 600;
-			player1.pos_player.x = 300;
-			weap1.pos_gun.x = 600;
-			weap1.pos_gun.x = 300;
+			player1_pos.x = 200;
+			player1_pos.y =  250;
 			weap2.pos_gun.x = 20;
 			weap2.pos_gun.x = 20;
 		}
@@ -274,21 +265,11 @@ mus = Mix_LoadMUS("mus/test3.mp3");
 		printf( "Failed to load PNG image!\n", gScreenSurface2 );
 		success = false;
 	}
-	player = loadSurface2( "img\\player.png", gScreenSurface2 );
-	if( player == NULL )
-	{
-		printf( "Failed to load PNG image!\n", gScreenSurface2 );
-		success = false;
-	}
 	player_pic = loadSurface2( "img\\player1.png", gScreenSurface2 );
 	if( player_pic == NULL )
 	{
 		printf( "Failed to load PNG image!\n", gScreenSurface2 );
-		SDL_Delay(15000);
 		success = false;
-	}
-	else {
-		printf("loaded good");
 	}
 	missile = loadSurface2( "img\\missile.png", gScreenSurface2 );
 	if ( missile == NULL )
@@ -331,14 +312,12 @@ void close()
 	menu_item_2 = NULL;
 	SDL_FreeSurface(menu_item_3);
 	menu_item_3 = NULL;
-	SDL_FreeSurface(player);
-	if (player != NULL){
+	if (player1.player_img != NULL){
 		player1.onClose();
 	}
 // free player
-	player = NULL;
-	for (int  i = nb_missiles; i>=0; i--) {
-		SDL_FreeSurface(missiles[i]);
+	for (int  i = player1.nb_missiles; i>=0; i--) {
+		SDL_FreeSurface(player1.missiles[i]);
 	}
 	// CLEAN MISSILES HERE
 //SDL_FreeSurface(missile);
@@ -373,15 +352,9 @@ int main( int argc, char* args[] )
 		else
 		{	
 			if (player_pic == NULL){
-				printf("MAISLOL");
-				SDL_Delay (21000);
+				printf("null playerpic before loading player");
 			}
-			player1 = Player(gScreenSurface2, missile, player_pic);
-			if (player1.player_img == NULL){
-				printf("MAISLOL");
-				SDL_Delay (21000);
-			}
-			weap1.gun = gun1;
+			player1 = Player(gScreenSurface2, missile, player_pic, player1_pos);
 			weap2.gun = gun2;
 			//gun1.loadpic(1);
 		//	gun1.boirePotionDeVie (1);
@@ -417,26 +390,22 @@ int main( int argc, char* args[] )
 									switch( e.key.keysym.sym ){
 										case SDLK_LEFT:
 											pos_player.x -= 10* speed;
-											player1.pos_player.x -=20 * speed;
-											weap1.pos_gun.x -=20 * speed;
+											player1.pos_playerX.x -=20 * speed;
 											weap2.pos_gun.x -=20 * speed;
 											break;
 										case SDLK_RIGHT:
 											pos_player.x += 10* speed;
-											player1.pos_player.x +=20 * speed;
-											weap1.pos_gun.x +=20 * speed;
+											player1.pos_playerX.x +=20 * speed;
 											weap2.pos_gun.x +=20 * speed;
 											break;
 										case SDLK_UP:
 											pos_player.y -= 10* speed;
-											player1.pos_player.y -=20 * speed;
-											weap1.pos_gun.y -=20 * speed;
+											player1.pos_playerX.y -=20 * speed;
 											weap2.pos_gun.y -=20 * speed;
 											break;
 										case SDLK_DOWN:
 											pos_player.y += 10 * speed;
-											player1.pos_player.y +=20 * speed;
-											weap1.pos_gun.y +=20 * speed;
+											player1.pos_playerX.y +=20 * speed;
 											weap2.pos_gun.y +=20 * speed;
 											break;
 										case SDLK_ESCAPE:
@@ -450,11 +419,9 @@ int main( int argc, char* args[] )
 							  /* If the left button was pressed. */
 						   switch (e.button.button) {
 						   case SDL_BUTTON_LEFT: 
-							  /* Quit the application */
-										if (spawn_missile())
-											shoot =true;
-										if (player1.spawn_missile() == true)
-											player1.shoot =true;
+							   printf("click");
+							   player1.shoot = true;
+										player1.spawn_missileX();
 							   break;
 								}
 
@@ -492,57 +459,60 @@ int main( int argc, char* args[] )
 				SDL_BlitSurface( menu_item_2, NULL, gScreenSurface2, &pos_item_2 );
 			
 				SDL_BlitSurface( menu_item_3, NULL, gScreenSurface2, &pos_item_3 );
+
+
+				player1.update();
+
+
+
 				if (player1.player_img != NULL) {
-					SDL_BlitSurface( player1.player_img, NULL, gScreenSurface2, &player1.pos_player);}
-				SDL_BlitSurface( player, NULL, gScreenSurface2, &pos_player );
+					SDL_BlitSurface( player1.player_img, NULL, gScreenSurface2, &player1.pos_playerX);}
 				//SDL_BlitSurface( player1.player_pic, NULL, gScreenSurface2, &player1.pos_player);
-				SDL_BlitSurface( weap1.gun, NULL, gScreenSurface2, &pos_player );
-				SDL_BlitSurface( weap2.gun, NULL, gScreenSurface2, &player1.pos_player );
-				if (shoot == true){
+				SDL_BlitSurface( weap2.gun, NULL, gScreenSurface2, &player1.pos_playerX );
+				if (player1.shoot == true){
 					//for (int i=0; i<nb_missiles; i++) {
-						int i = 0;
-						for (int i=0; i<=nb_missiles; i++) {
-						if (missiles[i] != NULL) {
-							SDL_BlitSurface(missiles[i], NULL, gScreenSurface2, &spawn_missiles[i] );
+						//int i = 0;
+						for (int i=0; i<player1.nb_missiles; i++) {
+						if (player1.missiles[i] != NULL) {
+							SDL_BlitSurface(player1.missiles[i], NULL, gScreenSurface2, &player1.spawn_missiles[i] );
 							if (player1.missile_player == NULL){
-								printf("missile load failed");
-								SDL_Delay(5000);
+								printf("can't display missile from player");
 							}
-							SDL_BlitSurface(player1.missile_player, NULL, gScreenSurface2, &player1.pos_player );
-						if (dest_missiles[i].x <spawn_missiles[i].x)
-							spawn_missiles[i].x--;
-						if (dest_missiles[i].x > spawn_missiles[i].x)
-							spawn_missiles[i].x++;
-						if (dest_missiles[i].y <spawn_missiles[i].y)
-							spawn_missiles[i].y--;
-						if (dest_missiles[i].y > spawn_missiles[i].y)
-							spawn_missiles[i].y++;
-
-						if ((spawn_missiles[i].x - dest_missiles[i].x == 0) && (spawn_missiles[i].y - dest_missiles[i].y ==0)){
-							missile_die(missiles[i]);
-						}
+							//SDL_BlitSurface(player1.missile_player, NULL, gScreenSurface2, &player1.pos_playerX );
+						if (player1.dest_missiles[i].x <player1.spawn_missiles[i].x)
+							player1.spawn_missiles[i].x--;
+						if (player1.dest_missiles[i].x > player1.spawn_missiles[i].x)
+							player1.spawn_missiles[i].x++;
+						if (player1.dest_missiles[i].y <player1.spawn_missiles[i].y)
+							player1.spawn_missiles[i].y--;
+						if (player1.dest_missiles[i].y > player1.spawn_missiles[i].y)
+							player1.spawn_missiles[i].y++;
+						/*
+						if ((player1.spawn_missiles[i].x - player1.dest_missiles[i].x == 0) && (player1.spawn_missiles[i].y - player1.dest_missiles[i].y ==0)){
+							missile_die(player1.missiles[i]);
+						}*/
 
 						
 						
-						if ((spawn_missiles[i].x + missiles[i]->w >= pos_item_3.x) && (spawn_missiles[i].x + missiles[i]->w <= pos_item_3.x + menu_item_3->w)) {
-							if ((spawn_missiles[i].y + missiles[i]->h >= pos_item_3.y) && (spawn_missiles[i].y + missiles[i]->h <= pos_item_3.y + menu_item_3->h)) 
+						/*if ((player1.spawn_missiles[i].x + player1.missiles[i]->w >= pos_item_3.x) && (player1.spawn_missiles[i].x + player1.missiles[i]->w <= pos_item_3.x + menu_item_3->w)) {
+							if ((player1.spawn_missiles[i].y + player1.missiles[i]->h >= pos_item_3.y) && (player1.spawn_missiles[i].y + player1.missiles[i]->h <= pos_item_3.y + menu_item_3->h)) 
 							{
-								missile_hit(menu_item_3, missiles[i]);
+								missile_hit(menu_item_3, player1.missiles[i]);
 							}
 						}
-						if ((spawn_missiles[i].x + missiles[i]->w >= pos_item_1.x) && (spawn_missiles[i].x + missiles[i]->w <= pos_item_1.x + menu_item_1->w)) {
-							if ((spawn_missiles[i].y + missiles[i]->h >= pos_item_1.y) && (spawn_missiles[i].y + missiles[i]->h <= pos_item_1.y + menu_item_1->h)) 
+						if ((player1.spawn_missiles[i].x + player1.missiles[i]->w >= pos_item_1.x) && (player1.spawn_missiles[i].x + player1.missiles[i]->w <= pos_item_1.x + menu_item_1->w)) {
+							if ((player1.spawn_missiles[i].y + player1.missiles[i]->h >= pos_item_1.y) && (player1.spawn_missiles[i].y + player1.missiles[i]->h <= pos_item_1.y + menu_item_1->h)) 
 							{
-								missile_hit(menu_item_1, missiles[i]);
+								missile_hit(menu_item_1, player1.missiles[i]);
 							}
 						}
-						if ((spawn_missiles[i].x + missiles[i]->w >= pos_item_2.x) && (spawn_missiles[i].x + missiles[i]->w <= pos_item_2.x + menu_item_2->w)) {
-							if ((spawn_missiles[i].y + missiles[i]->h >= pos_item_2.y) && (spawn_missiles[i].y + missiles[i]->h <= pos_item_2.y + menu_item_2->h)) 
+						if ((player1.spawn_missiles[i].x + player1.missiles[i]->w >= pos_item_2.x) && (player1.spawn_missiles[i].x + player1.missiles[i]->w <= pos_item_2.x + menu_item_2->w)) {
+							if ((player1.spawn_missiles[i].y + player1.missiles[i]->h >= pos_item_2.y) && (player1.spawn_missiles[i].y + player1.missiles[i]->h <= pos_item_2.y + menu_item_2->h)) 
 							{
-								missile_hit(menu_item_2, missiles[i]);
+								missile_hit(menu_item_2, player1.missiles[i]);
 							}
 						}
-						}
+						}*/
 						
 						
 						/*	
@@ -550,7 +520,7 @@ int main( int argc, char* args[] )
 							missile_hit(menu_item_3, missiles[i]);
 			printf( "hit!\n" );
 						}*/
-						}
+						}}
 
 					
 				}
