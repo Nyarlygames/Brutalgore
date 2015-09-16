@@ -19,7 +19,7 @@ SDL_Surface* screen = NULL;
 SDL_Rect spawn_missiles[20];
 SDL_Rect dest_missiles[20];
 SDL_Surface*	missiles[20];
-int nb_missiles = -1;
+int nb_missiles = 0;
 int nb_missiles_max = 20;
 int damages = 1;
 
@@ -32,7 +32,7 @@ Player::Player()
  
 Player::Player(SDL_Surface* Screen,SDL_Surface* missile_img,SDL_Surface* player_avatar, SDL_Rect pos_player) 
 {
-	Screen = screen;
+	screen = Screen;
 	missile_player = missile_img;
 	player_img = player_avatar;
 	pos_playerX = pos_player;
@@ -42,13 +42,13 @@ Player::Player(SDL_Surface* Screen,SDL_Surface* missile_img,SDL_Surface* player_
 			missiles[i] = missile_img;
 	}
 	if(player_img == NULL) {
-		printf("penis");
+		printf("player img not loaded");
 	}
 	if(player_avatar == NULL) {
-		printf("double");
+		printf("player img not sent");
 	}
 	if(missile_player == NULL) {
-		printf("lolilol");
+		printf("missile img not loaded for player");
 	}
  pos_player.x = 600;
  pos_player.y = 300;
@@ -60,6 +60,3 @@ Player::Player(SDL_Surface* Screen,SDL_Surface* missile_img,SDL_Surface* player_
 			SDL_FreeSurface(player_img);
 		}
     }
-
-	void update(){
-	}

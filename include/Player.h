@@ -56,29 +56,7 @@ Player(SDL_Surface* Screen,SDL_Surface* missile_img,SDL_Surface* player_avatar, 
 
 				printf("2");
 				/*
-					if (player1.shoot == true){
-					//for (int i=0; i<nb_missiles; i++) {
-						//int i = 0;
-						for (int i=0; i<=player1.nb_missiles; i++) {
-						if (player1.missiles[i] != NULL) {
-							SDL_BlitSurface(player1.missiles[i], NULL, gScreenSurface2, &player1.spawn_missiles[i] );
-							if (player1.missile_player == NULL){
-								printf("can't display missile from player");
-							}
-							//SDL_BlitSurface(player1.missile_player, NULL, gScreenSurface2, &player1.pos_playerX );
-						if (player1.dest_missiles[i].x <player1.spawn_missiles[i].x)
-							player1.spawn_missiles[i].x--;
-						if (player1.dest_missiles[i].x > player1.spawn_missiles[i].x)
-							player1.spawn_missiles[i].x++;
-						if (player1.dest_missiles[i].y <player1.spawn_missiles[i].y)
-							player1.spawn_missiles[i].y--;
-						if (player1.dest_missiles[i].y > player1.spawn_missiles[i].y)
-							player1.spawn_missiles[i].y++;
 
-
-
-
-						}
 						*/
 
 
@@ -108,7 +86,31 @@ Player(SDL_Surface* Screen,SDL_Surface* missile_img,SDL_Surface* player_avatar, 
 		}
 
     }
-	void update() {};
+	void update() {
+
+							if (shoot == true){
+					//for (int i=0; i<nb_missiles; i++) {
+						//int i = 0;
+						for (int i=0; i<nb_missiles; i++) {
+						if (missiles[i] != NULL) {
+							SDL_BlitSurface(missiles[i], NULL, screen, &spawn_missiles[i] );
+							if (missile_player == NULL){
+								printf("can't display missile from player");
+							}
+							//SDL_BlitSurface(player1.missile_player, NULL, gScreenSurface2, &player1.pos_playerX );
+						if (dest_missiles[i].x <spawn_missiles[i].x)
+							spawn_missiles[i].x--;
+						if (dest_missiles[i].x > spawn_missiles[i].x)
+							spawn_missiles[i].x++;
+						if (dest_missiles[i].y <spawn_missiles[i].y)
+							spawn_missiles[i].y--;
+						if (dest_missiles[i].y > spawn_missiles[i].y)
+							spawn_missiles[i].y++;
+						}
+					}
+				}
+							else printf("test2");
+	};
 };
 
 #endif

@@ -356,9 +356,6 @@ int main( int argc, char* args[] )
 			}
 			player1 = Player(gScreenSurface2, missile, player_pic, player1_pos);
 			weap2.gun = gun2;
-			//gun1.loadpic(1);
-		//	gun1.boirePotionDeVie (1);
-			//gun1.loadpic(1);
 
 
 
@@ -426,30 +423,8 @@ int main( int argc, char* args[] )
 								}
 
 					}
-					
-
-
-					//User requests quit
-					/*if( e.type == SDL_Keycode(SDLK_DOWN) )
-					{
-						pos_player.y++;
-					}
-					//User requests quit
-					if( e.type == SDL_Keycode(SDLK_LEFT) )
-					{
-						pos_player.x--;
-					}
-					//User requests quit
-					if( e.type == SDL_Keycode("Up") )
-					{
-						pos_player.y--;
-					}
-					//User requests quit
-					if( e.type == SDL_Keycode("Right") )
-					{
-						pos_player.x++;
-					}*/
 				}
+
 				
 				//Apply the PNG image
 				SDL_BlitSurface( background, NULL, gScreenSurface2, NULL );
@@ -460,8 +435,8 @@ int main( int argc, char* args[] )
 			
 				SDL_BlitSurface( menu_item_3, NULL, gScreenSurface2, &pos_item_3 );
 
+				if (player1.shoot == true) {player1.update();}
 
-				player1.update();
 
 
 
@@ -469,66 +444,12 @@ int main( int argc, char* args[] )
 					SDL_BlitSurface( player1.player_img, NULL, gScreenSurface2, &player1.pos_playerX);}
 				//SDL_BlitSurface( player1.player_pic, NULL, gScreenSurface2, &player1.pos_player);
 				SDL_BlitSurface( weap2.gun, NULL, gScreenSurface2, &player1.pos_playerX );
-				if (player1.shoot == true){
-					//for (int i=0; i<nb_missiles; i++) {
-						//int i = 0;
-						for (int i=0; i<player1.nb_missiles; i++) {
-						if (player1.missiles[i] != NULL) {
-							SDL_BlitSurface(player1.missiles[i], NULL, gScreenSurface2, &player1.spawn_missiles[i] );
-							if (player1.missile_player == NULL){
-								printf("can't display missile from player");
-							}
-							//SDL_BlitSurface(player1.missile_player, NULL, gScreenSurface2, &player1.pos_playerX );
-						if (player1.dest_missiles[i].x <player1.spawn_missiles[i].x)
-							player1.spawn_missiles[i].x--;
-						if (player1.dest_missiles[i].x > player1.spawn_missiles[i].x)
-							player1.spawn_missiles[i].x++;
-						if (player1.dest_missiles[i].y <player1.spawn_missiles[i].y)
-							player1.spawn_missiles[i].y--;
-						if (player1.dest_missiles[i].y > player1.spawn_missiles[i].y)
-							player1.spawn_missiles[i].y++;
-						/*
-						if ((player1.spawn_missiles[i].x - player1.dest_missiles[i].x == 0) && (player1.spawn_missiles[i].y - player1.dest_missiles[i].y ==0)){
-							missile_die(player1.missiles[i]);
-						}*/
-
-						
-						
-						/*if ((player1.spawn_missiles[i].x + player1.missiles[i]->w >= pos_item_3.x) && (player1.spawn_missiles[i].x + player1.missiles[i]->w <= pos_item_3.x + menu_item_3->w)) {
-							if ((player1.spawn_missiles[i].y + player1.missiles[i]->h >= pos_item_3.y) && (player1.spawn_missiles[i].y + player1.missiles[i]->h <= pos_item_3.y + menu_item_3->h)) 
-							{
-								missile_hit(menu_item_3, player1.missiles[i]);
-							}
-						}
-						if ((player1.spawn_missiles[i].x + player1.missiles[i]->w >= pos_item_1.x) && (player1.spawn_missiles[i].x + player1.missiles[i]->w <= pos_item_1.x + menu_item_1->w)) {
-							if ((player1.spawn_missiles[i].y + player1.missiles[i]->h >= pos_item_1.y) && (player1.spawn_missiles[i].y + player1.missiles[i]->h <= pos_item_1.y + menu_item_1->h)) 
-							{
-								missile_hit(menu_item_1, player1.missiles[i]);
-							}
-						}
-						if ((player1.spawn_missiles[i].x + player1.missiles[i]->w >= pos_item_2.x) && (player1.spawn_missiles[i].x + player1.missiles[i]->w <= pos_item_2.x + menu_item_2->w)) {
-							if ((player1.spawn_missiles[i].y + player1.missiles[i]->h >= pos_item_2.y) && (player1.spawn_missiles[i].y + player1.missiles[i]->h <= pos_item_2.y + menu_item_2->h)) 
-							{
-								missile_hit(menu_item_2, player1.missiles[i]);
-							}
-						}
-						}*/
-						
-						
-						/*	
-						if ((spawn_missiles[i].x == pos_item_3.x) && (spawn_missiles[i].y == pos_item_3.y)){
-							missile_hit(menu_item_3, missiles[i]);
-			printf( "hit!\n" );
-						}*/
-						}}
-
 					
-				}
-			
+				
 				//Update the surface
 				SDL_UpdateWindowSurface( gWindow );
+				}
 			}
-		}
 	}
 
 	//Free resources and close SDL
