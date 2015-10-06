@@ -70,12 +70,15 @@
   <ItemGroup>
     <ClCompile Include="Gun.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerController.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GlobalVar.h" />
+    <ClInclude Include="include\Const.h" />
+    <ClInclude Include="include\GlobalVar.h" />
     <ClInclude Include="include\Gun.h" />
+    <ClInclude Include="include\MainMenu.h" />
     <ClInclude Include="include\Player.h" />
     <ClInclude Include="include\PlayerController.h" />
   </ItemGroup>

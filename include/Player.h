@@ -7,7 +7,7 @@
 using namespace std;
 #include <SDL.h>
 #include <SDL_image.h>
-#include "Gun.h"
+#include "include/Gun.h"
 class Player
 {
     public:
@@ -17,7 +17,7 @@ class Player
   //  ~Player();
 
 
-		SDL_Surface* player_img;
+SDL_Surface* player_img;
 SDL_Surface* missile_player;
 SDL_Rect pos_playerX;
 Gun weapon1;
@@ -32,7 +32,7 @@ SDL_Surface*	missiles[20];
 int hp;
 int speedX;
 Player();
-Player(SDL_Surface* Screen,SDL_Surface* missile_img,SDL_Surface* player_avatar, SDL_Rect pos_player);
+Player(SDL_Surface* Screen,SDL_Surface* missile_img,SDL_Rect pos_player, int playerid);
 
     bool spawn_missileX()
     {
@@ -79,18 +79,48 @@ Player(SDL_Surface* Screen,SDL_Surface* missile_img,SDL_Surface* player_avatar, 
 
 		}	
 		return true;
+
+
     }
     void onClose()
     {
 		if (player_img != NULL) {
 			SDL_FreeSurface(player_img);
 		}
-	for (int  i = nb_missiles; i>=0; i--) {
+	for (int  i = nb_missiles; i>0; i--) {
 		if (missiles[i] != NULL){
 			SDL_FreeSurface(missiles[i]);}
 	}
 
     }
+
+	
+SDL_Surface* loadSurface_player( std::string path, SDL_Surface*	screen )
+{
+	//The final optimized image
+	SDL_Surface* optimizedSurface = NULL;
+
+	//Load image at specified path
+	SDL_Surface* loadedSurface = IMG_Load( path.c_str() );
+	if( loadedSurface == NULL )
+	{
+		printf( "Unable to load image %s! SDL_image Error: %s\n", path.c_str(), IMG_GetError() );
+	}
+	else
+	{
+		//Convert surface to screen format
+		optimizedSurface = SDL_ConvertSurface( loadedSurface, screen->format, NULL );
+		if( optimizedSurface == NULL )
+		{
+			printf( "Unable to optimize image %s! SDL Error: %s\n", path.c_str(), SDL_GetError() );
+		}
+
+		//Get rid of old loaded surface
+		SDL_FreeSurface( loadedSurface );
+	}
+
+	return optimizedSurface;
+}
 	void update() {
 
 							if (shoot == true){
@@ -114,6 +144,7 @@ Player(SDL_Surface* Screen,SDL_Surface* missile_img,SDL_Surface* player_avatar, 
 						}
 					}
 				}
+							if (player_img != NULL)
 							SDL_BlitSurface(player_img, NULL, screen, &pos_playerX );
 							
 

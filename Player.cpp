@@ -4,8 +4,9 @@
 #include <stdio.h>
 #include <sstream>
 #include <iostream>
-#include "Gun.h";
+#include "include/Gun.h";
 #include "include/Player.h";
+#include "include/GlobalVar.h";
 //#include "PlayerController.h";
 using namespace std;
 
@@ -32,22 +33,15 @@ Player::Player()
 }
  
  
-Player::Player(SDL_Surface* Screen,SDL_Surface* missile_img,SDL_Surface* player_avatar, SDL_Rect pos_player) 
+Player::Player(SDL_Surface* Screen,SDL_Surface* missile_img,SDL_Rect pos_player, int id) 
 {
 	screen = Screen;
 	missile_player = missile_img;
-	player_img = player_avatar;
 	pos_playerX = pos_player;
 	nb_missiles = 0;
 	nb_missiles_max = 20;
 	for (int i=0; i<= nb_missiles_max;i++) {
 			missiles[i] = missile_img;
-	}
-	if(player_img == NULL) {
-		printf("player img not loaded");
-	}
-	if(player_avatar == NULL) {
-		printf("player img not sent");
 	}
 	if(missile_player == NULL) {
 		printf("missile img not loaded for player");
@@ -55,4 +49,29 @@ Player::Player(SDL_Surface* Screen,SDL_Surface* missile_img,SDL_Surface* player_
  pos_player.x = 600;
  pos_player.y = 300;
  speedX = 10;
+
+ 
+ switch (id) {
+ case 1 :
+	player_img = loadSurface_player( "img\\player1.png", screen );
+	if( player_img == NULL )
+	{
+		printf( "Failed to load PNG image!\n", screen );
+	}
+	break;
+ case 2:
+	player_img = loadSurface_player( "img\\player2.png", screen );
+	if( player_img == NULL )
+	{
+		printf( "Failed to load PNG image!\n", screen );
+	}
+	break;
+ case 3:
+	player_img = loadSurface_player( "img\\player3.png", screen );
+	if( player_img == NULL )
+	{
+		printf( "Failed to load PNG image!\n", screen );
+	}
+	break;
+ }
 }

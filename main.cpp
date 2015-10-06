@@ -3,9 +3,10 @@ and may not be redistributed without written permission.*/
 
 //Using SDL, SDL_image, standard IO, and strings
 
-#include "Player.h"
-#include "Gun.h"
+#include "include/Player.h"
 #include "include/Gun.h"
+#include "include/GlobalVar.h";
+#include "include/MainMenu.h";
 #include <SDL.h>
 #include <SDL_ttf.h>
 #include <SDL_image.h>
@@ -66,6 +67,7 @@ int speed = 1;
 int hpmenu1 = 5;
 int hpmenu2 = 2;
 int hpmenu3 = 1;
+int state = 1;
 int hpplayer = 5;
 SDL_Color textColor = { 255, 255, 255 };
 
@@ -73,7 +75,7 @@ void missile_die(SDL_Surface*	missile) {
 
 }
 
-SDL_Surface* loadSurface2( std::string path, SDL_Surface*	screen )
+extern SDL_Surface* loadSurface2( std::string path, SDL_Surface*	screen )
 {
 	//The final optimized image
 	SDL_Surface* optimizedSurface = NULL;
@@ -241,24 +243,6 @@ mus = Mix_LoadMUS("mus/test3.mp3");
 		printf( "Failed to load PNG image!\n", gScreenSurface2 );
 		success = false;
 	}
-	player_pic = loadSurface2( "img\\player1.png", gScreenSurface2 );
-	if( player_pic == NULL )
-	{
-		printf( "Failed to load PNG image!\n", gScreenSurface2 );
-		success = false;
-	}
-	player2_pic = loadSurface2( "img\\player2.png", gScreenSurface2 );
-	if( player2_pic == NULL )
-	{
-		printf( "Failed to load PNG image!\n", gScreenSurface2 );
-		success = false;
-	}
-	player3_pic = loadSurface2( "img\\player3.png", gScreenSurface2 );
-	if( player3_pic == NULL )
-	{
-		printf( "Failed to load PNG image!\n", gScreenSurface2 );
-		success = false;
-	}
 	missile = loadSurface2( "img\\missile.png", gScreenSurface2 );
 	if ( missile == NULL )
 	{
@@ -335,21 +319,19 @@ int main( int argc, char* args[] )
 		}
 		else
 		{	
-			if (player_pic == NULL){
-				printf("null playerpic before loading player");
-			}
-			SDL_Rect p1_pos, p2_pos, p3_pos, p4_pos;
+			setMenu(gScreenSurface2);
+			SDL_Rect p1_pos, p2_pos, p3_pos;
 			p1_pos.x = 100;
 			p1_pos.y = 300;
-			player1 = Player(gScreenSurface2, missile, player_pic, p1_pos);
+			player1 = Player(gScreenSurface2, missile, p1_pos,1);
 			p2_pos.x = 50;
 			p2_pos.y = 20;
-			player2 = Player(gScreenSurface2, missile, player2_pic, p2_pos);
+			player2 = Player(gScreenSurface2, missile, p2_pos,2);
 			p3_pos.x = 800;
 			p3_pos.y = 700;
-			player3 = Player(gScreenSurface2, missile, player3_pic, p3_pos);
+			player3 = Player(gScreenSurface2, missile, p3_pos,3);
 			weap2.gun = gun2;
-
+			state=1;
 
 
 //Mix_PlayMusic(mus,1); //Music loop=1
@@ -413,10 +395,21 @@ int main( int argc, char* args[] )
 							   player1.shoot = true;
 										player1.spawn_missileX();
 							   break;
+						   case SDL_BUTTON_RIGHT: 
+							   printf("clickdroit");
+							   state = 2;
+							   break;
 								}
 
 					}
 				}
+
+				if (state==1) {
+					updateMenu(gScreenSurface2);
+				}
+				else {
+
+
 				//Apply the PNG image
 				SDL_BlitSurface( background, NULL, gScreenSurface2, NULL );
 				//Apply the PNG image
@@ -439,6 +432,7 @@ int main( int argc, char* args[] )
 					
 				
 				//Update the surface
+				}
 				SDL_UpdateWindowSurface( gWindow );
 				}
 			}
