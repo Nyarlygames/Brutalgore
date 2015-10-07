@@ -6,6 +6,7 @@ and may not be redistributed without written permission.*/
 #include "include/Gun.h"
 #include "include/MainMenu.h"
 #include "include/Game.h"
+#include "include/Missile.h"
 #include <SDL.h>
 #include <SDL_ttf.h>
 #include <SDL_image.h>
@@ -212,12 +213,6 @@ mus = Mix_LoadMUS("mus/test3.mp3");
 		printf( "Failed to load PNG image!\n" );
 		success = false;
 	}
-	missile = loadSurface2( "img\\missile.png", gScreenSurface2 );
-	if ( missile == NULL )
-	{
-		printf( "Failed to load PNG image!\n" , gScreenSurface2);
-		success = false;
-	}
 	gun1 = loadSurface2( "img\\gun1.png", gScreenSurface2 );
 		if ( gun1 == NULL )
 	{
@@ -304,6 +299,8 @@ int main( int argc, char* args[] )
 								quit = true;
 							break;
 						case SDL_KEYDOWN :
+							
+					GameObj.Root.Player1.player_controls(e);
 							//User requests quit
 							switch (e.type) {
 								case SDL_QUIT :
@@ -315,18 +312,19 @@ int main( int argc, char* args[] )
 											quit=true;
 											break;
 										default:
-												GameObj.Root.Player1.player_controls(e);
+												//GameObj.Root.Player1.player_controls(e);
 											break;
 									}
 							}
 						case (SDL_MOUSEBUTTONDOWN):
+					GameObj.Root.Player1.player_controls(e);
 							  /* If the left button was pressed. */
 						   switch (e.button.button) {
 						   case SDL_BUTTON_LEFT: 
-							   printf("click");
+							   //printf("click");
 							   break;
 						   case SDL_BUTTON_RIGHT: 
-							   printf("clickdroit");
+							   //printf("clickdroit");
 							   GameObj.state = 2;
 							   break;
 								}

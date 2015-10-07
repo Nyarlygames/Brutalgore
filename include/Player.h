@@ -4,10 +4,12 @@
 #include <string>
 #include <sstream>
 #include <iostream>
-using namespace std;
 #include <SDL.h>
 #include <SDL_image.h>
 #include "Gun.h"
+#include "Missile.h"
+using namespace std;
+
 class Player
 {
     public:
@@ -18,74 +20,31 @@ class Player
 
 
 SDL_Surface* player_img;
-SDL_Surface* missile_player;
 SDL_Rect pos_player;
 Gun weapon1;
 bool	shoot;
 SDL_Surface* screen;
+Missile*	missiles_player;
 int nb_missiles;
 int nb_missiles_max;
 int damages;
 SDL_Rect spawn_missiles[20];
 SDL_Rect dest_missiles[20];
-SDL_Surface*	missiles[20];
+//Missile*	missiles_player;
+//Missile* Missiles;
 int hp;
 int speedX;
 Player();
 Player(SDL_Surface* Screen,SDL_Rect pos_player, int playerid);
 
-    bool spawn_missileX()
-    {/*
-							   printf("click");
-		printf("spawn");
-		if (shoot == true) {
-			if (nb_missiles >= nb_missiles_max - 1){
-				printf("max missiles");
-				printf("1");
-				shoot = false;
-				return false;
-				//player1.spawn_missile();
-			}
-			else if (nb_missiles <= nb_missiles_max){
-			/*else {
-			//missiles[nb_missiles] = loadSurface( "img\\missile.png" );
-			if (missile == NULL)
-				return false;
-			missiles[nb_missiles] = missile;
-
-
-
-				printf("2");
-
-
-
-			int x,y = -1;
-			spawn_missiles[nb_missiles].x = pos_playerX.x;
-			spawn_missiles[nb_missiles].y = pos_playerX.y;
-			SDL_GetMouseState(&x,&y);	
-			dest_missiles[nb_missiles].x = x;
-			dest_missiles[nb_missiles].y = y;
-			nb_missiles+=1;
-			return true;
-			}
-		}
-		else {
-			printf("3");
-			return (shoot);
-
-		}	
-		return true;
-		*/
-
-    }
     void onClose()
     {
 		if (player_img != NULL) {
 			SDL_FreeSurface(player_img);
 		}
 	for (int  i = nb_missiles; i>0; i--) {
-		if (missiles[i] != NULL){
-			SDL_FreeSurface(missiles[i]);}
+	//	if (missiles[i] != NULL){
+		//	SDL_FreeSurface(missiles[i]);}
 	}
 
     }
@@ -119,32 +78,24 @@ SDL_Surface* loadSurface_player( std::string path, SDL_Surface*	screen )
 }
 	void updatePlayer() {
 
-					/*		if (shoot == true){
-					//for (int i=0; i<nb_missiles; i++) {
-						//int i = 0;
-						for (int i=0; i<nb_missiles; i++) {
-						if (missiles[i] != NULL) {
-							SDL_BlitSurface(missiles[i], NULL, screen, &spawn_missiles[i] );
-							if (missile_player == NULL){
-								printf("can't display missile from player");
-							}
-							//SDL_BlitSurface(player1.missile_player, NULL, gScreenSurface2, &player1.pos_playerX );
-						if (dest_missiles[i].x <spawn_missiles[i].x)
-							spawn_missiles[i].x--;
-						if (dest_missiles[i].x > spawn_missiles[i].x)
-							spawn_missiles[i].x++;
-						if (dest_missiles[i].y <spawn_missiles[i].y)
-							spawn_missiles[i].y--;
-						if (dest_missiles[i].y > spawn_missiles[i].y)
-							spawn_missiles[i].y++;
-						}
-					}
-				}*/
 							if (player_img != NULL) {
 							SDL_BlitSurface(player_img, NULL, screen, &pos_player );
 							}
+		if (nb_missiles >= 1){
+			for (int i = 0; i <= nb_missiles-1; i++) {
+				missiles_player[i].updateMissile();
+			}
+		}
 
 	}
+	
+	void spawn_missile(){
+		if (nb_missiles < nb_missiles_max) {
+			missiles_player[nb_missiles] = Missile(screen, 1, pos_player);
+			nb_missiles++;
+		}
+	}
+   
 
 	void	player_controls(SDL_Event e){
 
@@ -166,6 +117,21 @@ SDL_Surface* loadSurface_player( std::string path, SDL_Surface*	screen )
 										default:
 											break;
 									}
+									
+					
+					switch (e.type) {
+					case (SDL_MOUSEBUTTONDOWN):
+							  /* If the left button was pressed. */
+						   switch (e.button.button) {
+						   case SDL_BUTTON_LEFT: 
+							  spawn_missile();
+							   printf("click");
+							   break;
+						   case SDL_BUTTON_RIGHT: 
+							   printf("clickdroit");
+							   break;
+								}
+					}
 	}
 	
 	
