@@ -62,17 +62,17 @@ void	setMenu(SDL_Surface	*screen){
 	pos_item_1.x = 10;
 	pos_item_1.y = 20;
 	Enemies = new Enemy[max_enemies];
-	Enemies[0] = Enemy(screen,1,pos_item_1);
+	Enemies[0] = Enemy(screen,1,pos_item_1,7);
 	nb_enemies++;
 
 	pos_item_2.x = 500;
 	pos_item_2.y = 300;
-	Enemies[1] = Enemy(screen,2, pos_item_2);
+	Enemies[1] = Enemy(screen,2, pos_item_2,3);
 	nb_enemies++;
 	
 	pos_item_3.x = 600;
 	pos_item_3.y = 20;
-	Enemies[2] = Enemy(screen,3,pos_item_3);
+	Enemies[2] = Enemy(screen,3,pos_item_3,1);
 	
 	pos_player1.x = 50;
 	pos_player1.y = 600;
@@ -82,6 +82,30 @@ void	setMenu(SDL_Surface	*screen){
 };
 
 
+void	collision_check(Player PlayerColl, Enemy* EnemyColl){
+	if (PlayerColl.nb_missiles>0) {
+	for (int i = 0; i< nb_enemies; i++){
+		for (int y = 0; y< PlayerColl.nb_missiles; y++){
+			if (((PlayerColl.missiles_player[y].pos_missile.x <= EnemyColl[i].pos_enemy.x) &&
+				(PlayerColl.missiles_player[y].pos_missile.x + PlayerColl.missiles_player[y].img_missile->h >= EnemyColl[i].pos_enemy.x + EnemyColl[i].img_enemy->h)) || 
+				((PlayerColl.missiles_player[y].pos_missile.y >= EnemyColl[i].pos_enemy.y) &&
+				(PlayerColl.missiles_player[y].pos_missile.y + PlayerColl.missiles_player[y].img_missile->w <= EnemyColl[i].pos_enemy.y+ EnemyColl[i].img_enemy->w))) {
+
+					if (EnemyColl[i].health - PlayerColl.damages <= 0) {
+						EnemyColl[i].state = 0;
+					}
+					else {
+					 EnemyColl[i].health -= PlayerColl.damages;
+											printf("collision");
+					}
+			}
+		}}
+	}
+	// add collision player and stuff
+				
+
+};
+
 void	updateMenu(){
 	if (nb_enemies >= 0){
 		for (int i = 0; i < nb_enemies+1; i++) {
@@ -89,6 +113,7 @@ void	updateMenu(){
 		}
 	}
 	Player1.updatePlayer();
+	collision_check(Player1, Enemies);
 };
 
 };

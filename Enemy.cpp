@@ -8,42 +8,57 @@
 using namespace std;
 
 
-SDL_Surface* img;
+SDL_Surface* img_enemy;
 SDL_Surface* healthbar;
-SDL_Rect pos;
 SDL_Rect healthpos;
 SDL_Surface* screen_enemy = NULL;
 int health = 0;
 
 Enemy::Enemy() 
 {
- pos.x = 0;
- pos.y = 0;
+ pos_enemy.x = 0;
+ pos_enemy.y = 0;
+ state = 1;
 }
  
  
-Enemy::Enemy(SDL_Surface* Screen, int id, SDL_Rect sentpos) 
+Enemy::Enemy(SDL_Surface* Screen, int id, SDL_Rect sentpos, int basehealth) 
 {
  
  switch (id) {
  
  case 1 :
-	img = loadSurface_enemy( "img\\menu-exit.png", Screen );
-	if( img == NULL )
+	img_enemy = loadSurface_enemy( "img\\menu-exit.png", Screen );
+	if( img_enemy == NULL )
+	{
+		printf( "Failed to load PNG image!\n", Screen );
+	}
+	img_enemy_dead = loadSurface_enemy( "img\\menu-exit-dead.png", Screen );
+	if( img_enemy_dead == NULL )
 	{
 		printf( "Failed to load PNG image!\n", Screen );
 	}
 	break;
  case 2:
-	img = loadSurface_enemy( "img\\menu-play.png", Screen );
-	if( img == NULL )
+	img_enemy = loadSurface_enemy( "img\\menu-play.png", Screen );
+	if( img_enemy == NULL )
+	{
+		printf( "Failed to load PNG image!\n", Screen );
+	}
+	img_enemy_dead = loadSurface_enemy( "img\\menu-play-dead.png", Screen );
+	if( img_enemy_dead == NULL )
 	{
 		printf( "Failed to load PNG image!\n", Screen );
 	}
 	break;
  case 3:
-	img = loadSurface_enemy( "img\\menu-options.png", Screen );
-	if( img == NULL )
+	img_enemy = loadSurface_enemy( "img\\menu-options.png", Screen );
+	if( img_enemy == NULL )
+	{
+		printf( "Failed to load PNG image!\n", Screen );
+	}
+	img_enemy_dead = loadSurface_enemy( "img\\menu-options-dead.png", Screen );
+	if( img_enemy_dead == NULL )
 	{
 		printf( "Failed to load PNG image!\n", Screen );
 	}
@@ -51,11 +66,12 @@ Enemy::Enemy(SDL_Surface* Screen, int id, SDL_Rect sentpos)
  }
 
 screen_enemy = Screen;
-pos = sentpos;
-
-healthpos.x = pos.x;
-healthpos.y = pos.y -15;
-healthbar = SDL_CreateRGBSurface(0, img->w, 10, 32, 0, 0, 0, 0);
+pos_enemy = sentpos;
+health = basehealth;
+state = 1;
+healthpos.x = pos_enemy.x;
+healthpos.y = pos_enemy.y -15;
+healthbar = SDL_CreateRGBSurface(0, img_enemy->w, 10, 32, 0, 0, 0, 0);
 
 SDL_FillRect(healthbar, NULL, SDL_MapRGB(healthbar->format, 255, 0, 0));
 
@@ -63,7 +79,7 @@ SDL_FillRect(healthbar, NULL, SDL_MapRGB(healthbar->format, 255, 0, 0));
 
 void onClose(){
 	
-	SDL_FreeSurface(img);
-	img = NULL;
+	SDL_FreeSurface(img_enemy);
+	img_enemy = NULL;
 
 }

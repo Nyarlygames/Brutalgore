@@ -33,7 +33,8 @@ Player::Player(SDL_Surface* Screen,SDL_Rect pos_playerX, int id)
  nb_missiles_max = 20;
 	screen = Screen;
 	pos_player = pos_playerX;
- speedX = 10;
+ speedX = 1;
+ damages = 2;
  missiles_player = new Missile[nb_missiles_max];
 
  

@@ -23,6 +23,7 @@ Missile(SDL_Surface*	Screen, int id, SDL_Rect pos_player);
 void updateMissile()
 {
 	SDL_BlitSurface(img_missile, NULL,screen_missile , &pos_missile );
+
 }
 	
 SDL_Surface* loadSurface_missile( std::string path, SDL_Surface*	screen )
