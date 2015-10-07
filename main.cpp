@@ -2,9 +2,10 @@
 and may not be redistributed without written permission.*/
 
 //Using SDL, SDL_image, standard IO, and strings
-#include "include/Player.h";
-#include "include/Gun.h";
-#include "include/MainMenu.h";
+#include "include/Player.h"
+#include "include/Gun.h"
+#include "include/MainMenu.h"
+#include "include/Game.h"
 #include <SDL.h>
 #include <SDL_ttf.h>
 #include <SDL_image.h>
@@ -47,6 +48,7 @@ SDL_Rect pos_item_22;
 SDL_Rect pos_item_32;
 SDL_Rect player1_pos;
 SDL_Rect message_1;
+Game GameObj;
 Gun weap2;
 
 TTF_Font *font = NULL;
@@ -58,7 +60,7 @@ int speed = 1;
 int hpmenu1 = 5;
 int hpmenu2 = 2;
 int hpmenu3 = 1;
-int state = 1;
+int stateMain = 1;
 int hpplayer = 5;
 SDL_Color textColor = { 255, 255, 255 };
 
@@ -277,9 +279,9 @@ int main( int argc, char* args[] )
 		}
 		else
 		{	
-			setMenu(gScreenSurface2);
+			GameObj = Game(gScreenSurface2);
 			weap2.gun = gun2;
-			state=1;
+			stateMain=1;
 
 
 //Mix_PlayMusic(mus,1); //Music loop=1
@@ -292,7 +294,7 @@ int main( int argc, char* args[] )
 			//While application is running
 			while( !quit )
 			{
-
+				
 								//Handle events on queue
 				while( SDL_PollEvent( &e ) != 0 )
 				{
@@ -313,6 +315,7 @@ int main( int argc, char* args[] )
 											quit=true;
 											break;
 										default:
+												GameObj.Root.Player1.player_controls(e);
 											break;
 									}
 							}
@@ -324,16 +327,16 @@ int main( int argc, char* args[] )
 							   break;
 						   case SDL_BUTTON_RIGHT: 
 							   printf("clickdroit");
-							   state = 2;
+							   GameObj.state = 2;
 							   break;
 								}
 					}
 				}
-				if (state==1) {
-					updateMenu(gScreenSurface2);
+				if (GameObj.state==1) {
+				//	updateMenu();
+					GameObj.updateGame();
 				}
 				else {
-
 
 				//Apply the PNG image
 				SDL_BlitSurface( background, NULL, gScreenSurface2, NULL );

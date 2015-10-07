@@ -7,7 +7,7 @@
 using namespace std;
 #include <SDL.h>
 #include <SDL_image.h>
-#include "include/Gun.h"
+#include "Gun.h"
 class Player
 {
     public:
@@ -117,9 +117,9 @@ SDL_Surface* loadSurface_player( std::string path, SDL_Surface*	screen )
 
 	return optimizedSurface;
 }
-	void update_player() {
+	void updatePlayer() {
 
-							if (shoot == true){
+					/*		if (shoot == true){
 					//for (int i=0; i<nb_missiles; i++) {
 						//int i = 0;
 						for (int i=0; i<nb_missiles; i++) {
@@ -139,18 +139,18 @@ SDL_Surface* loadSurface_player( std::string path, SDL_Surface*	screen )
 							spawn_missiles[i].y++;
 						}
 					}
-				}
-							if (player_img != NULL)
+				}*/
+							if (player_img != NULL) {
 							SDL_BlitSurface(player_img, NULL, screen, &pos_player );
-							
+							}
 
 	}
 
-	void	player_controls(SDL_Keycode e){
-	
-			
-								switch( e ){
+	void	player_controls(SDL_Event e){
 
+
+		
+									switch( e.key.keysym.sym ){
 									case SDLK_LEFT:
 										pos_player.x -= 20 * speedX;
 										break;
@@ -163,10 +163,11 @@ SDL_Surface* loadSurface_player( std::string path, SDL_Surface*	screen )
 									case SDLK_DOWN:
 										pos_player.y += 20 * speedX;
 										break;
-									default:
-										break;
-								}
+										default:
+											break;
+									}
 	}
+	
 	
 };
 

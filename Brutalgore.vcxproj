@@ -69,6 +69,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="Game.cpp" />
     <ClCompile Include="Gun.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainMenu.cpp" />
@@ -78,6 +79,7 @@
   <ItemGroup>
     <ClInclude Include="include\Const.h" />
     <ClInclude Include="include\Enemy.h" />
+    <ClInclude Include="include\Game.h" />
     <ClInclude Include="include\Gun.h" />
     <ClInclude Include="include\MainMenu.h" />
     <ClInclude Include="include\Player.h" />

@@ -32,6 +32,7 @@ void	updateEnemy(){
 					SDL_BlitSurface( healthbar, NULL, screen_enemy, &healthpos );
 		}
 
+
 	};
 
 
