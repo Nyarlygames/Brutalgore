@@ -4,16 +4,14 @@
 #include <stdio.h>
 #include <sstream>
 #include <iostream>
-#include "include/Gun.h";
-#include "include/Player.h";
-#include "include/GlobalVar.h";
+#include "include/Gun.h"
+#include "include/Player.h"
 //#include "PlayerController.h";
 using namespace std;
 
-
 SDL_Surface* player_img;
 SDL_Surface* missile_player;
-SDL_Rect pos_playerX;
+SDL_Rect pos_player;
 Gun weapon1;
 bool	shoot = false;
 SDL_Surface* screen = NULL;
@@ -28,26 +26,25 @@ int speedX;
 
 Player::Player() 
 {
- pos_playerX.x = 600;
- pos_playerX.y = 300;
+ pos_player.x = 600;
+ pos_player.y = 300;
 }
- 
- 
-Player::Player(SDL_Surface* Screen,SDL_Surface* missile_img,SDL_Rect pos_player, int id) 
+  
+Player::Player(SDL_Surface* Screen,SDL_Rect pos_playerX, int id) 
 {
 	screen = Screen;
-	missile_player = missile_img;
+	missile_player = loadSurface_player( "img\\missile.png", screen );
 	pos_playerX = pos_player;
 	nb_missiles = 0;
 	nb_missiles_max = 20;
 	for (int i=0; i<= nb_missiles_max;i++) {
-			missiles[i] = missile_img;
+			missiles[i] = missile_player;
 	}
 	if(missile_player == NULL) {
 		printf("missile img not loaded for player");
 	}
- pos_player.x = 600;
- pos_player.y = 300;
+	pos_player.x = pos_playerX.x;
+	pos_player.y = pos_playerX.y;
  speedX = 10;
 
  

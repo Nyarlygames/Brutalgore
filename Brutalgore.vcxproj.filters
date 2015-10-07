@@ -30,6 +30,9 @@
     <ClCompile Include="MainMenu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Player.h">
@@ -41,13 +44,13 @@
     <ClInclude Include="include\Gun.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\GlobalVar.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\Const.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\MainMenu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Enemy.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

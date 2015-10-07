@@ -2,10 +2,8 @@
 and may not be redistributed without written permission.*/
 
 //Using SDL, SDL_image, standard IO, and strings
-
-#include "include/Player.h"
-#include "include/Gun.h"
-#include "include/GlobalVar.h";
+#include "include/Player.h";
+#include "include/Gun.h";
 #include "include/MainMenu.h";
 #include <SDL.h>
 #include <SDL_ttf.h>
@@ -38,24 +36,17 @@ SDL_Window* gWindow = NULL;
 //Current displayed PNG image
 SDL_Surface* gScreenSurface2 = NULL;
 SDL_Surface* background = NULL;
-SDL_Surface* menu_item_1 = NULL;
-SDL_Surface* menu_item_2 = NULL;
-SDL_Surface* menu_item_3 = NULL;
 SDL_Surface* player_pic = NULL;
 SDL_Surface* player2_pic = NULL;
 SDL_Surface* player3_pic = NULL;
 SDL_Surface* missile = NULL;
 SDL_Surface* gun1 = NULL;
 SDL_Surface* gun2 = NULL;
-SDL_Rect pos_item_1;
-SDL_Rect pos_item_2;
-SDL_Rect pos_item_3;
-SDL_Rect pos_player;
+SDL_Rect pos_item_12;
+SDL_Rect pos_item_22;
+SDL_Rect pos_item_32;
 SDL_Rect player1_pos;
 SDL_Rect message_1;
-Player player1;
-Player player2;
-Player player3;
 Gun weap2;
 
 TTF_Font *font = NULL;
@@ -104,7 +95,7 @@ extern SDL_Surface* loadSurface2( std::string path, SDL_Surface*	screen )
 
 void missile_hit(SDL_Surface*	target, SDL_Surface*	missile) {
 //	stuff.pop
-	if (target == menu_item_3) {
+	/*if (target == menu_item_3) {
 		hpmenu3 -= player1.damages;
 		if (hpmenu3 == 0) {
 		SDL_FreeSurface(menu_item_3);
@@ -127,7 +118,7 @@ void missile_hit(SDL_Surface*	target, SDL_Surface*	missile) {
 		menu_item_1 = NULL;
 		menu_item_1 = loadSurface2( "img\\menu-play-dead.png", gScreenSurface2 );
 		}
-	}
+	}*/
 }
 
 
@@ -192,14 +183,8 @@ else
 				//Get window surface
 				gScreenSurface2 = SDL_GetWindowSurface( gWindow );
 			}
-			pos_item_1.x = 0;
-			pos_item_1.y = 0;
 			message_1.x = 0;
 			message_1.y = 0;
-			pos_item_2.x = 300;
-			pos_item_2.y = 400;
-			pos_item_3.x = 600;
-			pos_item_3.y = 800;
 			weap2.pos_gun.x = 20;
 			weap2.pos_gun.x = 20;
 		}
@@ -223,24 +208,6 @@ mus = Mix_LoadMUS("mus/test3.mp3");
 	if( background == NULL )
 	{
 		printf( "Failed to load PNG image!\n" );
-		success = false;
-	}
-	menu_item_1 = loadSurface2( "img\\menu-play.png", gScreenSurface2 );
-	if( menu_item_1 == NULL )
-	{
-		printf( "Failed to load PNG image!\n" );
-		success = false;
-	}
-	menu_item_2 = loadSurface2( "img\\menu-options.png", gScreenSurface2 );
-	if( menu_item_2 == NULL )
-	{
-		printf( "Failed to load PNG image!\n" );
-		success = false;
-	}
-	menu_item_3 = loadSurface2( "img\\menu-exit.png", gScreenSurface2 );
-	if( menu_item_2 == NULL )
-	{
-		printf( "Failed to load PNG image!\n", gScreenSurface2 );
 		success = false;
 	}
 	missile = loadSurface2( "img\\missile.png", gScreenSurface2 );
@@ -278,15 +245,6 @@ void close()
 	SDL_FreeSurface(background);
 	background = NULL;
 	
-	SDL_FreeSurface(menu_item_1);
-	menu_item_1 = NULL;
-	SDL_FreeSurface(menu_item_2);
-	menu_item_2 = NULL;
-	SDL_FreeSurface(menu_item_3);
-	menu_item_3 = NULL;
-		player1.onClose();
-		player2.onClose();
-		player3.onClose();
 	// CLEAN MISSILES HERE
 //SDL_FreeSurface(missile);
 	//missile = NULL;
@@ -320,16 +278,6 @@ int main( int argc, char* args[] )
 		else
 		{	
 			setMenu(gScreenSurface2);
-			SDL_Rect p1_pos, p2_pos, p3_pos;
-			p1_pos.x = 100;
-			p1_pos.y = 300;
-			player1 = Player(gScreenSurface2, missile, p1_pos,1);
-			p2_pos.x = 50;
-			p2_pos.y = 20;
-			player2 = Player(gScreenSurface2, missile, p2_pos,2);
-			p3_pos.x = 800;
-			p3_pos.y = 700;
-			player3 = Player(gScreenSurface2, missile, p3_pos,3);
 			weap2.gun = gun2;
 			state=1;
 
@@ -344,7 +292,8 @@ int main( int argc, char* args[] )
 			//While application is running
 			while( !quit )
 			{
-				//Handle events on queue
+
+								//Handle events on queue
 				while( SDL_PollEvent( &e ) != 0 )
 				{
 					//User requests quit
@@ -360,26 +309,6 @@ int main( int argc, char* args[] )
 									break;
 								case SDL_KEYDOWN :
 									switch( e.key.keysym.sym ){
-										case SDLK_LEFT:
-											player1.pos_playerX.x -= 20 * player1.speedX;
-											player2.pos_playerX.x -= 20 * player2.speedX;
-											player3.pos_playerX.x -= 20 * player3.speedX;
-											break;
-										case SDLK_RIGHT:
-											player1.pos_playerX.x += 20 * player1.speedX;
-											player2.pos_playerX.x += 20 * player2.speedX;
-											player3.pos_playerX.x += 20 * player3.speedX;
-											break;
-										case SDLK_UP:
-											player1.pos_playerX.y -= 20 * player1.speedX;
-											player2.pos_playerX.y -= 20 * player2.speedX;
-											player3.pos_playerX.y -= 20 * player3.speedX;
-											break;
-										case SDLK_DOWN:
-											player1.pos_playerX.y += 20 * player1.speedX;
-											player2.pos_playerX.y += 20 * player2.speedX;
-											player3.pos_playerX.y += 20 * player3.speedX;
-											break;
 										case SDLK_ESCAPE:
 											quit=true;
 											break;
@@ -392,18 +321,14 @@ int main( int argc, char* args[] )
 						   switch (e.button.button) {
 						   case SDL_BUTTON_LEFT: 
 							   printf("click");
-							   player1.shoot = true;
-										player1.spawn_missileX();
 							   break;
 						   case SDL_BUTTON_RIGHT: 
 							   printf("clickdroit");
 							   state = 2;
 							   break;
 								}
-
 					}
 				}
-
 				if (state==1) {
 					updateMenu(gScreenSurface2);
 				}
@@ -413,22 +338,12 @@ int main( int argc, char* args[] )
 				//Apply the PNG image
 				SDL_BlitSurface( background, NULL, gScreenSurface2, NULL );
 				//Apply the PNG image
-				SDL_BlitSurface( menu_item_1, NULL, gScreenSurface2, &pos_item_1 );
-				//Apply the PNG image
-				SDL_BlitSurface( menu_item_2, NULL, gScreenSurface2, &pos_item_2 );
-			
-				SDL_BlitSurface( menu_item_3, NULL, gScreenSurface2, &pos_item_3 );
-				
-				player1.update();
-				player2.update();
-				player3.update();
-
 
 				
 
 			
 				//SDL_BlitSurface( player1.player_pic, NULL, gScreenSurface2, &player1.pos_player);
-				SDL_BlitSurface( weap2.gun, NULL, gScreenSurface2, &player1.pos_playerX );
+			//	SDL_BlitSurface( weap2.gun, NULL, gScreenSurface2, &player1.pos_playerX );
 					
 				
 				//Update the surface

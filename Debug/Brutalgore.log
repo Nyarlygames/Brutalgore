@@ -1,12 +1,30 @@
-﻿Build started 06/10/2015 21:07:32.
+﻿Build started 07/10/2015 08:50:08.
      1>Project "D:\Projects\Brutalgore\Brutalgore.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
-         Creating "Debug\Brutalgore.unsuccessfulbuild" because "AlwaysCreate" was specified.
+         Touching "Debug\Brutalgore.unsuccessfulbuild".
        ClCompile:
-         All outputs are up-to-date.
+         d:\Programs\VS2010\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt MainMenu.cpp Player.cpp PlayerController.cpp main.cpp
+         main.cpp
+     1>d:\projects\brutalgore\main.cpp(5): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+     1>d:\projects\brutalgore\main.cpp(6): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+     1>d:\projects\brutalgore\main.cpp(7): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+         Player.cpp
+         MainMenu.cpp
+         Generating Code...
+         Skipping... (no relevant changes detected)
+         PlayerController.cpp
        Link:
-         All outputs are up-to-date.
+         d:\Programs\VS2010\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Projects\Brutalgore\Debug\Brutalgore.exe" /NOLOGO SDL2.lib SDL2main.lib SDL2_image.lib SDL2_ttf.lib SDL2_mixer.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\Brutalgore.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"D:\Projects\Brutalgore\Debug\Brutalgore.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Projects\Brutalgore\Debug\Brutalgore.lib" /MACHINE:X86 Debug\Enemy.obj
+         Debug\Gun.obj
+         Debug\main.obj
+         Debug\MainMenu.obj
+         Debug\Player.obj
+         Debug\PlayerController.obj
+         LINK : D:\Projects\Brutalgore\Debug\Brutalgore.exe not found or not built by the last incremental link; performing full link
+     1>MSVCRTD.lib(cinitexe.obj) : warning LNK4098: defaultlib 'msvcrt.lib' conflicts with use of other libs; use /NODEFAULTLIB:library
          Brutalgore.vcxproj -> D:\Projects\Brutalgore\Debug\Brutalgore.exe
+       Manifest:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"D:\Projects\Brutalgore\Debug\Brutalgore.exe;#1" /manifest Debug\Brutalgore.exe.intermediate.manifest
        FinalizeBuildStatus:
          Deleting file "Debug\Brutalgore.unsuccessfulbuild".
          Touching "Debug\Brutalgore.lastbuildstate".
@@ -14,4 +32,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:00.03
+Time Elapsed 00:00:01.84

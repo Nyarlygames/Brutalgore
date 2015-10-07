@@ -19,7 +19,7 @@ class Player
 
 SDL_Surface* player_img;
 SDL_Surface* missile_player;
-SDL_Rect pos_playerX;
+SDL_Rect pos_player;
 Gun weapon1;
 bool	shoot;
 SDL_Surface* screen;
@@ -32,10 +32,10 @@ SDL_Surface*	missiles[20];
 int hp;
 int speedX;
 Player();
-Player(SDL_Surface* Screen,SDL_Surface* missile_img,SDL_Rect pos_player, int playerid);
+Player(SDL_Surface* Screen,SDL_Rect pos_player, int playerid);
 
     bool spawn_missileX()
-    {
+    {/*
 							   printf("click");
 		printf("spawn");
 		if (shoot == true) {
@@ -51,15 +51,11 @@ Player(SDL_Surface* Screen,SDL_Surface* missile_img,SDL_Rect pos_player, int pla
 			//missiles[nb_missiles] = loadSurface( "img\\missile.png" );
 			if (missile == NULL)
 				return false;
-			missiles[nb_missiles] = missile;*/
+			missiles[nb_missiles] = missile;
 
 
 
 				printf("2");
-				/*
-
-						*/
-
 
 
 
@@ -79,7 +75,7 @@ Player(SDL_Surface* Screen,SDL_Surface* missile_img,SDL_Rect pos_player, int pla
 
 		}	
 		return true;
-
+		*/
 
     }
     void onClose()
@@ -121,7 +117,7 @@ SDL_Surface* loadSurface_player( std::string path, SDL_Surface*	screen )
 
 	return optimizedSurface;
 }
-	void update() {
+	void update_player() {
 
 							if (shoot == true){
 					//for (int i=0; i<nb_missiles; i++) {
@@ -145,101 +141,33 @@ SDL_Surface* loadSurface_player( std::string path, SDL_Surface*	screen )
 					}
 				}
 							if (player_img != NULL)
-							SDL_BlitSurface(player_img, NULL, screen, &pos_playerX );
+							SDL_BlitSurface(player_img, NULL, screen, &pos_player );
 							
 
 	}
-	/*
-	if (SDL_PollEvent( &e ) != 0){
-		switch (e.type) {
-						case SDL_KEYDOWN :
-							//User requests quit
-							switch (e.type) {
-								case SDL_KEYDOWN :
-									switch( e.key.keysym.sym ){
-										case SDLK_LEFT:
-											pos_playerX.x -=10 * speedX;
-											break;
-										case SDLK_RIGHT:
-											pos_playerX.x +=10 * speedX;
-											break;
-										case SDLK_UP:
-											pos_playerX.y -=10;
-											break;
-										case SDLK_DOWN:
-											pos_playerX.y +=10;
-											break;
-										default:
-											break;
-									}
-							}
-						case (SDL_MOUSEBUTTONDOWN):
-							  // If the left button was pressed. 
-						   switch (e.button.button) {
-						   case SDL_BUTTON_LEFT: 
-							   printf("click");
-							   shoot = true;
-										spawn_missileX();
-							   break;
-						   }
-		}
 
-	}*/
-							//update_pos();
+	void	player_controls(SDL_Keycode e){
 	
-	/*
-void update_pos() {
-	SDL_Event e;
-	bool quit = false;
-			while( !quit )
-			{
-while( SDL_PollEvent( &e ) != 0 )
-				{
-					//User requests quit
-					switch (e.type) {
-						case SDL_QUIT :
-								quit = true;
-							break;
-						case SDL_KEYDOWN :
-							//User requests quit
-							switch (e.type) {
-								case SDL_QUIT :
-										quit = true;
-									break;
-								case SDL_KEYDOWN :
-									switch( e.key.keysym.sym ){
-										case SDLK_LEFT:
-											pos_playerX.x -=20 * speedX;
-											break;
-										case SDLK_RIGHT:
-											pos_playerX.x +=20 * speedX;
-											break;
-										case SDLK_UP:
-											pos_playerX.y -=20 * speedX;
-											break;
-										case SDLK_DOWN:
-											pos_playerX.y +=20 *speedX;
-											break;
-										case SDLK_ESCAPE:
-											quit=true;
-											break;
-										default:
-											break;
-									}
-							}
-						case (SDL_MOUSEBUTTONDOWN):
-							  // If the left button was pressed. 
-						   switch (e.button.button) {
-						   case SDL_BUTTON_LEFT: 
-							   printf("click");
-							   shoot = true;
-										spawn_missileX();
-							   break;
-								}
+			
+								switch( e ){
 
-					}
-}
-			}};*/
+									case SDLK_LEFT:
+										pos_player.x -= 20 * speedX;
+										break;
+									case SDLK_RIGHT:
+										pos_player.x += 20 * speedX;
+										break;
+									case SDLK_UP:
+										pos_player.y -= 20 * speedX;
+										break;
+									case SDLK_DOWN:
+										pos_player.y += 20 * speedX;
+										break;
+									default:
+										break;
+								}
+	}
+	
 };
 
 
