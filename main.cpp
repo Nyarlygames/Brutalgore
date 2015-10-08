@@ -1,602 +1,361 @@
-#include <SDL/SDL.h>
-#include <GL/gl.h>
-#include <GL/glu.h>
-#include <cstdlib>
-#include <cmath>
+/*This source code copyrighted by Lazy Foo' Productions (2004-2015)
+and may not be redistributed without written permission.*/
+
+//Using SDL, SDL_image, standard IO, and strings
+#include "include/Player.h"
+#include "include/Gun.h"
+#include "include/MainMenu.h"
+#include "include/Game.h"
+#include "include/Missile.h"
+#include <SDL.h>
+#include <SDL_ttf.h>
+#include <SDL_image.h>
+#include <SDL_mixer.h>
+#include <stdio.h>
 #include <string>
+#include <sstream>
+//#include "include\Toolbox.h"
 
-#include "SDL/SDL_image.h"
-#include "SDL/SDL_ttf.h"
-#include "sdlglutils.h"
-#include "scene.h"
-#include "sound.h"
-#include "global.h"
-#include "ens.h"
-#include "player.h"
-#include "game.h"
+//Screen dimension constants
+const int SCREEN_WIDTH = 1680;
+const int SCREEN_HEIGHT = 1050;
 
-#define FPS 50
-#define LARGEUR_FENETRE 800
-#define HAUTEUR_FENETRE 600
+//Starts up SDL and creates window
+bool init();
 
+//Loads media
+bool loadMedia();
 
+//Frees media and shuts down SDL
+void close();
 
-SDL_Event event;
+//Loads individual image
 
-const int SCREEN_BPP = 32;
+//The window we'll be rendering to
+SDL_Window* gWindow = NULL;
+	
 
-//Les surfaces
-SDL_Surface *background = NULL;
-SDL_Surface *cursor = NULL;
-SDL_Surface *launch = NULL;
-SDL_Surface *lan = NULL;
-SDL_Surface *opt = NULL;
-SDL_Surface *screen = NULL;
-Ennemy *ens = NULL;
-Player *player = NULL;
-Game *gameobj = NULL;
-//Le font qu'on va utiliser
-TTF_Font *font;
-TTF_Font *font2;
+//Current displayed PNG image
+SDL_Surface* gScreenSurface = NULL;
+SDL_Surface* background = NULL;
+SDL_Surface* player_pic = NULL;
+SDL_Surface* player2_pic = NULL;
+SDL_Surface* player3_pic = NULL;
+SDL_Surface* missile = NULL;
+SDL_Surface* gun1 = NULL;
+SDL_Surface* gun2 = NULL;
+SDL_Rect pos_item_12;
+SDL_Rect pos_item_22;
+SDL_Rect pos_item_32;
+SDL_Rect player1_pos;
+SDL_Rect message_1;
+Game GameObj;
+Gun weap2;
 
-//La couleur du font-
-SDL_Color textColor = { 200, 0, 0 };
-void DrawGL( SDL_Surface * ecran);
-int game(int nbplayers);
+TTF_Font *font = NULL;
+SDL_Surface *message = NULL;
+std::stringstream stuff;
 
-bool handle_event(bool fup, bool fright, bool fleft, bool fdown, int speed);
+Mix_Music*	mus = NULL;
+int speed = 1;
+int hpmenu1 = 5;
+int hpmenu2 = 2;
+int hpmenu3 = 1;
+int stateMain = 1;
+int hpplayer = 5;
+SDL_Color textColor = { 255, 255, 255 };
 
+void missile_die(SDL_Surface*	missile) {
 
-
-SDL_Surface *load_image( std::string filename )
-{
-    //L'image qui est chargée
-    SDL_Surface* loadedImage = NULL;
-
-    //L'image optimisée que nous utiliserons par la suite
-    SDL_Surface* optimizedImage = NULL;
-
-    //Chargement de l'image
-    loadedImage = IMG_Load( filename.c_str() );
-
-    //Si l'image est chargée correctement
-    if( loadedImage != NULL )
-    {
-        //creation de l'image optimisée
-        optimizedImage = SDL_DisplayFormat( loadedImage );
-
-        //liberation de l'ancienne image
-        SDL_FreeSurface( loadedImage );
-
-        //si l'image optimisée créé est bonne
-        if( optimizedImage != NULL )
-        {
-            //transparence
-            SDL_SetColorKey( optimizedImage, SDL_RLEACCEL | SDL_SRCCOLORKEY, SDL_MapRGB( optimizedImage->format, 0, 0xFF, 0xFF ) );
-        }
-    }
-
-    //on retourne l'image optimisé
-    return optimizedImage;
 }
 
-void apply_surface( int x, int y, SDL_Surface* source, SDL_Surface* destination, SDL_Rect* clip = NULL )
+extern SDL_Surface* loadSurface2( std::string path, SDL_Surface*	screen )
 {
-    SDL_Rect offset;
+	//The final optimized image
+	SDL_Surface* optimizedSurface = NULL;
 
-    offset.x = x;
-    offset.y = y;
+	//Load image at specified path
+	SDL_Surface* loadedSurface = IMG_Load( path.c_str() );
+	if( loadedSurface == NULL )
+	{
+		printf( "Unable to load image %s! SDL_image Error: %s\n", path.c_str(), IMG_GetError() );
+	}
+	else
+	{
+		//Convert surface to screen format
+		optimizedSurface = SDL_ConvertSurface( loadedSurface, gScreenSurface->format, NULL );
+		if( optimizedSurface == NULL )
+		{
+			printf( "Unable to optimize image %s! SDL Error: %s\n", path.c_str(), SDL_GetError() );
+		}
 
-    //on blit la surface
-    SDL_BlitSurface( source, clip, destination, &offset );
+		//Get rid of old loaded surface
+		SDL_FreeSurface( loadedSurface );
+	}
+
+	return optimizedSurface;
 }
 
-/* ------------------------------------------------------------- MENU ------------------------------------------------*/
+void missile_hit(SDL_Surface*	target, SDL_Surface*	missile) {
+//	stuff.pop
+	/*if (target == menu_item_3) {
+		hpmenu3 -= player1.damages;
+		if (hpmenu3 == 0) {
+		SDL_FreeSurface(menu_item_3);
+		menu_item_3 = NULL;
+		menu_item_3 = loadSurface2( "img\\menu-exit-dead.png", gScreenSurface2);
+		}
+	}
+	if (target == menu_item_2) {
+		hpmenu2 -= player1.damages;
+		if (hpmenu2 == 0) {
+		SDL_FreeSurface(menu_item_2);
+		menu_item_2 = NULL;
+		menu_item_2 = loadSurface2( "img\\menu-options-dead.png", gScreenSurface2 );
+		}
+	}
+	if (target == menu_item_1) {
+		hpmenu1 -= 5;
+		if (hpmenu1 == 0) {
+		SDL_FreeSurface(menu_item_1);
+		menu_item_1 = NULL;
+		menu_item_1 = loadSurface2( "img\\menu-play-dead.png", gScreenSurface2 );
+		}
+	}*/
+}
+
+
+
 
 bool init()
 {
-    //initialisation de tout les sous-systemes de sdl
-    if( SDL_Init( SDL_INIT_EVERYTHING ) == -1 )
-    {
-        return false;
-    }
+	//Initialization flag
+	bool success = true;
 
-    //on met en place l'ecran
-    screen = SDL_SetVideoMode( LARGEUR_FENETRE, HAUTEUR_FENETRE, SCREEN_BPP, SDL_SWSURFACE );
+	//Initialize SDL
+	if( SDL_Init( SDL_INIT_VIDEO ) )
+	{
+		printf( "SDL could not initialize! SDL Error: %s\n", SDL_GetError() );
+		success = false;
+	}
+	else
+	{
+		// Inilialize SDL_mixer , exit if fail
+if( SDL_Init(SDL_INIT_AUDIO) < 0 ) exit(1);
+// Setup audio mode
+Mix_OpenAudio(22050,AUDIO_S16SYS,2,640);
+///ix_Music *mus , *mus2 ;  // Background Music 
+//Mix_Chunk *wav , *wav2 ;  // For Sounds
+//mus = Mix_LoadMUS("./mixer/ff2prlde.mid");
+//wav = Mix_LoadWAV("./mixer/po_p2k.wav");
+//wav2 = Mix_LoadWAV("./mixer/start.wav");
 
-    //Si il y a une erreur lors de la mise en place de l'ecran
-    if( screen == NULL )
-    {
-        return false;
-    }
-
-    //Initialisation de SDL_ttf
-    if( TTF_Init() == -1 )
-    {
-        return false;
-    }
-
-    //on met en place la barre caption de la fenetre
-    SDL_WM_SetCaption( "Brutal Gore Launcher", NULL );
-
-    //si tout s'est bien passé
-    return true;
-}
-
-bool load_files()
+if (TTF_Init() == -1)
 {
-    //chargement du fond
-    background = load_image("img/background.png" );
-
-    //Ouverture du font
-    font = TTF_OpenFont( "Gore Font II.ttf", 28 );
-    font2 = TTF_OpenFont( "brutal-tooth.ttf", 28 );
-
-    //si il y a un probleme au chargement du fond
-    if( background == NULL )
-    {
-        return false;
-    }
-
-    //Si il y a une erreur au chargement du font
-    if( font == NULL )
-    {
-        return false;
-    }
-
-    //Si tout s'est bien passé
-    return true;
+	printf ("TTF failed");
 }
-
-void clean_up()
+else
 {
-    //Liberation des surfaces
-    SDL_FreeSurface( background );
-    SDL_FreeSurface( cursor );
-    SDL_FreeSurface( lan );
-    SDL_FreeSurface( opt );
-
-    //On ferme le font qu'on a utilisé
-    TTF_CloseFont( font );
-
-    //On quitte SDL_ttf
-    TTF_Quit();
-
-    //On quitte SDL
-    SDL_Quit();
+    font = TTF_OpenFont( "lazy.ttf", 28 );
+	if (font != NULL) {
+		printf("font loaded");
+		stuff << "Test : " << hpmenu1;
+		message = TTF_RenderText_Solid( font, stuff.str().c_str(), textColor );
+	}
 }
 
-/* ------------------------------------------------------------- SELECTION ------------------------------------------------*/
-int selection(int from){
-    SDL_Rect bg;
-    SDL_Rect cursorl;
-    SDL_Surface *pcount = NULL;
-    bool quit = false;
-    int nbplayers = 1;
-    cursorl.x = 20;
-    cursorl.y = HAUTEUR_FENETRE/4;
-    pcount = TTF_RenderText_Solid( font, "1", textColor );
-    bg.x = 0;
-    bg.y = 0;
 
-    while( quit == false )
-    {
-        SDL_Flip(screen);
-        SDL_BlitSurface( background, NULL, screen, &bg );
-        SDL_BlitSurface( pcount, NULL, screen, &cursorl );
-        while( SDL_PollEvent( &event ) )
-        {
-              switch(event.type)
-            {
-                case SDL_QUIT:
-                    quit = true;
-                break;
-                case SDL_KEYDOWN:
-                switch (event.key.keysym.sym)
-                {/*
-                    case SDLK_KP0:
-                        pcount = TTF_RenderText_Solid( font, "0", textColor );*/
-                        break;
-                    case SDLK_KP1:
-                        pcount = TTF_RenderText_Solid( font, "1", textColor );
-                        nbplayers = 1;
-                        break;
-                    case SDLK_KP2:
-                        pcount = TTF_RenderText_Solid( font, "2", textColor );
-                        nbplayers = 2;
-                        break;
-                    case SDLK_KP3:
-                        pcount = TTF_RenderText_Solid( font, "3", textColor );
-                        nbplayers = 3;
-                        break;
-                    case SDLK_KP4:
-                        pcount = TTF_RenderText_Solid( font, "4", textColor );
-                        nbplayers = 4;
-                        break;
-                    case SDLK_KP5:
-                        pcount = TTF_RenderText_Solid( font, "5", textColor );
-                        nbplayers = 5;
-                        break;
-                    case SDLK_KP6:
-                        pcount = TTF_RenderText_Solid( font, "6", textColor );
-                        nbplayers = 6;
-                        break;
-                    case SDLK_KP7:
-                        pcount = TTF_RenderText_Solid( font, "7", textColor );
-                        nbplayers = 7;
-                        break;
-                    case SDLK_KP8:
-                        pcount = TTF_RenderText_Solid( font, "8", textColor );
-                        nbplayers = 8;
-                        break;
-                    case SDLK_KP9:
-                        pcount = TTF_RenderText_Solid( font, "9", textColor );
-                        nbplayers = 9;
-                        break;
-                    break;
-                    case SDLK_ESCAPE:
-                    quit=true;
-                    break;
-                    case SDLK_UP:
-                    if (cursorl.y > HAUTEUR_FENETRE/4)
-                        cursorl.y -= (HAUTEUR_FENETRE/4);
-                    else
-                        cursorl.y = (HAUTEUR_FENETRE/4);
-                    break;
-                    case SDLK_DOWN:
-                    if (cursorl.y < HAUTEUR_FENETRE*3/4)
-                        cursorl.y += (HAUTEUR_FENETRE/4);
-                    else
-                        cursorl.y = (HAUTEUR_FENETRE*3/4);
-                    break;
-                    case SDLK_RETURN:
-                    if (cursorl.y == HAUTEUR_FENETRE/4)
-                    {
-                       game(nbplayers);
-                    }
-                    break;
-                }
-            }
-        }
-    }
-    return (0);
+		//Create window
+		gWindow = SDL_CreateWindow( "BrutalGore", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
+		if( gWindow == NULL )
+		{
+			printf( "Window could not be created! SDL Error: %s\n", SDL_GetError() );
+			success = false;
+		}
+		else
+		{
+			//Initialize PNG loading
+			int imgFlags = IMG_INIT_PNG;
+			if( !( IMG_Init( imgFlags ) & imgFlags ) )
+			{
+			printf( "SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError() );
+				success = false;
+			}
+			else
+			{
+				//Get window surface
+				gScreenSurface = SDL_GetWindowSurface( gWindow );
+			}
+			message_1.x = 0;
+			message_1.y = 0;
+			weap2.pos_gun.x = 20;
+			weap2.pos_gun.x = 20;
+		}
+	}
+
+	return success;
 }
+
+bool loadMedia()
+{
+	//Loading success flag
+	bool success = true;
+mus = Mix_LoadMUS("mus/test3.mp3");
+		if( mus == NULL )
+	{
+	//	Mix_PlayMusic(mus,1);
+		success = false;
+	}
+	//Load PNG surface
+	background = loadSurface2( "img\\background.png" , gScreenSurface);
+	if( background == NULL )
+	{
+		printf( "Failed to load PNG image!\n" );
+		success = false;
+	}
+	gun1 = loadSurface2( "img\\gun1.png", gScreenSurface );
+		if ( gun1 == NULL )
+	{
+		printf( "Failed to load PNG image!\n", gScreenSurface );
+		success = false;
+	}
+	gun2 = loadSurface2( "img\\gun2.png", gScreenSurface );
+		if ( gun2 == NULL )
+	{
+		printf( "Failed to load PNG image!\n", gScreenSurface );
+		success = false;
+	}
+
+	return success;
+}
+
+void close()
+{
+	//Free loaded image
+	SDL_FreeSurface( background );
+	background = NULL;
+
+	//Destroy window
+	SDL_DestroyWindow( gWindow );
+	gWindow = NULL;
+	
+	SDL_FreeSurface(background);
+	background = NULL;
+	
+	// CLEAN MISSILES HERE
+//SDL_FreeSurface(missile);
+	//missile = NULL;
+    Mix_FreeMusic( mus );
+    Mix_CloseAudio();
+    Mix_CloseAudio();
+
+	//Quit SDL subsystems
+	IMG_Quit();
+	SDL_Quit();
+}
+
+
+//bool isinside(SDL_Rect* target, 
+
+
 int main( int argc, char* args[] )
 {
-    SDL_Rect optos;
-    SDL_Rect launchos;
-    SDL_Rect lanos;
-    SDL_Rect bg;
-    SDL_Rect cursorl;
-
-    launchos.x = 50;
-    launchos.y = HAUTEUR_FENETRE/4;
-    lanos.x = 50;
-    lanos.y = HAUTEUR_FENETRE*2/4;
-    optos.x = 50;
-    optos.y = HAUTEUR_FENETRE*3/4;
-    bg.x = 0;
-    bg.y = 0;
-    cursorl.x = 20;
-    cursorl.y = HAUTEUR_FENETRE/4;
-    //ce qui va nous permettre de quitter
-    bool quit = false;
-
-    //Initialisation
-    if( init() == false )
-    {
-        return 1;
-    }
-
-    //Chargement des fichiers
-    if( load_files() == false )
-    {
-        return 1;
-    }
-    /*
-    //cursor
-    cursor = load_image( "img/cursor.png" );*/
-
-    //application du texte
-    launch = TTF_RenderText_Solid( font, "Lancer", textColor );
-    lan= TTF_RenderText_Solid( font, "LAN", textColor );
-    opt= TTF_RenderText_Solid( font, "Options", textColor );
-    cursor = TTF_RenderText_Solid( font2, "=", textColor );
-
-/*
-
-    //Application des surfaces(images) sur l'ecran
-    apply_surface( 0, 0, background, screen );
-    apply_surface( 20, HAUTEUR_FENETRE/4, cursor, screen );
-    apply_surface( 50, HAUTEUR_FENETRE*3/4, launch, screen );
-    apply_surface( 50, HAUTEUR_FENETRE*2/4, lan, screen );
-    apply_surface( 50, HAUTEUR_FENETRE/4, opt, screen );*/
-
-    //mise à jour de l'ecran
-    if( SDL_Flip( screen ) == -1 )
-    {
-        return 1;
-    }
-
-    //Tant que l'utilisateur n'a pas quitter
-    while( quit == false )
-    {
-        SDL_Flip(screen);
-        SDL_BlitSurface( background, NULL, screen, &bg );
-        SDL_BlitSurface( launch, NULL, screen, &launchos );
-        SDL_BlitSurface( lan, NULL, screen, &lanos );
-        SDL_BlitSurface( opt, NULL, screen, &optos );
-        SDL_BlitSurface( cursor, NULL, screen, &cursorl );
-        //tant qu'il y a un evenement dans le handler
-        while( SDL_PollEvent( &event ) )
-        {
-              switch(event.type)
-            {
-                case SDL_QUIT:
-                    clean_up();
-                    quit=true;
-                break;
-                case SDL_KEYDOWN:
-                switch (event.key.keysym.sym)
-                {
-                    case SDLK_ESCAPE:
-                    quit=true;
-                    break;
-                    case SDLK_UP:
-                    if (cursorl.y > HAUTEUR_FENETRE/4)
-                        cursorl.y -= (HAUTEUR_FENETRE/4);
-                    else
-                        cursorl.y = (HAUTEUR_FENETRE/4);
-                    break;
-                    case SDLK_DOWN:
-                    if (cursorl.y < HAUTEUR_FENETRE*3/4)
-                        cursorl.y += (HAUTEUR_FENETRE/4);
-                    else
-                        cursorl.y = (HAUTEUR_FENETRE*3/4);
-                    break;
-                    case SDLK_RETURN:
-                    if (cursorl.y == HAUTEUR_FENETRE/4)
-                    {
-                        selection(1);
-                    }
-                    if (cursorl.y == HAUTEUR_FENETRE*2/4)
-                    {
-                        // LAN
-                    }
-
-                    break;
-                }
-                break;
-            }
-        }
-    }
-
-    return 0;
-}
+	//Start up SDL and create window
+	if( !init() )
+	{
+		printf( "Failed to initialize!\n" );
+	}
+	else
+	{
+		//Load media
+		if( !loadMedia() )
+		{
+			printf( "Failed to load media!\n" );
+		}
+		else
+		{	
+			GameObj = Game(gScreenSurface, gWindow);
+			weap2.gun = gun2;
+			stateMain=1;
 
 
-/* ------------------------------------------------------------- GAME ------------------------------------------------*/
+//Mix_PlayMusic(mus,1); //Music loop=1
+			//Main loop flag
+			bool quit = false;
+			bool shoot = false;
+			//Event handler
+			SDL_Event e;
 
-int game(int nbplayers)
-{
-	// opengl lighting initialization
-	glDisable( GL_LIGHTING );
-	glEnable( GL_LIGHT0 );
+			//While application is running
+			while( !quit )
+			{
+				
+								//Handle events on queue
+				while( SDL_PollEvent( &e ) != 0 )
+				{
+					//User requests quit
+					switch (e.type) {
+						case SDL_QUIT :
+								quit = true;
+							break;
+						case SDL_KEYDOWN :
+							
+					GameObj.Root.Player1.player_controls(e);
+							//User requests quit
+							switch (e.type) {
+								case SDL_QUIT :
+										quit = true;
+									break;
+								case SDL_KEYDOWN :
+									switch( e.key.keysym.sym ){
+										case SDLK_ESCAPE:
+											quit=true;
+											break;
+										default:
+												//GameObj.Root.Player1.player_controls(e);
+											break;
+									}
+							}
+						case (SDL_MOUSEBUTTONDOWN):
+					GameObj.Root.Player1.player_controls(e);
+							  /* If the left button was pressed. */
+						   switch (e.button.button) {
+						   case SDL_BUTTON_LEFT: 
+							   //printf("click");
+							   break;
+						   case SDL_BUTTON_RIGHT: 
+							   //printf("clickdroit");
+							   GameObj.state = 2;
+							   break;
+								}
+					}
+				}
+				if (GameObj.state==1) {
+				//	updateMenu();
+					GameObj.updateGame();
+				}
+				else {
 
-	float lightpos[]	= { 10.0, 10.0, 100.0 };
-	float lightcolor[]	= { 1.0, 1.0, 1.0, 1.0 };
+				//Apply the PNG image
+				SDL_BlitSurface( background, NULL, gScreenSurface , NULL );
+				//Apply the PNG image
 
-	glLightfv( GL_LIGHT0, GL_POSITION, lightpos );
-	glLightfv( GL_LIGHT0, GL_DIFFUSE, lightcolor );
-	glLightfv( GL_LIGHT0, GL_SPECULAR, lightcolor );
-    bool fright = false;
-    bool fleft = false;
-    bool fdown = false;
-    bool fup = false;
-    Player  *players[nbplayers];
-    SDL_Surface *ecran = NULL;
+				
 
-    const Uint32 time_per_frame = 1000/FPS;
+			
+				//SDL_BlitSurface( player1.player_pic, NULL, gScreenSurface2, &player1.pos_player);
+			//	SDL_BlitSurface( weap2.gun, NULL, gScreenSurface2, &player1.pos_playerX );
+					
+				
+				//Update the surface
+				}
+				SDL_UpdateWindowSurface( gWindow );
+				}
+			}
+	}
 
-    Uint32 last_time,current_time,elapsed_time; //for time animation
-    Uint32 start_time,stop_time; //for frame limit
+	//Free resources and close SDL
+	close();
 
-
-    SDL_Init(SDL_INIT_VIDEO);
-
-
-	//Mise en place de la barre caption
-	SDL_WM_SetCaption( "Brutal Gore", NULL );
-
-    atexit(SDL_Quit);
-    /*playsound("sound/alig.mp3");*/
-
-    ecran = SDL_SetVideoMode(LARGEUR_FENETRE, HAUTEUR_FENETRE, 32, SDL_OPENGL);
-   /* initFullScreen();*/
-    glMatrixMode( GL_PROJECTION );
-    glLoadIdentity( );
-    gluPerspective(70,(double)LARGEUR_FENETRE/HAUTEUR_FENETRE,1,1000);
-    glEnable(GL_DEPTH_TEST);
-    glEnable(GL_TEXTURE_2D);
-    ens = new Ennemy(-30,0,15);
-   /* ens = new Ennemy(50,11,40);
-
-    ens = new Ennemy(55,10,40);
-    ens = new Ennemy(50,10,30);*/
-    gameobj = new Game(nbplayers);
-    chargerTextures();
-
-    last_time = SDL_GetTicks();
-    for (;;)
-    {
-
-        start_time = SDL_GetTicks();
-        SDL_PollEvent(&event);
-            switch(event.type)
-            {
-                case SDL_QUIT:
-                exit(0);
-                break;
-                case SDL_KEYDOWN:
-                switch (event.key.keysym.sym)
-                {
-                    case SDLK_PRINT:
-                    takeScreenshot("test2.bmp");
-                    break;
-                    case SDLK_ESCAPE:
-                    exit(0);
-                    break;
-                    case SDLK_SPACE:
-                        xc = 10;
-                        yc = -10;
-                        xe = -xp;
-                        ye = 10;
-                    break;
-                    case SDLK_UP:
-/*                    movelegs("up");*/
-                    fup = true;
-                    fdown = false;
-                    break;
-                    case SDLK_DOWN:
-                    fdown = true;
-                    fup = false;
-                    break;
-                    case SDLK_RIGHT:
-                    fright = true;
-                    fleft = false;
-                    break;
-                    case SDLK_LEFT:
-                    fleft = true;
-                    fright = false;
-                    break;
-                }
-                break;
-            case SDL_KEYUP:
-                  switch (event.key.keysym.sym)
-                {
-                    case SDLK_UP:
-                    fup = false;
-                    break;
-                    case SDLK_DOWN:
-                    fdown = false;
-                    break;
-                    case SDLK_RIGHT:
-                    fright = false;
-                    break;
-                    case SDLK_LEFT:
-                    fleft = false;
-                    break;
-                }
-                break;
-            }
-        handle_event(fup, fright, fleft, fdown, speed);
-
-        current_time = SDL_GetTicks();
-        elapsed_time = current_time - last_time;
-        last_time = current_time;
-
-        DrawGL(ecran);
-
-        stop_time = SDL_GetTicks();
-        if ((stop_time - last_time) < time_per_frame)
-        {
-           SDL_Delay(time_per_frame - (stop_time - last_time));
-        }
-
-    }
-
-    return 0;
-}
-
-
-bool handle_event(bool fup, bool fright, bool fleft, bool fdown, int speed)
-{
-    Uint8 *keystate = SDL_GetKeyState(NULL);
-
-    if (keystate[SDLK_RIGHT] && (yp-4 < -15*mapy))
-        return false;
-    else
-        if (keystate[SDLK_LEFT] && (yp+4 > 15*mapy))
-            return false;
-        else
-            if (keystate[SDLK_UP] && (xp+10 > 15*mapx))
-                return false;
-            else
-                if (keystate[SDLK_DOWN] && (xp-2 < -15*30))
-                return false;
-
-
-/* --------------------------------------------- MULTI KEY ---------------------------------------------*/
-    if ( keystate[SDLK_RIGHT] && keystate[SDLK_UP] )
-    {
-        yp -= speed/2;
-        xp += speed/2;
-    };
-
-    if ( keystate[SDLK_LEFT] && keystate[SDLK_UP] )
-    {
-        yp += speed/2;
-        xp += speed/2;
-    };
-
-    if ( keystate[SDLK_RIGHT] && keystate[SDLK_DOWN] )
-    {
-        yp -= speed/2;
-        xp -= speed/2;
-    };
-
-    if ( keystate[SDLK_LEFT] && keystate[SDLK_DOWN] )
-    {
-        yp += speed/2;
-        xp -= speed/2;
-    };
-
-    if ( keystate[SDLK_LEFT] && keystate[SDLK_RIGHT] )
-    {
-        if (fright)
-            yp += speed;
-        else
-            yp -= speed;
-    };
-    if ( keystate[SDLK_DOWN] && keystate[SDLK_UP] )
-    {
-        if (fdown)
-            xp += speed;
-        else
-            xp -= speed;
-    };
-
-
-/* --------------------------------------------- SINGLE KEY ---------------------------------------------*/
-    if ( keystate[SDLK_DOWN] )
-        xp -= speed;
-
-    if (keystate[SDLK_UP] )
-        xp += speed;
-
-    if ( keystate[SDLK_RIGHT])
-        yp -= speed;
-
-    if ( keystate[SDLK_LEFT])
-        yp += speed;
-return true;
-
-}
-
-void DrawGL( SDL_Surface *ecran)
-{
-
-  glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-
-    glMatrixMode( GL_MODELVIEW );
-    glLoadIdentity( );
-    gluLookAt(xp+xe,yp+ye,zp+ze,
-             xc,yc,zc,
-              0,0,1);
-    ens->show();
-    for (int i = 0; i < gameobj->nbplayers; i++) {
-        gameobj->players[i]->show();
-    }
-    dessinerScene();
-    SDL_GL_SwapBuffers();
+	return 0;
 }

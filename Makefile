@@ -1,24 +1,15 @@
-SOURCES =	main.cpp \
-		sdlglutils.cpp \
-		vector3d.cpp \
-		freeflycamera.cpp \
-		scene.cpp
-OBJECTS	=	$(SOURCES:.cpp=.o)
-TARGET	=	sdlgl_09_freefly	
-LIBS	=	$(shell sdl-config --libs) -lSDL_image -lGL -lGLU 
+CFLAGS=-g -O2 -Wall $(shell sdl-config --cflags)
+LDFLAGS=-g -O2 -Wall $(shell sdl-config --libs) -lSDL_ttf
 
-all: $(OBJECTS)
-	g++ $(LIBS) -o $(TARGET) $(OBJECTS)
+PROGRAMS=$(basename $(wildcard *.c))
 
-%o: %cpp
-	g++ -o $@ -c $<
+all: $(PROGRAMS) freefont-ttf
 
-x: all
-	./$(TARGET)
+freefont-ttf: freefont-ttf.tar.gz
+	rm -rf freefont-ttf
+	gzip -dc freefont-ttf.tar.gz | tar -xv
 
 clean:
-	rm -rf $(OBJECTS)
+	rm -rf $(PROGRAMS) *.o freefont-ttf
 
-superclean : clean
-	rm -rf $(TARGET)
-
+new: clean all
