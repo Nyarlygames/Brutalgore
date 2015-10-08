@@ -16,13 +16,16 @@ class Missile
 SDL_Surface*	screen_missile;
 SDL_Rect	pos_missile;
 SDL_Surface*	img_missile;
+int state_missile;
 		
 
 Missile();
 Missile(SDL_Surface*	Screen, int id, SDL_Rect pos_player);
 void updateMissile()
 {
+	if (state_missile == 1) {
 	SDL_BlitSurface(img_missile, NULL,screen_missile , &pos_missile );
+	}
 
 }
 	

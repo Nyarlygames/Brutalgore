@@ -18,9 +18,10 @@ class Game
 
 Game();
 Player PlayerGame;
+SDL_Window *windows_game;
 MainMenu	Root;
 int state;
-Game(SDL_Surface*	Screen);
+Game(SDL_Surface*	Screen, SDL_Window *window);
 
     void onClose()
     {
@@ -28,6 +29,7 @@ Game(SDL_Surface*	Screen);
 	
 void updateGame() {
 	Root.updateMenu();
+	//SDL_UpdateWindowSurface( windows_game );
 }
 	
 SDL_Surface* loadSurface_player( std::string path, SDL_Surface*	screen )

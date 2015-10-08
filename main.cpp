@@ -36,7 +36,7 @@ SDL_Window* gWindow = NULL;
 	
 
 //Current displayed PNG image
-SDL_Surface* gScreenSurface2 = NULL;
+SDL_Surface* gScreenSurface = NULL;
 SDL_Surface* background = NULL;
 SDL_Surface* player_pic = NULL;
 SDL_Surface* player2_pic = NULL;
@@ -83,7 +83,7 @@ extern SDL_Surface* loadSurface2( std::string path, SDL_Surface*	screen )
 	else
 	{
 		//Convert surface to screen format
-		optimizedSurface = SDL_ConvertSurface( loadedSurface, gScreenSurface2->format, NULL );
+		optimizedSurface = SDL_ConvertSurface( loadedSurface, gScreenSurface->format, NULL );
 		if( optimizedSurface == NULL )
 		{
 			printf( "Unable to optimize image %s! SDL Error: %s\n", path.c_str(), SDL_GetError() );
@@ -184,7 +184,7 @@ else
 			else
 			{
 				//Get window surface
-				gScreenSurface2 = SDL_GetWindowSurface( gWindow );
+				gScreenSurface = SDL_GetWindowSurface( gWindow );
 			}
 			message_1.x = 0;
 			message_1.y = 0;
@@ -207,22 +207,22 @@ mus = Mix_LoadMUS("mus/test3.mp3");
 		success = false;
 	}
 	//Load PNG surface
-	background = loadSurface2( "img\\background.png" , gScreenSurface2);
+	background = loadSurface2( "img\\background.png" , gScreenSurface);
 	if( background == NULL )
 	{
 		printf( "Failed to load PNG image!\n" );
 		success = false;
 	}
-	gun1 = loadSurface2( "img\\gun1.png", gScreenSurface2 );
+	gun1 = loadSurface2( "img\\gun1.png", gScreenSurface );
 		if ( gun1 == NULL )
 	{
-		printf( "Failed to load PNG image!\n", gScreenSurface2 );
+		printf( "Failed to load PNG image!\n", gScreenSurface );
 		success = false;
 	}
-	gun2 = loadSurface2( "img\\gun2.png", gScreenSurface2 );
+	gun2 = loadSurface2( "img\\gun2.png", gScreenSurface );
 		if ( gun2 == NULL )
 	{
-		printf( "Failed to load PNG image!\n", gScreenSurface2 );
+		printf( "Failed to load PNG image!\n", gScreenSurface );
 		success = false;
 	}
 
@@ -274,7 +274,7 @@ int main( int argc, char* args[] )
 		}
 		else
 		{	
-			GameObj = Game(gScreenSurface2);
+			GameObj = Game(gScreenSurface, gWindow);
 			weap2.gun = gun2;
 			stateMain=1;
 
@@ -337,7 +337,7 @@ int main( int argc, char* args[] )
 				else {
 
 				//Apply the PNG image
-				SDL_BlitSurface( background, NULL, gScreenSurface2, NULL );
+				SDL_BlitSurface( background, NULL, gScreenSurface , NULL );
 				//Apply the PNG image
 
 				

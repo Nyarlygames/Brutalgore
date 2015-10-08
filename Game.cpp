@@ -16,7 +16,7 @@ SDL_Rect pos_player_base;
 Game::Game() 
 {
 }
-Game::Game(SDL_Surface*	Screen){
+Game::Game(SDL_Surface*	Screen, SDL_Window *window){
 	
 
 	pos_player_base.x = 50;
@@ -26,4 +26,5 @@ Game::Game(SDL_Surface*	Screen){
 	screenGame = Screen;
 	Root = MainMenu(Screen);
 	PlayerGame = Root.Player1;
+	windows_game = window;
 }

@@ -16,8 +16,7 @@ Missile::Missile(SDL_Surface*	Screen, int id, SDL_Rect pos_player){
 	
 	pos_missile = pos_player;
 	screen_missile = Screen;
-	
- 
+	state_missile = 1;
  switch (id) {
  case 1 :
 	img_missile = loadSurface_missile( "img\\missile1.png", Screen );

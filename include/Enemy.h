@@ -15,12 +15,14 @@ class Enemy
 SDL_Surface* img_enemy;
 SDL_Surface* img_enemy_dead;
 SDL_Surface* healthbar;
+SDL_Surface* hpbar;
 SDL_Rect pos_enemy;
 SDL_Rect healthpos;
 SDL_Surface* screen_enemy;
 int health;
+int basehealth;
 int state;
-
+SDL_Rect fillbar;
 
 Enemy();
 Enemy::Enemy(SDL_Surface* Screen, int id, SDL_Rect sentpos, int basehealth);
@@ -35,8 +37,18 @@ void	updateEnemy(){
 			else {
 				SDL_BlitSurface( img_enemy_dead, NULL, screen_enemy, &pos_enemy );
 			}
-			if (healthbar != NULL)
+			if ((health != basehealth) && (state == 1)) {
+				fillbar.w = (health * img_enemy->w) / basehealth;
+hpbar = SDL_CreateRGBSurface(0, fillbar.w, 10, 32, 0, 0, 0, SDL_ALPHA_TRANSPARENT);
+SDL_FillRect(healthbar, NULL, SDL_MapRGB(hpbar->format, 255, 255, 30));
+					SDL_BlitSurface( hpbar, NULL, screen_enemy, &healthpos );
+
+			}
+			else if ((state == 0) || (health <= 0)) {
+healthbar = SDL_CreateRGBSurface(0, img_enemy_dead->w, 10, 32, 0, 0, 0, 0);
+SDL_FillRect(healthbar, NULL, SDL_MapRGB(healthbar->format, 255, 255, 0));
 					SDL_BlitSurface( healthbar, NULL, screen_enemy, &healthpos );
+			}
 		}
 
 

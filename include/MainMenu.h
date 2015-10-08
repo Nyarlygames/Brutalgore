@@ -67,12 +67,12 @@ void	setMenu(SDL_Surface	*screen){
 
 	pos_item_2.x = 500;
 	pos_item_2.y = 300;
-	Enemies[1] = Enemy(screen,2, pos_item_2,3);
+	Enemies[1] = Enemy(screen,2, pos_item_2,10);
 	nb_enemies++;
 	
 	pos_item_3.x = 600;
 	pos_item_3.y = 20;
-	Enemies[2] = Enemy(screen,3,pos_item_3,1);
+	Enemies[2] = Enemy(screen,3,pos_item_3,20);
 	
 	pos_player1.x = 50;
 	pos_player1.y = 600;
@@ -91,19 +91,22 @@ void	collision_check(Player PlayerColl, Enemy* EnemyColl){
 				((PlayerColl.missiles_player[y].pos_missile.y >= EnemyColl[i].pos_enemy.y) &&
 				(PlayerColl.missiles_player[y].pos_missile.y + PlayerColl.missiles_player[y].img_missile->w <= EnemyColl[i].pos_enemy.y+ EnemyColl[i].img_enemy->w))) {
 
-					if (EnemyColl[i].health - PlayerColl.damages <= 0) {
+					if ((EnemyColl[i].state == 1) && (EnemyColl[i].health - PlayerColl.damages <= 0) && (PlayerColl.missiles_player[y].state_missile == 1)) {
 						EnemyColl[i].state = 0;
 					}
-					else {
-					 EnemyColl[i].health -= PlayerColl.damages;
-											printf("collision");
+					else if ((EnemyColl[i].health > 0) && (PlayerColl.missiles_player[y].state_missile == 1)) {
+					 printf("hereonce");
+					PlayerColl.missiles_player[y].state_missile = 0;
+					EnemyColl[i].fillbar.w = (EnemyColl[i].health * EnemyColl[i].img_enemy->w) / EnemyColl[i].basehealth;
+					SDL_FillRect(EnemyColl[i].healthbar, &EnemyColl[i].fillbar, SDL_MapRGB(EnemyColl[i].healthbar->format, 255, 30, 0));
+					SDL_BlitSurface( EnemyColl[i].healthbar, NULL, EnemyColl[i].screen_enemy, &EnemyColl[i].healthpos );
+					EnemyColl[i].health = EnemyColl[i].health - 1;//PlayerColl.damages;
 					}
 			}
 		}}
 	}
 	// add collision player and stuff
 				
-
 };
 
 void	updateMenu(){
