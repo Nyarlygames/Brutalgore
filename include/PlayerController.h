@@ -27,8 +27,7 @@ while( SDL_PollEvent( &e ) != 0 )
 							//User requests quit
 							switch (e.type) {
 								case SDL_QUIT :
-										quit = true;
-									break;
+										quit = true;									break;
 								case SDL_KEYDOWN :
 									switch( e.key.keysym.sym ){
 										case SDLK_LEFT:

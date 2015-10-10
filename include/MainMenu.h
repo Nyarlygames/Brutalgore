@@ -83,19 +83,22 @@ void	setMenu(SDL_Surface	*screen){
 
 
 void	collision_check(Player PlayerColl, Enemy* EnemyColl){
-	if (PlayerColl.nb_missiles>0) {
-	for (int i = 0; i< nb_enemies; i++){
+	if (PlayerColl.nb_missiles>0){
+	for (int i = 0; i< nb_enemies+1; i++){
 		for (int y = 0; y< PlayerColl.nb_missiles; y++){
-			if (((PlayerColl.missiles_player[y].pos_missile.x <= EnemyColl[i].pos_enemy.x) &&
-				(PlayerColl.missiles_player[y].pos_missile.x + PlayerColl.missiles_player[y].img_missile->h >= EnemyColl[i].pos_enemy.x + EnemyColl[i].img_enemy->h)) || 
-				((PlayerColl.missiles_player[y].pos_missile.y >= EnemyColl[i].pos_enemy.y) &&
-				(PlayerColl.missiles_player[y].pos_missile.y + PlayerColl.missiles_player[y].img_missile->w <= EnemyColl[i].pos_enemy.y+ EnemyColl[i].img_enemy->w))) {
+if (EnemyColl[i].state != 0) {
+			if (((PlayerColl.missiles_player[y].pos_missile.x <= EnemyColl[i].pos_enemy.x + EnemyColl[i].img_enemy->w) &&
+				(PlayerColl.missiles_player[y].pos_missile.x + PlayerColl.missiles_player[y].img_missile->w >= EnemyColl[i].pos_enemy.x)) && 
+
+				((PlayerColl.missiles_player[y].pos_missile.y + PlayerColl.missiles_player[y].img_missile->h >= EnemyColl[i].pos_enemy.y) &&
+				(PlayerColl.missiles_player[y].pos_missile.y <= EnemyColl[i].pos_enemy.y+ EnemyColl[i].img_enemy->h))) {
 
 					if ((EnemyColl[i].state == 1) && (EnemyColl[i].health - PlayerColl.damages <= 0) && (PlayerColl.missiles_player[y].state_missile == 1)) {
+						printf("enemy dead");
 						EnemyColl[i].state = 0;
 					}
 					else if ((EnemyColl[i].health > 0) && (PlayerColl.missiles_player[y].state_missile == 1)) {
-					 printf("hereonce");
+					 printf("enemy hurt");
 					PlayerColl.missiles_player[y].state_missile = 0;
 					EnemyColl[i].fillbar.w = (EnemyColl[i].health * EnemyColl[i].img_enemy->w) / EnemyColl[i].basehealth;
 					SDL_FillRect(EnemyColl[i].healthbar, &EnemyColl[i].fillbar, SDL_MapRGB(EnemyColl[i].healthbar->format, 255, 30, 0));
@@ -103,7 +106,9 @@ void	collision_check(Player PlayerColl, Enemy* EnemyColl){
 					EnemyColl[i].health = EnemyColl[i].health - 1;//PlayerColl.damages;
 					}
 			}
-		}}
+		}
+		}
+	}
 	}
 	// add collision player and stuff
 				

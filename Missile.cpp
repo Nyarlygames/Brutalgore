@@ -11,9 +11,9 @@ using namespace std;
 Missile::Missile() 
 {
 }
-Missile::Missile(SDL_Surface*	Screen, int id, SDL_Rect pos_player){
+Missile::Missile(SDL_Surface*	Screen, int id, SDL_Rect pos_player, SDL_Rect destination){
 	
-	
+	dest_missile = destination;
 	pos_missile = pos_player;
 	screen_missile = Screen;
 	state_missile = 1;

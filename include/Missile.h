@@ -16,15 +16,30 @@ class Missile
 SDL_Surface*	screen_missile;
 SDL_Rect	pos_missile;
 SDL_Surface*	img_missile;
+SDL_Rect dest_missile;
 int state_missile;
 		
 
 Missile();
-Missile(SDL_Surface*	Screen, int id, SDL_Rect pos_player);
+Missile(SDL_Surface*	Screen, int id, SDL_Rect pos_player, SDL_Rect destination);
 void updateMissile()
 {
 	if (state_missile == 1) {
-	SDL_BlitSurface(img_missile, NULL,screen_missile , &pos_missile );
+		if (dest_missile.x < pos_missile.x)
+			pos_missile.x--;
+		if (dest_missile.x > pos_missile.x)
+			pos_missile.x++;
+		if (dest_missile.y <pos_missile.y)
+			pos_missile.y--;
+		if (dest_missile.y > pos_missile.y)
+			pos_missile.y++;
+
+		if ((pos_missile.x - dest_missile.x == 0) && (pos_missile.y - dest_missile.y ==0)){
+			state_missile = 0;
+		}
+
+
+		SDL_BlitSurface(img_missile, NULL,screen_missile , &pos_missile );
 	}
 
 }

@@ -28,8 +28,6 @@ Missile*	missiles_player;
 int nb_missiles;
 int nb_missiles_max;
 int damages;
-SDL_Rect spawn_missiles[20];
-SDL_Rect dest_missiles[20];
 //Missile*	missiles_player;
 //Missile* Missiles;
 int hp;
@@ -90,8 +88,13 @@ SDL_Surface* loadSurface_player( std::string path, SDL_Surface*	screen )
 	}
 	
 	void spawn_missile(){
+		int xmouse, ymouse;
+		SDL_Rect dest_missiles;
+	SDL_GetMouseState(&xmouse,&ymouse);	
+	dest_missiles.x = xmouse;
+	dest_missiles.y = ymouse;
 		if (nb_missiles < nb_missiles_max) {
-			missiles_player[nb_missiles] = Missile(screen, 1, pos_player);
+			missiles_player[nb_missiles] = Missile(screen, 1, pos_player,dest_missiles);
 			nb_missiles++;
 		}
 	}

@@ -1,15 +1,14 @@
-﻿Build started 08/10/2015 02:21:44.
+﻿Build started 10/10/2015 11:08:57.
      1>Project "D:\Projects\Brutalgore\Brutalgore.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating "Debug\Brutalgore.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
-         d:\Programs\VS2010\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt Enemy.cpp Game.cpp MainMenu.cpp main.cpp
-         Enemy.cpp
+         d:\Programs\VS2010\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt Game.cpp MainMenu.cpp main.cpp
+         Game.cpp
          Generating Code...
          Compiling...
          main.cpp
          MainMenu.cpp
-         Game.cpp
          Generating Code...
        Link:
          d:\Programs\VS2010\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Projects\Brutalgore\Debug\Brutalgore.exe" /NOLOGO SDL2.lib SDL2main.lib SDL2_image.lib SDL2_ttf.lib SDL2_mixer.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\Brutalgore.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"D:\Projects\Brutalgore\Debug\Brutalgore.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Projects\Brutalgore\Debug\Brutalgore.lib" /MACHINE:X86 Debug\Enemy.obj
@@ -19,7 +18,6 @@
          Debug\MainMenu.obj
          Debug\Missile.obj
          Debug\Player.obj
-         Debug\PlayerController.obj
          LINK : D:\Projects\Brutalgore\Debug\Brutalgore.exe not found or not built by the last incremental link; performing full link
      1>MSVCRTD.lib(cinitexe.obj) : warning LNK4098: defaultlib 'msvcrt.lib' conflicts with use of other libs; use /NODEFAULTLIB:library
          Brutalgore.vcxproj -> D:\Projects\Brutalgore\Debug\Brutalgore.exe
@@ -32,4 +30,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.36
+Time Elapsed 00:00:01.10
