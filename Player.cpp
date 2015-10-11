@@ -7,6 +7,7 @@
 #include "include/Gun.h"
 #include "include/Player.h"
 #include "include/Missile.h"
+#include "include/Missile.h"
 //#include "PlayerController.h";
 using namespace std;
 

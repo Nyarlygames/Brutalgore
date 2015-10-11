@@ -81,6 +81,7 @@
     <ClInclude Include="include\Enemy.h" />
     <ClInclude Include="include\Game.h" />
     <ClInclude Include="include\Gun.h" />
+    <ClInclude Include="include\main.h" />
     <ClInclude Include="include\MainMenu.h" />
     <ClInclude Include="include\Missile.h" />
     <ClInclude Include="include\Player.h" />
