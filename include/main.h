@@ -13,17 +13,14 @@
 #include <string>
 #include <sstream>
 
-int SCREEN_WIDTH = 1680;
-int SCREEN_HEIGHT = 1050;
-
-bool init();
-bool loadMedia();
-void close();
+int SCREEN_WIDTH = 1;
+int SCREEN_HEIGHT = 1;
 
 SDL_Window* gWindow = NULL;
 SDL_Surface* gScreenSurface = NULL;
 SDL_Surface* background = NULL;
 Game GameObj;
+MainMenu MenuObj;
 TTF_Font *font = NULL;
 Mix_Music*	mus = NULL;
 int stateMain = 1;
@@ -50,7 +47,10 @@ extern SDL_Surface* loadSurface_main( std::string path, SDL_Surface*	screen )
 	return optimizedSurface;
 }
 bool init();
+void createCfg();
 bool loadCfg(char *filename);
+bool loadMedia();
+void close();
 int main( int argc, char* args[] );
 
 #endif

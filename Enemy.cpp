@@ -12,7 +12,6 @@ SDL_Surface* img_enemy;
 SDL_Surface* healthbar;
 SDL_Rect healthpos;
 SDL_Surface* screen_enemy = NULL;
-int health = 0;
 
 Enemy::Enemy() 
 {
@@ -22,9 +21,9 @@ Enemy::Enemy()
 }
  
  
-Enemy::Enemy(SDL_Surface* Screen, int id, SDL_Rect sentpos, int starthealth) 
+Enemy::Enemy(SDL_Surface* Screen, int createid, SDL_Rect sentpos, int starthealth) 
 {
- 
+ id = createid;
  switch (id) {
  
  case 1 :
@@ -77,7 +76,6 @@ healthpos.y = pos_enemy.y -15;
 healthbar = SDL_CreateRGBSurface(0, fillbar.w, fillbar.h, 32, 0, 0, 0, 0);
 
 SDL_FillRect(healthbar, NULL, SDL_MapRGB(healthbar->format, 255, 0, 0));
-					SDL_BlitSurface( healthbar, NULL, screen_enemy, &healthpos );
 
 }
 

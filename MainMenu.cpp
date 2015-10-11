@@ -11,18 +11,14 @@
 #include "include/Game.h"
 //#include "include\Toolbox.h"
 
-	
-
-
-
-
 MainMenu::MainMenu() 
 {
 }
+
 MainMenu::MainMenu(SDL_Surface*	Screen){
-	
 	max_enemies = 50;
 	nb_enemies = 0;
+	state=1;
 	window = Screen;
 	setMenu(Screen);
 }

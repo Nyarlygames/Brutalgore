@@ -23,9 +23,7 @@ MainMenu	Root;
 int state;
 Game(SDL_Surface*	Screen, SDL_Window *window);
 
-    void onClose()
-    {
-    }
+void onClose(){}
 	
 void updateGame() {
 	Root.updateMenu();

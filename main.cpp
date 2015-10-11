@@ -25,12 +25,22 @@ const int MAX_CHARS_PER_LINE = 512;
 const int MAX_TOKENS_PER_LINE = 50;
 const char* const DELIMITER = " ";
 
+void createCfg() {
+  ofstream defaultCfg ("options.bgo",ofstream::binary);
+  defaultCfg <<"width 1920" << endl;
+  defaultCfg <<"height 1080" << endl;
+  defaultCfg.close();
+  printf("created default cfg \n");
+}
+
 bool loadCfg(char	*filename) {
 		// create a file-reading object
 	ifstream fin;
 	fin.open(filename); // open a file
-	if (!fin.good()) 
-	return 1; // exit if file not found
+	if (!fin.good()) {
+		createCfg();
+		return false; 
+	}
   
 	while (!fin.eof())
 	{
@@ -57,7 +67,6 @@ bool loadCfg(char	*filename) {
 		
 		if (n>0){
 			if (strcmp(token[0], "width") == 0){
-			printf("test");
 				SCREEN_WIDTH = atoi(token[1]);
 			}
 			else if (strcmp(token[0], "height") == 0){
@@ -96,7 +105,15 @@ bool init()
 			font = TTF_OpenFont( "lazy.ttf", 28 );
 		}
 
-		loadCfg("options.bgo");
+		if (loadCfg("options.bgo") == false){
+			printf ("failed to load opt, created default, retry \n");
+			if (loadCfg("options.bgo") == true) {
+				printf("cfg loaded\n");
+			}
+			else {
+				printf("cfgload failed\n");
+			}
+		}
 
 		gWindow = SDL_CreateWindow( "BrutalGore", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
 		if( gWindow == NULL )
@@ -179,7 +196,9 @@ int main( int argc, char* args[] )
 		else
 		{	
 			GameObj = Game(gScreenSurface, gWindow);
-			stateMain=1;
+			MenuObj = MainMenu(gScreenSurface);
+		//	GameObj = Game(gScreenSurface, gWindow);
+			stateMain=0;
 			//Mix_PlayMusic(mus,1); //Music loop=1
 
 			bool quit = false;
@@ -193,42 +212,54 @@ int main( int argc, char* args[] )
 							quit = true;
 							break;
 						case SDL_KEYDOWN :
-							GameObj.Root.Player1.player_controls(e);
-								switch (e.type) {
-									case SDL_QUIT :
-										quit = true;
-										break;
-									case SDL_KEYDOWN :
-										switch( e.key.keysym.sym ){
-											case SDLK_ESCAPE:
-												quit=true;
-												break;
-											default:
-												break;
-										}
-								}
+							MenuObj.Player1.player_controls(e);
+							switch (e.type) {
+								case SDL_QUIT :
+									quit = true;
+									break;
+								case SDL_KEYDOWN :
+									switch( e.key.keysym.sym ){
+										case SDLK_ESCAPE:
+											quit=true;
+											break;
+										default:
+											break;
+									}
+							}
 						case (SDL_MOUSEBUTTONDOWN):
-							GameObj.Root.Player1.player_controls(e);
+							MenuObj.Player1.player_controls(e);
 							switch (e.button.button) {
 								case SDL_BUTTON_LEFT: 
 								   //printf("click");
 								  break;
 							   case SDL_BUTTON_RIGHT: 
 								   //printf("clickdroit");
-								   GameObj.state = 2;
+								  // GameObj.state = 2;
 							   break;
 							}
 					}
 				}
-					if (GameObj.state==1) {
-						//	updateMenu();
-						GameObj.updateGame();
-					}
-					else {
-					}
+
+				switch(stateMain) {
+				case 0:
+					//main menu
+					if (MenuObj.state == 1)
+						MenuObj.updateMenu();
+					else if (MenuObj.state ==-1)
+						quit = true;
+					break;
+				case 1:
+					GameObj.updateGame();
+					//game loop
+					break;
+				case 2:
+					//
+					break;
+				}
+
 				SDL_UpdateWindowSurface( gWindow );
 			}
-			}
+		}
 	}
 	close();
 
