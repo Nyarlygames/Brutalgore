@@ -22,9 +22,9 @@ Game::Game(SDL_Surface*	Screen, SDL_Window *window){
 	pos_player_base.x = 50;
 	pos_player_base.y = 600;
 	state = 1;
-	//PlayerGame = Player(Screen, pos_player_base,1);
+	PlayerGame = Player(Screen, pos_player_base,1);
 	screenGame = Screen;
-	Root = MainMenu(Screen);
-	PlayerGame = Root.Player1;
+	/*Root = MainMenu(Screen);
+	PlayerGame = Root.Player1;*/
 	windows_game = window;
 }

@@ -151,22 +151,11 @@ bool loadMedia()
 		success = false;
 	}
 
-	background = loadSurface_main( "img\\background.png" , gScreenSurface);
-	if( background == NULL )
-	{
-		printf( "Failed to load PNG image!\n" );
-		success = false;
-	}
-
 	return success;
 }
 
 void close()
 {
-	//Free loaded image
-	SDL_FreeSurface( background );
-	background = NULL;
-
 	//Destroy window
 	SDL_DestroyWindow( gWindow );
 	gWindow = NULL;
@@ -197,7 +186,6 @@ int main( int argc, char* args[] )
 		{	
 			GameObj = Game(gScreenSurface, gWindow);
 			MenuObj = MainMenu(gScreenSurface);
-		//	GameObj = Game(gScreenSurface, gWindow);
 			stateMain=0;
 			//Mix_PlayMusic(mus,1); //Music loop=1
 
@@ -245,8 +233,10 @@ int main( int argc, char* args[] )
 					//main menu
 					if (MenuObj.state == 1)
 						MenuObj.updateMenu();
-					else if (MenuObj.state ==-1)
+					else if (MenuObj.state == -1)
 						quit = true;
+					else
+						stateMain = MenuObj.state;
 					break;
 				case 1:
 					GameObj.updateGame();

@@ -13,17 +13,15 @@ using namespace std;
 class MainMenu
 {
     public:
-		
-SDL_Rect mainmenu_3;
-Enemy	menu1,menu2,menu3;
 SDL_Surface* window;
+SDL_Surface* bg;
 SDL_Rect pos_item_1, pos_item_2, pos_item_3, pos_player1;
-Enemy Enemy_1;
 Enemy *Enemies;
 Player Player1;
 int max_enemies;
 int nb_enemies;
 int state;
+SDL_Rect stretchRect;
 
 MainMenu();
 MainMenu(SDL_Surface*	Screen);
@@ -113,6 +111,7 @@ if (PlayerColl.nb_missiles>0){
 };
 
 void	updateMenu(){
+	SDL_BlitScaled(bg, NULL, window, &stretchRect);
 	if (nb_enemies >= 0){
 		for (int i = 0; i < nb_enemies+1; i++) {
 			//addcheck if dead no update
@@ -120,11 +119,20 @@ void	updateMenu(){
 			if ((Enemies[i].id == 1) && (Enemies[i].state == 0)){
 				state=-1;
 			}
+			else if ((Enemies[i].id == 2) && (Enemies[i].state == 0)){
+				state=2;
+			}
 		}
 	}
 	Player1.updatePlayer();
 	collision_check(Player1, Enemies);
 };
+
+void onClose() {
+	//SDL_FreeSurface( background );
+	//background = NULL;
+};
+
 
 };
 

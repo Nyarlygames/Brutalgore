@@ -14,11 +14,6 @@ class Player
 {
     public:
 		
-//Player1();
-    //Player(std::string nomArme, int degatsArme);
-  //  ~Player();
-
-
 SDL_Surface* player_img;
 SDL_Rect pos_player;
 Gun weapon1;

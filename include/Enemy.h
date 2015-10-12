@@ -42,6 +42,7 @@ void updateEnemy(){
 			fillbar.w = (health * img_enemy->w) / basehealth;
 			hpbar = SDL_CreateRGBSurface(0, img_enemy->w - fillbar.w, 10, 32, 0, 0, 0, SDL_ALPHA_TRANSPARENT);
 			SDL_FillRect(hpbar, NULL, SDL_MapRGB(hpbar->format, 255, 255, 255));
+			SDL_BlitSurface( healthbar, NULL, screen_enemy, &healthpos );
 			SDL_BlitSurface( hpbar, NULL, screen_enemy, &healthpos );
 
 		}

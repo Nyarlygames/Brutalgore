@@ -26,7 +26,7 @@ Game(SDL_Surface*	Screen, SDL_Window *window);
 void onClose(){}
 	
 void updateGame() {
-	Root.updateMenu();
+	//Root.updateMenu();
 	//SDL_UpdateWindowSurface( windows_game );
 }
 	

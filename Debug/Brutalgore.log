@@ -1,14 +1,15 @@
-﻿Build started 11/10/2015 20:40:33.
+﻿Build started 12/10/2015 08:41:14.
      1>Project "D:\Projects\Brutalgore\Brutalgore.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating "Debug\Brutalgore.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
-         d:\Programs\VS2010\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt Game.cpp MainMenu.cpp Player.cpp main.cpp
-         Game.cpp
+         d:\Programs\VS2010\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt Enemy.cpp Game.cpp MainMenu.cpp Player.cpp main.cpp
+         Enemy.cpp
          Generating Code...
          Compiling...
          main.cpp
          MainMenu.cpp
+         Game.cpp
          Generating Code...
          Skipping... (no relevant changes detected)
          Player.cpp
@@ -32,4 +33,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.17
+Time Elapsed 00:00:01.48
