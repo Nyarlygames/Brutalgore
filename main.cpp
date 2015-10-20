@@ -193,6 +193,7 @@ int main( int argc, char* args[] )
 			SDL_Event e;
 			while( !quit )
 			{
+				//	printf("%d stateMain \n", stateMain);
 				while( SDL_PollEvent( &e ) != 0 )
 				{
 					switch (e.type) {
@@ -230,20 +231,34 @@ int main( int argc, char* args[] )
 
 				switch(stateMain) {
 				case 0:
-					//main menu
-					if (MenuObj.state == 1)
+					switch(MenuObj.state) {
+					case 0:
+						// update menu
 						MenuObj.updateMenu();
-					else if (MenuObj.state == -1)
+						break;
+					case -1:
+						// quit game if exit is dead
 						quit = true;
-					else
+						break;
+					default:
+						// end menu loop
 						stateMain = MenuObj.state;
+						break;
+					}
 					break;
 				case 1:
-					GameObj.updateGame();
-					//game loop
-					break;
-				case 2:
-					//
+					switch(GameObj.state) {
+					case 1:
+						// update game
+						GameObj.updateGame();
+						break;
+					case 0:
+						GameObj.setGame(1);
+					default:
+						// end game loop
+						stateMain = GameObj.state;
+						break;
+					}
 					break;
 				}
 

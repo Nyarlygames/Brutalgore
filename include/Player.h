@@ -71,9 +71,9 @@ SDL_Surface* loadSurface_player( std::string path, SDL_Surface*	screen )
 }
 	void updatePlayer() {
 
-							if (player_img != NULL) {
-							SDL_BlitSurface(player_img, NULL, screen, &pos_player );
-							}
+		if (player_img != NULL) {
+			SDL_BlitSurface(player_img, NULL, screen, &pos_player );
+		}
 		if (nb_missiles >= 1){
 			for (int i = 0; i <= nb_missiles-1; i++) {
 				missiles_player[i].updateMissile();

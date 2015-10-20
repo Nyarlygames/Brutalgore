@@ -38,7 +38,7 @@ Player::Player(SDL_Surface* Screen,SDL_Rect pos_playerX, int id)
  damages = 2;
  missiles_player = new Missile[nb_missiles_max];
 
- 
+ cout << "ID PLAYER : " << id << endl;
  switch (id) {
  case 1 :
 	player_img = loadSurface_player( "img\\player1.png", screen );

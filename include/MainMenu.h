@@ -117,15 +117,17 @@ void	updateMenu(){
 			//addcheck if dead no update
 			Enemies[i].updateEnemy();
 			if ((Enemies[i].id == 1) && (Enemies[i].state == 0)){
+				//quit game
 				state=-1;
 			}
 			else if ((Enemies[i].id == 2) && (Enemies[i].state == 0)){
-				state=2;
+				state=1;
 			}
 		}
 	}
 	Player1.updatePlayer();
 	collision_check(Player1, Enemies);
+	//printf("%d updateMainMenu \n", state);
 };
 
 void onClose() {

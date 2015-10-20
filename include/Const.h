@@ -8,9 +8,6 @@
 # define FPS 20
 # define DELAY 20 /* time actualise (ms)*/
 
-# define LARGEUR 1024
-# define HAUTEUR 650
-
 # define SIZE	13 /* Size of the grid (SIZE*SIZE) */
 
 # define TICK_BOOM 2500
@@ -30,5 +27,8 @@
 # define EAST 8
 # define SOUTH 16
 # define WEST 24
+
+extern int LARGEUR=0;
+extern int HAUTEUR=0;
 
 #endif /* !CONST_H_ */

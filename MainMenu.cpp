@@ -17,7 +17,7 @@ MainMenu::MainMenu()
 MainMenu::MainMenu(SDL_Surface*	Screen){
 	max_enemies = 50;
 	nb_enemies = 0;
-	state=1;
+	state=0;
 	window = Screen;
 	setMenu(Screen);
 
