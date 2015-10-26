@@ -75,7 +75,7 @@ void	setMenu(SDL_Surface	*screen){
 	
 	pos_player1.x = 50;
 	pos_player1.y = 600;
-	Player1 = Player(screen,pos_player1,2);
+	Player1 = Player(screen,pos_player1,1);
 
 
 };

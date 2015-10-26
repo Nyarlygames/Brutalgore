@@ -95,42 +95,37 @@ SDL_Surface* loadSurface_player( std::string path, SDL_Surface*	screen )
 	}
    
 
-	void	player_controls(SDL_Event e){
-
-
-		
-									switch( e.key.keysym.sym ){
-									case SDLK_LEFT:
-										pos_player.x -= 10 * speedX;
-										break;
-									case SDLK_RIGHT:
-										pos_player.x += 10 * speedX;
-										break;
-									case SDLK_UP:
-										pos_player.y -= 10 * speedX;
-										break;
-									case SDLK_DOWN:
-										pos_player.y += 10 * speedX;
-										break;
-										default:
-											break;
-									}
-									
-					
-					switch (e.type) {
-					case (SDL_MOUSEBUTTONDOWN):
-							  /* If the left button was pressed. */
-						   switch (e.button.button) {
-						   case SDL_BUTTON_LEFT: 
-							  spawn_missile();
-							   printf("click");
-							   break;
-						   case SDL_BUTTON_RIGHT: 
-							   printf("clickdroit");
-							   break;
-								}
-					}
+void	player_controls(SDL_Event e){	
+	switch( e.key.keysym.sym ){
+	case SDLK_LEFT:
+		pos_player.x += 10 * speedX;
+		break;
+	case SDLK_RIGHT:
+		pos_player.x -= 10 * speedX;
+		break;
+	case SDLK_UP:
+		pos_player.y += 10 * speedX;
+		break;
+	case SDLK_DOWN:
+		pos_player.y -= 10 * speedX;
+		break;
+		default:
+			break;
+	}	
+	switch (e.type) {
+	case (SDL_MOUSEBUTTONDOWN):
+				/* If the left button was pressed. */
+			switch (e.button.button) {
+			case SDL_BUTTON_LEFT: 
+				spawn_missile();
+				printf("click");
+				break;
+			case SDL_BUTTON_RIGHT: 
+				printf("clickdroit");
+				break;
+				}
 	}
+}
 	
 	
 };

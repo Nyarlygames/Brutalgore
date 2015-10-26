@@ -1,21 +1,20 @@
-﻿Build started 20/10/2015 23:18:10.
+﻿Build started 26/10/2015 23:25:38.
      1>Project "D:\Projects\Brutalgore\Brutalgore.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating "Debug\Brutalgore.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
-         d:\Programs\VS2010\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt Game.cpp MainMenu.cpp Player.cpp main.cpp
+         d:\Programs\VS2010\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt Game.cpp MainMenu.cpp Missile.cpp Player.cpp main.cpp
          Game.cpp
-     1>d:\projects\brutalgore\include\game.h(51): warning C4101: 'tilepos' : unreferenced local variable
-     1>d:\projects\brutalgore\include\game.h(92): warning C4996: 'strtok': This function or variable may be unsafe. Consider using strtok_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 d:\programs\vs2010\vc\include\string.h(197) : see declaration of 'strtok'
      1>d:\projects\brutalgore\include\game.h(97): warning C4996: 'strtok': This function or variable may be unsafe. Consider using strtok_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 d:\programs\vs2010\vc\include\string.h(197) : see declaration of 'strtok'
+     1>d:\projects\brutalgore\include\game.h(102): warning C4996: 'strtok': This function or variable may be unsafe. Consider using strtok_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
                  d:\programs\vs2010\vc\include\string.h(197) : see declaration of 'strtok'
          Generating Code...
          Compiling...
          main.cpp
-     1>d:\projects\brutalgore\include\game.h(51): warning C4101: 'tilepos' : unreferenced local variable
          Generating Code...
          Skipping... (no relevant changes detected)
+         Missile.cpp
          Player.cpp
          MainMenu.cpp
        Link:
@@ -38,4 +37,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.05
+Time Elapsed 00:00:00.88

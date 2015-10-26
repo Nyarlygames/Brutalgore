@@ -24,6 +24,7 @@ class Game
 {
     public:
 		
+int width, height;
 Player *Players;
 SDL_Window *windows_game;
 int state;
@@ -37,6 +38,8 @@ const char *bgname;
 SDL_Surface** tileset;
 SDL_Surface*** tiles;
 SDL_Rect tilesize;
+SDL_Rect tilecollide;
+SDL_Rect camera;
 
 Game();
 Game(SDL_Surface*	Screen, SDL_Window *window);
@@ -48,11 +51,13 @@ void updateGame() {
 	if ((sizex > 0) && (sizey > 0)) {
 		for (int xline = 0; xline < sizex; xline++) {
 			for (int yline = 0; yline < sizey; yline++) {
-				SDL_Rect tilepos;
-				tilesize.x = yline * tilesize.w;
-				tilesize.y = xline * tilesize.h;
-				//SDL_BlitSurface(tiles[xline][yline], NULL, screenGame, &tilepos );
-				SDL_BlitScaled(tiles[xline][yline], NULL, screenGame, &tilesize);
+					tilecollide.w = width/(sizey);
+					tilecollide.h = height/(sizex);
+					tilecollide.x = yline * tilecollide.w;
+					tilecollide.y = xline * tilecollide.h;
+				if (inCamera(camera, tilecollide)) {
+					SDL_BlitScaled(tiles[xline][yline], NULL, screenGame, &tilecollide);
+				}
 			}
 		}
 	}
@@ -230,16 +235,35 @@ void loadMap(int mapnumber) {
 		fin.close();
 	}
 }
+
 	
-void setGame(int mapnumber) {
+bool inCamera(SDL_Rect cam, SDL_Rect pos_object) {
+	if (((pos_object.x >= cam.x) && (pos_object.x + pos_object.w <= cam.x + cam.w))
+		&& ((pos_object.y >= cam.y) && (pos_object.y + pos_object.h <= cam.y + cam.h)))
+		return true;
+	else
+		return false;
+}
+	
+void setGame(int mapnumber, int sheight, int swidth) {
 	mapid = mapnumber;	
 	loadMap(mapnumber);
-	bg_game = loadGamePic("img\\backgroundGame.png", screenGame);
+	height = sheight;
+	width = swidth;
+	stretchRectGame.x = 0;
+	stretchRectGame.y = 0;
+	stretchRectGame.w = 1920;
+	stretchRectGame.h = 1080;
+	bg_game = loadGamePic("img/backgroundGame.png", screenGame);
 	if( bg_game == NULL )
 	{
 		printf( "Failed to load GameBG image!\n" );
 	}
 	state = 1;
+	camera.w = width/2;
+	camera.h = height/2;
+	camera.x = width/4;
+	camera.y = height/4;
 }
 
 SDL_Surface* loadGamePic( std::string path, SDL_Surface*	screen )

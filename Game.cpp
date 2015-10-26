@@ -15,11 +15,5 @@ Game::Game() {}
 Game::Game(SDL_Surface*	Screen, SDL_Window *window){
 	state = 0;
 	screenGame = Screen;
-	/*Root = MainMenu(Screen);
-	PlayerGame = Root.Player1;*/
 	windows_game = window;
-	stretchRectGame.x = 0;
-	stretchRectGame.y = 0;
-	stretchRectGame.w = 1920;
-	stretchRectGame.h = 1080;
 }

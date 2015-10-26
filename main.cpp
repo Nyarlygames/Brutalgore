@@ -201,7 +201,17 @@ int main( int argc, char* args[] )
 							quit = true;
 							break;
 						case SDL_KEYDOWN :
-							MenuObj.Player1.player_controls(e);
+							switch (stateMain) {
+							case 0:
+								MenuObj.Player1.player_controls(e);
+								break;
+							case 1:
+								//move first player (multi = later)
+								GameObj.Players[0].player_controls(e);
+								break;
+							default:
+								break;
+							}
 							switch (e.type) {
 								case SDL_QUIT :
 									quit = true;
@@ -211,12 +221,25 @@ int main( int argc, char* args[] )
 										case SDLK_ESCAPE:
 											quit=true;
 											break;
+										case SDLK_g:
+											stateMain = 1;
+											break;
 										default:
 											break;
 									}
 							}
 						case (SDL_MOUSEBUTTONDOWN):
-							MenuObj.Player1.player_controls(e);
+							switch (stateMain) {
+							case 0:
+								MenuObj.Player1.player_controls(e);
+								break;
+							case 1:
+								//move first player (multi = later)
+								GameObj.Players[0].player_controls(e);
+								break;
+							default:
+								break;
+							}
 							switch (e.button.button) {
 								case SDL_BUTTON_LEFT: 
 								   //printf("click");
@@ -253,7 +276,7 @@ int main( int argc, char* args[] )
 						GameObj.updateGame();
 						break;
 					case 0:
-						GameObj.setGame(1);
+						GameObj.setGame(1, SCREEN_HEIGHT, SCREEN_WIDTH);
 					default:
 						// end game loop
 						stateMain = GameObj.state;
@@ -261,7 +284,6 @@ int main( int argc, char* args[] )
 					}
 					break;
 				}
-
 				SDL_UpdateWindowSurface( gWindow );
 			}
 		}

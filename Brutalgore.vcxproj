@@ -86,6 +86,9 @@
     <ClInclude Include="include\Missile.h" />
     <ClInclude Include="include\Player.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="maps\map01.bgm" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
