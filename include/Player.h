@@ -109,8 +109,8 @@ void	player_controls(SDL_Event e){
 	case SDLK_DOWN:
 		pos_player.y -= 10 * speedX;
 		break;
-		default:
-			break;
+	default:
+		break;
 	}	
 	switch (e.type) {
 	case (SDL_MOUSEBUTTONDOWN):

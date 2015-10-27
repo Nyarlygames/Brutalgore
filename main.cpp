@@ -224,6 +224,18 @@ int main( int argc, char* args[] )
 										case SDLK_g:
 											stateMain = 1;
 											break;
+										case SDLK_LEFT:
+											GameObj.camera.x -= 10 * 2;
+											break;
+										case SDLK_RIGHT:
+											GameObj.camera.x += 10 * 2;
+											break;
+										case SDLK_UP:
+											GameObj.camera.y -= 10 * 2;
+											break;
+										case SDLK_DOWN:
+											GameObj.camera.y += 10 * 2;
+											break;
 										default:
 											break;
 									}
