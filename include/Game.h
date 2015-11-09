@@ -11,7 +11,7 @@
 #include <SDL_image.h>
 
 const int MAX_MAP_CHARS = 512;
-const int MAX_MAP_TOKENS = 20;
+const int MAX_MAP_TOKENS = 500;
 char* const MAP_DELIMITER = " ";
 using std::cout;
 using std::endl;
@@ -29,6 +29,7 @@ Player *Players;
 SDL_Window *windows_game;
 int state;
 SDL_Surface *bg_game;
+SDL_Surface *Camerasurf;
 int nbplayers;
 int mapid;
 int sizex, sizey;
@@ -65,6 +66,7 @@ void updateGame() {
 		for (int playblit = 0; playblit < nbplayers; playblit++) {
 			Players[playblit].updatePlayer();
 		}
+	SDL_BlitScaled(bg_game, NULL, Camerasurf, &stretchRectGame);
 	}
 	//printf("%d updateGame \n", state);
 }
@@ -254,6 +256,9 @@ void setGame(int mapnumber, int sheight, int swidth) {
 	stretchRectGame.y = 0;
 	stretchRectGame.w = 1920;
 	stretchRectGame.h = 1080;
+	Camerasurf = new SDL_Surface[1];
+	Camerasurf->w = 500;
+	Camerasurf->h = 500;
 	bg_game = loadGamePic("img/backgroundGame.png", screenGame);
 	if( bg_game == NULL )
 	{
@@ -262,8 +267,8 @@ void setGame(int mapnumber, int sheight, int swidth) {
 	state = 1;
 	camera.w = width/2;
 	camera.h = height/2;
-	camera.x = width/4;
-	camera.y = height/4;
+	camera.x = Players[0].pos_player.x - 640;
+	camera.y = Players[0].pos_player.y - 200;
 }
 
 SDL_Surface* loadGamePic( std::string path, SDL_Surface*	screen )

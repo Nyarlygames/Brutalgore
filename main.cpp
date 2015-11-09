@@ -134,6 +134,7 @@ bool init()
 			{
 				//Get window surface
 				gScreenSurface = SDL_GetWindowSurface( gWindow );
+				background = SDL_GetWindowSurface( gWindow );
 			}
 		}
 	}
@@ -184,12 +185,17 @@ int main( int argc, char* args[] )
 		}
 		else
 		{	
-			GameObj = Game(gScreenSurface, gWindow);
-			MenuObj = MainMenu(gScreenSurface);
+			GameObj = Game(background, gWindow);
+			MenuObj = MainMenu(background);
 			stateMain=0;
 			//Mix_PlayMusic(mus,1); //Music loop=1
 
 			bool quit = false;
+			testrec = new SDL_Rect[1];
+			testrec[0].x = 200;
+			testrec[0].y = 500;
+			testrec[0].w = 500;
+			testrec[0].h = 500;
 			SDL_Event e;
 			while( !quit )
 			{
@@ -225,16 +231,28 @@ int main( int argc, char* args[] )
 											stateMain = 1;
 											break;
 										case SDLK_LEFT:
-											GameObj.camera.x -= 10 * 2;
+											if (GameObj.camera.x > 0)
+												GameObj.camera.x -= 10 * 2;
+											else if (GameObj.camera.x < 0)
+												GameObj.camera.x = 0;
 											break;
 										case SDLK_RIGHT:
-											GameObj.camera.x += 10 * 2;
+											if (GameObj.camera.x + GameObj.camera.w < 1920)
+												GameObj.camera.x += 10 * 2;
+											else if (GameObj.camera.x + GameObj.camera.w > 1920)
+												GameObj.camera.x = 1920 - GameObj.camera.w;
 											break;
 										case SDLK_UP:
-											GameObj.camera.y -= 10 * 2;
+											if (GameObj.camera.y > 0)
+												GameObj.camera.y -= 10 * 2;
+											else if (GameObj.camera.y < 0)
+												GameObj.camera.y = 0;
 											break;
 										case SDLK_DOWN:
-											GameObj.camera.y += 10 * 2;
+											if (GameObj.camera.y + GameObj.camera.h < 1080)
+												GameObj.camera.y += 10 * 2;
+											else if (GameObj.camera.y + GameObj.camera.h > 1080)
+												GameObj.camera.y = 1080 - GameObj.camera.h;
 											break;
 										default:
 											break;
@@ -296,7 +314,8 @@ int main( int argc, char* args[] )
 					}
 					break;
 				}
-				SDL_UpdateWindowSurface( gWindow );
+				SDL_UpdateWindowSurfaceRects (gWindow,testrec, 1);
+				//SDL_UpdateWindowSurface( gWindow );
 			}
 		}
 	}

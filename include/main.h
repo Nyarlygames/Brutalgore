@@ -25,6 +25,7 @@ TTF_Font *font = NULL;
 Mix_Music*	mus = NULL;
 int stateMain = 1;
 SDL_Color textColor = { 255, 255, 255 };
+SDL_Rect *testrec;
 
 extern SDL_Surface* loadSurface_main( std::string path, SDL_Surface*	screen )
 {
