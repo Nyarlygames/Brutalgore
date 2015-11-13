@@ -191,11 +191,6 @@ int main( int argc, char* args[] )
 			//Mix_PlayMusic(mus,1); //Music loop=1
 
 			bool quit = false;
-			testrec = new SDL_Rect[1];
-			testrec[0].x = 200;
-			testrec[0].y = 500;
-			testrec[0].w = 500;
-			testrec[0].h = 500;
 			SDL_Event e;
 			while( !quit )
 			{
@@ -231,29 +226,37 @@ int main( int argc, char* args[] )
 											stateMain = 1;
 											break;
 										case SDLK_LEFT:
-											if (GameObj.camera.x > 0)
-												GameObj.camera.x -= 10 * 2;
-											else if (GameObj.camera.x < 0)
-												GameObj.camera.x = 0;
-											break;
+											/*if (GameObj.testbg.x > 0){
+												GameObj.testbg.x -= 10 * 2;
+											}
+											else if (GameObj.testbg.x < 0){
+												GameObj.testbg.x = 0;
+											}
+											break;*/
 										case SDLK_RIGHT:
-											if (GameObj.camera.x + GameObj.camera.w < 1920)
-												GameObj.camera.x += 10 * 2;
-											else if (GameObj.camera.x + GameObj.camera.w > 1920)
-												GameObj.camera.x = 1920 - GameObj.camera.w;
-											break;
+										/*	if (GameObj.testbg.x + GameObj.testbg.w < 1920){
+												GameObj.testbg.x += 10 * 2;
+											}
+											else if (GameObj.testbg.x + GameObj.testbg.w > 1920){
+												GameObj.testbg.x = 1000 - GameObj.testbg.w;
+											}
+											break;*/
 										case SDLK_UP:
-											if (GameObj.camera.y > 0)
-												GameObj.camera.y -= 10 * 2;
-											else if (GameObj.camera.y < 0)
-												GameObj.camera.y = 0;
-											break;
+										/*	if (GameObj.testbg.y > 0){
+												GameObj.testbg.y -= 10 * 2;
+											}
+											else if (GameObj.testbg.y < 0){
+												GameObj.testbg.y = 0;
+											}
+											break;*/
 										case SDLK_DOWN:
-											if (GameObj.camera.y + GameObj.camera.h < 1080)
-												GameObj.camera.y += 10 * 2;
-											else if (GameObj.camera.y + GameObj.camera.h > 1080)
-												GameObj.camera.y = 1080 - GameObj.camera.h;
-											break;
+										/*	if (GameObj.testbg.y + GameObj.testbg.h < 1080){
+												GameObj.testbg.y += 10 * 2;
+											}
+											else if (GameObj.testbg.y + GameObj.testbg.h > 1080){
+												GameObj.testbg.y = 800 - GameObj.testbg.h;
+											}
+											break;*/
 										default:
 											break;
 									}
@@ -314,8 +317,8 @@ int main( int argc, char* args[] )
 					}
 					break;
 				}
-				SDL_UpdateWindowSurfaceRects (gWindow,testrec, 1);
-				//SDL_UpdateWindowSurface( gWindow );
+				//SDL_UpdateWindowSurfaceRects (gWindow,testrec, 1);
+				SDL_UpdateWindowSurface( gWindow );
 			}
 		}
 	}

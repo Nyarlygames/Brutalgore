@@ -40,7 +40,11 @@ SDL_Surface** tileset;
 SDL_Surface*** tiles;
 SDL_Rect tilesize;
 SDL_Rect tilecollide;
+SDL_Rect tilemaxx;
+SDL_Rect tilemaxy;
 SDL_Rect camera;
+SDL_Rect testbg;
+SDL_Rect testdest;
 
 Game();
 Game(SDL_Surface*	Screen, SDL_Window *window);
@@ -48,6 +52,8 @@ Game(SDL_Surface*	Screen, SDL_Window *window);
 void onClose(){}
 	
 void updateGame() {
+
+	//SDL_BlitScaled(bg_game, NULL, screenGame, &stretchRectGame);
 	SDL_BlitScaled(bg_game, NULL, screenGame, &stretchRectGame);
 	if ((sizex > 0) && (sizey > 0)) {
 		for (int xline = 0; xline < sizex; xline++) {
@@ -56,9 +62,7 @@ void updateGame() {
 					tilecollide.h = height/(sizex);
 					tilecollide.x = yline * tilecollide.w;
 					tilecollide.y = xline * tilecollide.h;
-				if (inCamera(camera, tilecollide)) {
 					SDL_BlitScaled(tiles[xline][yline], NULL, screenGame, &tilecollide);
-				}
 			}
 		}
 	}
@@ -66,8 +70,9 @@ void updateGame() {
 		for (int playblit = 0; playblit < nbplayers; playblit++) {
 			Players[playblit].updatePlayer();
 		}
-	SDL_BlitScaled(bg_game, NULL, Camerasurf, &stretchRectGame);
 	}
+		SDL_BlitScaled(screenGame, &testbg, Camerasurf, &testdest);
+
 	//printf("%d updateGame \n", state);
 }
 
@@ -256,9 +261,9 @@ void setGame(int mapnumber, int sheight, int swidth) {
 	stretchRectGame.y = 0;
 	stretchRectGame.w = 1920;
 	stretchRectGame.h = 1080;
-	Camerasurf = new SDL_Surface[1];
-	Camerasurf->w = 500;
-	Camerasurf->h = 500;
+	Camerasurf = SDL_GetWindowSurface( windows_game );
+	Camerasurf->w = 1920;
+	Camerasurf->h = 1080;
 	bg_game = loadGamePic("img/backgroundGame.png", screenGame);
 	if( bg_game == NULL )
 	{
