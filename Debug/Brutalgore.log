@@ -1,13 +1,13 @@
-﻿Build started 13/11/2015 13:26:15.
+﻿Build started 13/11/2015 14:26:48.
      1>Project "D:\Projects\Brutalgore\Brutalgore.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating "Debug\Brutalgore.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
          d:\Programs\VS2010\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt Game.cpp MainMenu.cpp Player.cpp main.cpp
          Game.cpp
-     1>d:\projects\brutalgore\include\game.h(98): warning C4996: 'strtok': This function or variable may be unsafe. Consider using strtok_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+     1>d:\projects\brutalgore\include\game.h(123): warning C4996: 'strtok': This function or variable may be unsafe. Consider using strtok_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
                  d:\programs\vs2010\vc\include\string.h(197) : see declaration of 'strtok'
-     1>d:\projects\brutalgore\include\game.h(103): warning C4996: 'strtok': This function or variable may be unsafe. Consider using strtok_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+     1>d:\projects\brutalgore\include\game.h(128): warning C4996: 'strtok': This function or variable may be unsafe. Consider using strtok_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
                  d:\programs\vs2010\vc\include\string.h(197) : see declaration of 'strtok'
          Generating Code...
          Compiling...

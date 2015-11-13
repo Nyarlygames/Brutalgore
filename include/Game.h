@@ -43,6 +43,10 @@ SDL_Rect tilecollide;
 SDL_Rect testbg;
 Settings set;
 SDL_Rect testdest;
+SDL_Rect tileborder;
+SDL_Surface *testcam;
+SDL_Surface *test2;
+int camcontrol;
 
 Game();
 Game(SDL_Surface*	Screen, SDL_Window *window, Settings set);
@@ -51,6 +55,9 @@ void onClose(){}
 	
 void updateGame() {
 	SDL_BlitScaled(bg_game, NULL, screenGame, &stretchRectGame);
+		/*	testcam = SDL_CreateRGBSurface(0, testbg.w, testbg.h, 32, 0, 0, 0, SDL_ALPHA_TRANSPARENT);
+			SDL_FillRect(testcam, NULL, SDL_MapRGB(testcam->format, 255, 255, 255));
+			SDL_BlitSurface( testcam, NULL, screenGame, &testbg );*/
 	if ((sizex > 0) && (sizey > 0)) {
 		for (int xline = 0; xline < sizex; xline++) {
 			for (int yline = 0; yline < sizey; yline++) {
@@ -59,7 +66,24 @@ void updateGame() {
 					tilecollide.h = set.height / sizex;
 					tilecollide.x = yline * tilecollide.w;
 					tilecollide.y = xline * tilecollide.h;
-					SDL_BlitScaled(tiles[xline][yline], NULL, screenGame, &tilecollide);
+					camcontrol = inCamera(testbg, tilecollide);
+					switch (camcontrol) {
+						case 1 :
+							SDL_BlitScaled(tiles[xline][yline], NULL, screenGame, &tilecollide);
+							break;
+						case 2 :
+							tileborder.x = testbg.x;
+							tileborder.y = testbg.y;
+							tileborder.w =tilecollide.x + tilecollide.w - testbg.x;
+							tileborder.h =tilecollide.y + tilecollide.h - testbg.y;
+								/*test2 = SDL_CreateRGBSurface(0, tilecollide.w, tilecollide.h, 32, 0, 0, 0, SDL_ALPHA_TRANSPARENT);
+								SDL_FillRect(test2, NULL, SDL_MapRGB(test2->format, 10, 10, 10));
+								SDL_BlitSurface( test2, NULL, screenGame, &tileborder );*/
+							SDL_BlitScaled(tiles[xline][yline], NULL, screenGame, &tileborder);
+							break;
+						case -1:
+							break;
+					};
 			}
 		}
 	}
@@ -68,7 +92,8 @@ void updateGame() {
 			Players[playblit].updatePlayer();
 		}
 	}
-	SDL_BlitScaled(screenGame, &testbg, Camerasurf, &testdest);
+	
+	//SDL_BlitScaled(screenGame, &testbg, Camerasurf, &testdest);
 }
 
 void loadMap(int mapnumber) {
@@ -238,12 +263,16 @@ void loadMap(int mapnumber) {
 }
 
 	
-bool inCamera(SDL_Rect cam, SDL_Rect pos_object) {
+int inCamera(SDL_Rect cam, SDL_Rect pos_object) {
 	if (((pos_object.x >= cam.x) && (pos_object.x + pos_object.w <= cam.x + cam.w))
 		&& ((pos_object.y >= cam.y) && (pos_object.y + pos_object.h <= cam.y + cam.h)))
-		return true;
+		return 1;
+	else if ((pos_object.x + pos_object.w >= cam.x) && (pos_object.x < cam.x)
+			&& (pos_object.y + pos_object.h > cam.y) && (pos_object.y <cam.y)) {
+		return 2;
+	}
 	else
-		return false;
+		return -1;
 }
 	
 void setGame(int mapnumber, int sheight, int swidth) {

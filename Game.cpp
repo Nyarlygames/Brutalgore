@@ -18,4 +18,5 @@ Game::Game(SDL_Surface*	Screen, SDL_Window *window, Settings s){
 	screenGame = Screen;
 	windows_game = window;
 	set = s;
+	camcontrol = 0;
 }
