@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include <string>
 #include <sstream>
+#include "Settings.h"
 
 int SCREEN_WIDTH = 1;
 int SCREEN_HEIGHT = 1;
@@ -26,6 +27,7 @@ Mix_Music*	mus = NULL;
 int stateMain = 1;
 SDL_Color textColor = { 255, 255, 255 };
 SDL_Rect *testrec;
+Settings set;
 
 extern SDL_Surface* loadSurface_main( std::string path, SDL_Surface*	screen )
 {

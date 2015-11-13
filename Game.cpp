@@ -8,20 +8,14 @@
 #include "include/Player.h"
 #include "include/Game.h"
 #include "include/MainMenu.h"
+#include "Settings.h"
 //#include "PlayerController.h";
 using namespace std;
 
 Game::Game() {}
-Game::Game(SDL_Surface*	Screen, SDL_Window *window){
+Game::Game(SDL_Surface*	Screen, SDL_Window *window, Settings s){
 	state = 0;
 	screenGame = Screen;
 	windows_game = window;
-	testbg.x = 800;
-	testbg.y = 600;
-	testbg.w = 800;
-	testbg.h = 600;
-	testdest.x = 0;
-	testdest.y = 0;
-	testdest.w = 1920;
-	testdest.h = 1080;
+	set = s;
 }

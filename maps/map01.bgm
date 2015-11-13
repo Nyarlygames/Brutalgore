@@ -5,7 +5,7 @@ Player 2 250 600
 Player 3 500 800
 Size 27 22
 TileSet 10 0 1 2 3 4 5 6 7 8 9
-TileSize 100 20
+TileSize 200 200
 Tiles 3 1 2 4 5 6 7 8 9 0 2 3 3 3 3 3 3 3 3 3 3 4
 Tiles 3 0 0 0 0 0 0 0 9 3 4 3 0 0 0 0 0 0 0 9 3 4
 Tiles 3 0 0 0 0 0 0 0 9 3 4 3 0 0 0 0 0 0 0 9 3 4

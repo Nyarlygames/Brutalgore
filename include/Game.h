@@ -7,6 +7,7 @@
 #include <iostream>
 #include <fstream>
 #include "Player.h"
+#include "Settings.h"
 #include <SDL.h>
 #include <SDL_image.h>
 
@@ -24,42 +25,38 @@ class Game
 {
     public:
 		
-int width, height;
 Player *Players;
 SDL_Window *windows_game;
 int state;
 SDL_Surface *bg_game;
-SDL_Surface *Camerasurf;
 int nbplayers;
 int mapid;
 int sizex, sizey;
 SDL_Rect stretchRectGame;
 SDL_Surface*	screenGame;
+SDL_Surface*	Camerasurf;
 const char *bgname;
 SDL_Surface** tileset;
 SDL_Surface*** tiles;
 SDL_Rect tilesize;
 SDL_Rect tilecollide;
-SDL_Rect tilemaxx;
-SDL_Rect tilemaxy;
-SDL_Rect camera;
 SDL_Rect testbg;
+Settings set;
 SDL_Rect testdest;
 
 Game();
-Game(SDL_Surface*	Screen, SDL_Window *window);
+Game(SDL_Surface*	Screen, SDL_Window *window, Settings set);
 
 void onClose(){}
 	
 void updateGame() {
-
-	//SDL_BlitScaled(bg_game, NULL, screenGame, &stretchRectGame);
 	SDL_BlitScaled(bg_game, NULL, screenGame, &stretchRectGame);
 	if ((sizex > 0) && (sizey > 0)) {
 		for (int xline = 0; xline < sizex; xline++) {
 			for (int yline = 0; yline < sizey; yline++) {
-					tilecollide.w = width/(sizey);
-					tilecollide.h = height/(sizex);
+				// tilesize.w & tilesize.h if better cam
+					tilecollide.w = set.width / sizey;
+					tilecollide.h = set.height / sizex;
 					tilecollide.x = yline * tilecollide.w;
 					tilecollide.y = xline * tilecollide.h;
 					SDL_BlitScaled(tiles[xline][yline], NULL, screenGame, &tilecollide);
@@ -71,14 +68,11 @@ void updateGame() {
 			Players[playblit].updatePlayer();
 		}
 	}
-		SDL_BlitScaled(screenGame, &testbg, Camerasurf, &testdest);
-
-	//printf("%d updateGame \n", state);
+	SDL_BlitScaled(screenGame, &testbg, Camerasurf, &testdest);
 }
 
 void loadMap(int mapnumber) {
 	printf("Loading a map \n");
-	// create a file-reading object
 	ifstream fin;
 	switch (mapnumber){
 	case 1:
@@ -255,33 +249,35 @@ bool inCamera(SDL_Rect cam, SDL_Rect pos_object) {
 void setGame(int mapnumber, int sheight, int swidth) {
 	mapid = mapnumber;	
 	loadMap(mapnumber);
-	height = sheight;
-	width = swidth;
 	stretchRectGame.x = 0;
 	stretchRectGame.y = 0;
-	stretchRectGame.w = 1920;
-	stretchRectGame.h = 1080;
+	stretchRectGame.w = set.width;
+	stretchRectGame.h = set.height;
 	Camerasurf = SDL_GetWindowSurface( windows_game );
-	Camerasurf->w = 1920;
-	Camerasurf->h = 1080;
 	bg_game = loadGamePic("img/backgroundGame.png", screenGame);
 	if( bg_game == NULL )
 	{
 		printf( "Failed to load GameBG image!\n" );
 	}
 	state = 1;
-	camera.w = width/2;
-	camera.h = height/2;
-	camera.x = Players[0].pos_player.x - 640;
-	camera.y = Players[0].pos_player.y - 200;
+
+	//POS CAPTURE
+	testbg.x = 800;
+	testbg.y = 500;
+	// ZOOM
+	testbg.w = 300;
+	testbg.h = 300;
+	// POS CAM
+	testdest.x = 500;
+	testdest.y = 500;
+	// TAILLE CAM
+	testdest.w = 500;
+	testdest.h = 500;
 }
 
 SDL_Surface* loadGamePic( std::string path, SDL_Surface*	screen )
 {
-	//The final optimized image
 	SDL_Surface* optimizedSurface = NULL;
-
-	//Load image at specified path
 	SDL_Surface* loadedSurface = IMG_Load( path.c_str() );
 	if( loadedSurface == NULL )
 	{
@@ -289,17 +285,13 @@ SDL_Surface* loadGamePic( std::string path, SDL_Surface*	screen )
 	}
 	else
 	{
-		//Convert surface to screen format
 		optimizedSurface = SDL_ConvertSurface( loadedSurface, screen->format, NULL );
 		if( optimizedSurface == NULL )
 		{
 			printf( "Unable to optimize image %s! SDL Error: %s\n", path.c_str(), SDL_GetError() );
 		}
-
-		//Get rid of old loaded surface
 		SDL_FreeSurface( loadedSurface );
 	}
-
 	return optimizedSurface;
 }
 

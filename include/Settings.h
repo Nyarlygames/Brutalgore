@@ -14,8 +14,8 @@ class Settings
     public:
 		int width;
 		int height;
-Settings();
-Settings(int w, int h);
+		Settings();
+		Settings(int w, int h);
 
 
 void updateSettings(SDL_Event e)

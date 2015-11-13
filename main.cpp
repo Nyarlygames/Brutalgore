@@ -6,6 +6,7 @@
 #include "include/Game.h"
 #include "include/Missile.h"
 #include "include/main.h"
+#include "include/Settings.h"
 #include <SDL.h>
 #include <SDL_ttf.h>
 #include <SDL_image.h>
@@ -68,9 +69,11 @@ bool loadCfg(char	*filename) {
 		if (n>0){
 			if (strcmp(token[0], "width") == 0){
 				SCREEN_WIDTH = atoi(token[1]);
+				set.width = atoi(token[1]);
 			}
 			else if (strcmp(token[0], "height") == 0){
 				SCREEN_HEIGHT = atoi(token[1]);
+				set.height = atoi(token[1]);
 			}
 		}
 			
@@ -133,7 +136,6 @@ bool init()
 			else
 			{
 				//Get window surface
-				gScreenSurface = SDL_GetWindowSurface( gWindow );
 				background = SDL_GetWindowSurface( gWindow );
 			}
 		}
@@ -185,7 +187,7 @@ int main( int argc, char* args[] )
 		}
 		else
 		{	
-			GameObj = Game(background, gWindow);
+			GameObj = Game(background, gWindow, set);
 			MenuObj = MainMenu(background);
 			stateMain=0;
 			//Mix_PlayMusic(mus,1); //Music loop=1
@@ -226,37 +228,23 @@ int main( int argc, char* args[] )
 											stateMain = 1;
 											break;
 										case SDLK_LEFT:
-											/*if (GameObj.testbg.x > 0){
-												GameObj.testbg.x -= 10 * 2;
-											}
-											else if (GameObj.testbg.x < 0){
-												GameObj.testbg.x = 0;
-											}
-											break;*/
+											if (GameObj.testbg.x > 10)
+												GameObj.testbg.x -=10;
+											break;
 										case SDLK_RIGHT:
-										/*	if (GameObj.testbg.x + GameObj.testbg.w < 1920){
-												GameObj.testbg.x += 10 * 2;
+											if (GameObj.testbg.x < set.width - GameObj.testbg.w - 10){
+												GameObj.testbg.x +=10;
 											}
-											else if (GameObj.testbg.x + GameObj.testbg.w > 1920){
-												GameObj.testbg.x = 1000 - GameObj.testbg.w;
-											}
-											break;*/
+											break;
 										case SDLK_UP:
-										/*	if (GameObj.testbg.y > 0){
-												GameObj.testbg.y -= 10 * 2;
-											}
-											else if (GameObj.testbg.y < 0){
-												GameObj.testbg.y = 0;
-											}
-											break;*/
+											if (GameObj.testbg.y > 10)
+												GameObj.testbg.y -=10;
+											break;
 										case SDLK_DOWN:
-										/*	if (GameObj.testbg.y + GameObj.testbg.h < 1080){
-												GameObj.testbg.y += 10 * 2;
+											if (GameObj.testbg.y < set.height - GameObj.testbg.h - 10){
+												GameObj.testbg.y +=10;
 											}
-											else if (GameObj.testbg.y + GameObj.testbg.h > 1080){
-												GameObj.testbg.y = 800 - GameObj.testbg.h;
-											}
-											break;*/
+											break;
 										default:
 											break;
 									}
