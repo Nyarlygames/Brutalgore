@@ -117,7 +117,7 @@ bool init()
 				printf("cfgload failed\n");
 			}
 		}
-
+		
 		gWindow = SDL_CreateWindow( "BrutalGore", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
 		if( gWindow == NULL )
 		{
@@ -228,20 +228,20 @@ int main( int argc, char* args[] )
 											stateMain = 1;
 											break;
 										case SDLK_LEFT:
-											if (GameObj.testbg.x > 10)
+											if (GameObj.testbg.x >= 10)
 												GameObj.testbg.x -=10;
 											break;
 										case SDLK_RIGHT:
-											if (GameObj.testbg.x < set.width - GameObj.testbg.w - 10){
+											if (GameObj.testbg.x <= set.width - GameObj.testbg.w - 10){
 												GameObj.testbg.x +=10;
 											}
 											break;
 										case SDLK_UP:
-											if (GameObj.testbg.y > 10)
+											if (GameObj.testbg.y >= 10)
 												GameObj.testbg.y -=10;
 											break;
 										case SDLK_DOWN:
-											if (GameObj.testbg.y < set.height - GameObj.testbg.h - 10){
+											if (GameObj.testbg.y <= set.height - GameObj.testbg.h - 10){
 												GameObj.testbg.y +=10;
 											}
 											break;

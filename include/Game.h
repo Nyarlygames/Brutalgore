@@ -27,6 +27,7 @@ class Game
 		
 Player *Players;
 SDL_Window *windows_game;
+SDL_Window *hidden_window;
 int state;
 SDL_Surface *bg_game;
 int nbplayers;
@@ -43,10 +44,6 @@ SDL_Rect tilecollide;
 SDL_Rect testbg;
 Settings set;
 SDL_Rect testdest;
-SDL_Rect tileborder;
-SDL_Surface *testcam;
-SDL_Surface *test2;
-int camcontrol;
 
 Game();
 Game(SDL_Surface*	Screen, SDL_Window *window, Settings set);
@@ -55,9 +52,6 @@ void onClose(){}
 	
 void updateGame() {
 	SDL_BlitScaled(bg_game, NULL, screenGame, &stretchRectGame);
-		/*	testcam = SDL_CreateRGBSurface(0, testbg.w, testbg.h, 32, 0, 0, 0, SDL_ALPHA_TRANSPARENT);
-			SDL_FillRect(testcam, NULL, SDL_MapRGB(testcam->format, 255, 255, 255));
-			SDL_BlitSurface( testcam, NULL, screenGame, &testbg );*/
 	if ((sizex > 0) && (sizey > 0)) {
 		for (int xline = 0; xline < sizex; xline++) {
 			for (int yline = 0; yline < sizey; yline++) {
@@ -66,24 +60,7 @@ void updateGame() {
 					tilecollide.h = set.height / sizex;
 					tilecollide.x = yline * tilecollide.w;
 					tilecollide.y = xline * tilecollide.h;
-					camcontrol = inCamera(testbg, tilecollide);
-					switch (camcontrol) {
-						case 1 :
-							SDL_BlitScaled(tiles[xline][yline], NULL, screenGame, &tilecollide);
-							break;
-						case 2 :
-							tileborder.x = testbg.x;
-							tileborder.y = testbg.y;
-							tileborder.w =tilecollide.x + tilecollide.w - testbg.x;
-							tileborder.h =tilecollide.y + tilecollide.h - testbg.y;
-								/*test2 = SDL_CreateRGBSurface(0, tilecollide.w, tilecollide.h, 32, 0, 0, 0, SDL_ALPHA_TRANSPARENT);
-								SDL_FillRect(test2, NULL, SDL_MapRGB(test2->format, 10, 10, 10));
-								SDL_BlitSurface( test2, NULL, screenGame, &tileborder );*/
-							SDL_BlitScaled(tiles[xline][yline], NULL, screenGame, &tileborder);
-							break;
-						case -1:
-							break;
-					};
+					SDL_BlitScaled(tiles[xline][yline], NULL, screenGame, &tilecollide);
 			}
 		}
 	}
@@ -92,8 +69,7 @@ void updateGame() {
 			Players[playblit].updatePlayer();
 		}
 	}
-	
-	//SDL_BlitScaled(screenGame, &testbg, Camerasurf, &testdest);
+	SDL_BlitScaled(screenGame, &testbg, Camerasurf, &testdest);
 }
 
 void loadMap(int mapnumber) {
@@ -263,16 +239,12 @@ void loadMap(int mapnumber) {
 }
 
 	
-int inCamera(SDL_Rect cam, SDL_Rect pos_object) {
+bool inCamera(SDL_Rect cam, SDL_Rect pos_object) {
 	if (((pos_object.x >= cam.x) && (pos_object.x + pos_object.w <= cam.x + cam.w))
 		&& ((pos_object.y >= cam.y) && (pos_object.y + pos_object.h <= cam.y + cam.h)))
-		return 1;
-	else if ((pos_object.x + pos_object.w >= cam.x) && (pos_object.x < cam.x)
-			&& (pos_object.y + pos_object.h > cam.y) && (pos_object.y <cam.y)) {
-		return 2;
-	}
+		return true;
 	else
-		return -1;
+		return false;
 }
 	
 void setGame(int mapnumber, int sheight, int swidth) {
@@ -282,7 +254,6 @@ void setGame(int mapnumber, int sheight, int swidth) {
 	stretchRectGame.y = 0;
 	stretchRectGame.w = set.width;
 	stretchRectGame.h = set.height;
-	Camerasurf = SDL_GetWindowSurface( windows_game );
 	bg_game = loadGamePic("img/backgroundGame.png", screenGame);
 	if( bg_game == NULL )
 	{
@@ -294,14 +265,14 @@ void setGame(int mapnumber, int sheight, int swidth) {
 	testbg.x = 800;
 	testbg.y = 500;
 	// ZOOM
-	testbg.w = 300;
-	testbg.h = 300;
+	testbg.w = 500;
+	testbg.h = 500;
 	// POS CAM
-	testdest.x = 500;
-	testdest.y = 500;
+	testdest.x = 0;
+	testdest.y = 0;
 	// TAILLE CAM
-	testdest.w = 500;
-	testdest.h = 500;
+	testdest.w = set.width;
+	testdest.h = set.height;
 }
 
 SDL_Surface* loadGamePic( std::string path, SDL_Surface*	screen )

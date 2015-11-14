@@ -15,8 +15,9 @@ using namespace std;
 Game::Game() {}
 Game::Game(SDL_Surface*	Screen, SDL_Window *window, Settings s){
 	state = 0;
-	screenGame = Screen;
 	windows_game = window;
 	set = s;
-	camcontrol = 0;
+	hidden_window = SDL_CreateWindow( "Hiddendisplay", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, set.width, set.height, SDL_WINDOW_HIDDEN );
+	screenGame = SDL_GetWindowSurface( hidden_window );;
+	Camerasurf = Screen;
 }
