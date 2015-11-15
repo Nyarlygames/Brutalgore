@@ -6,15 +6,17 @@
 #include <iostream>
 #include "include/Camera.h"
 #include "include/Settings.h"
+#include "include/Player.h"
 using namespace std;
 
 Camera::Camera() 
 {
 }
 
-Camera::Camera(Settings opt, SDL_Rect cam, SDL_Rect game, SDL_Surface	*gameview, SDL_Surface	*camview){
+Camera::Camera(Settings opt, SDL_Rect cam, SDL_Rect game, SDL_Surface	*gameview, SDL_Surface	*camview, Player	*gamers){
 	opts = opt;
 	camsize = cam;
+	players = gamers;
 	gamesize = game;
 	gamesurf = gameview;
 	camsurf = camview;
