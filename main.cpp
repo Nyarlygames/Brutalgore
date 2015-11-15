@@ -215,40 +215,17 @@ int main( int argc, char* args[] )
 							default:
 								break;
 							}
-							switch (e.type) {
-								case SDL_QUIT :
-									quit = true;
+							switch( e.key.keysym.sym ){
+								case SDLK_ESCAPE:
+									quit=true;
 									break;
-								case SDL_KEYDOWN :
-									switch( e.key.keysym.sym ){
-										case SDLK_ESCAPE:
-											quit=true;
-											break;
-										case SDLK_g:
-											stateMain = 1;
-											break;
-										case SDLK_LEFT:
-											if (GameObj.testbg.x >= 10)
-												GameObj.testbg.x -=10;
-											break;
-										case SDLK_RIGHT:
-											if (GameObj.testbg.x <= set.width - GameObj.testbg.w - 10){
-												GameObj.testbg.x +=10;
-											}
-											break;
-										case SDLK_UP:
-											if (GameObj.testbg.y >= 10)
-												GameObj.testbg.y -=10;
-											break;
-										case SDLK_DOWN:
-											if (GameObj.testbg.y <= set.height - GameObj.testbg.h - 10){
-												GameObj.testbg.y +=10;
-											}
-											break;
-										default:
-											break;
-									}
+								case SDLK_g:
+									stateMain = 1;
+									break;
+								default:
+									break;
 							}
+							break;
 						case (SDL_MOUSEBUTTONDOWN):
 							switch (stateMain) {
 							case 0:

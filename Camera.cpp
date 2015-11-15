@@ -11,15 +11,15 @@ using namespace std;
 Camera::Camera() 
 {
 }
-Camera::Camera(Settings opt, int x, int y, int posx, int posy, int maxtilex, int maxtiley){
+
+Camera::Camera(Settings opt, SDL_Rect cam, SDL_Rect game, SDL_Surface	*gameview, SDL_Surface	*camview){
 	opts = opt;
-	nbtilesx = x;
-	nbtilesy = y;
-	pos.x = posx;
-	pos.y = posy;
-	tiles.w = opt.width/maxtilex;
-	tiles.h = opt.height/maxtiley;
-	pos.w = nbtilesx * tiles.w;
-	pos.h = nbtilesy * tiles.h;
-			//		printf("Width cam : %i, Height cam : %i, Tilew : %i, Tileh : %i, nbtilesx : %i, nbtilesy : %i \n",pos.w, pos.h, tiles.w, tiles.h, nbtilesx, nbtilesy);
+	camsize = cam;
+	gamesize = game;
+	gamesurf = gameview;
+	camsurf = camview;
+	minimapsize.w = 200;
+	minimapsize.h = 200;
+	minimapsize.x = 20;
+	minimapsize.y = opts.height - minimapsize.h - 20;
 }

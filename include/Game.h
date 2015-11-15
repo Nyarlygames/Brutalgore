@@ -7,6 +7,7 @@
 #include <iostream>
 #include <fstream>
 #include "Player.h"
+#include "Camera.h"
 #include "Settings.h"
 #include <SDL.h>
 #include <SDL_image.h>
@@ -35,15 +36,17 @@ int mapid;
 int sizex, sizey;
 SDL_Rect stretchRectGame;
 SDL_Surface*	screenGame;
-SDL_Surface*	Camerasurf;
+SDL_Surface*	mainscreen;
 const char *bgname;
 SDL_Surface** tileset;
 SDL_Surface*** tiles;
 SDL_Rect tilesize;
 SDL_Rect tilecollide;
-SDL_Rect testbg;
+SDL_Rect gameviewsize;
+SDL_Rect camviewsize;
+SDL_Rect fullboardsize;
 Settings set;
-SDL_Rect testdest;
+Camera cam;
 
 Game();
 Game(SDL_Surface*	Screen, SDL_Window *window, Settings set);
@@ -51,13 +54,13 @@ Game(SDL_Surface*	Screen, SDL_Window *window, Settings set);
 void onClose(){}
 	
 void updateGame() {
-	SDL_BlitScaled(bg_game, NULL, screenGame, &stretchRectGame);
+	//see if useful later SDL_BlitScaled(bg_game, NULL, screenGame, &stretchRectGame);
 	if ((sizex > 0) && (sizey > 0)) {
-		for (int xline = 0; xline < sizex; xline++) {
-			for (int yline = 0; yline < sizey; yline++) {
+		for (int xline = 0; xline < sizey; xline++) {
+			for (int yline = 0; yline < sizex; yline++) {
 				// tilesize.w & tilesize.h if better cam
-					tilecollide.w = set.width / sizey;
-					tilecollide.h = set.height / sizex;
+					tilecollide.w = tilesize.w;
+					tilecollide.h = tilesize.h;
 					tilecollide.x = yline * tilecollide.w;
 					tilecollide.y = xline * tilecollide.h;
 					SDL_BlitScaled(tiles[xline][yline], NULL, screenGame, &tilecollide);
@@ -69,7 +72,8 @@ void updateGame() {
 			Players[playblit].updatePlayer();
 		}
 	}
-	SDL_BlitScaled(screenGame, &testbg, Camerasurf, &testdest);
+	SDL_BlitScaled(screenGame, &cam.gamesize, cam.camsurf, &cam.camsize);
+	SDL_BlitScaled(screenGame, &fullboardsize, cam.camsurf, &cam.minimapsize);
 }
 
 void loadMap(int mapnumber) {
@@ -130,8 +134,8 @@ void loadMap(int mapnumber) {
 				else if (!strcmp(token[0], "Size")){
 					sizex = atoi(token[1]);
 					sizey = atoi(token[2]);
-					tiles = new SDL_Surface**[sizex];
-					cout << "Map size: X = " << token[1] << " Y = " << token[1] << endl;
+					tiles = new SDL_Surface**[sizey];
+					cout << "Map size: X = " << token[1] << " Y = " << token[2] << endl;
 				}
 				else if (!strcmp(token[0], "TileSet")){
 					tileset = new SDL_Surface* [atoi(token[1])];
@@ -220,8 +224,9 @@ void loadMap(int mapnumber) {
 				}
 				else if (!strcmp(token[0], "Tiles")){
 					cout << "Line = ";
-					tiles[map_pos] = new SDL_Surface*[sizey];
-					for (int yline = 0; yline < sizey; yline++) {
+					printf("sizey : %i", sizey);
+					tiles[map_pos] = new SDL_Surface*[sizex];
+					for (int yline = 0; yline < sizex; yline++) {
 						tiles[map_pos][yline] = tileset[atoi(token[yline+1])];
 						cout << token[yline+1];
 					}
@@ -231,6 +236,13 @@ void loadMap(int mapnumber) {
 				else if (!strcmp(token[0], "TileSize")){
 					tilesize.w = atoi(token[1]);
 					tilesize.h = atoi(token[2]);
+					fullboardsize.w = sizex * tilesize.w;
+					fullboardsize.h = sizey * tilesize.h;
+					fullboardsize.x = 0;
+					fullboardsize.y = 0;
+					printf("Sizex : %i, Sizey : %i, tilesizex : %i, tilesizey : %i", sizex, sizey, tilesize.w, tilesize.h);
+					hidden_window = SDL_CreateWindow( "Hiddendisplay", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, fullboardsize.w, fullboardsize.h, SDL_WINDOW_HIDDEN );
+					screenGame = SDL_GetWindowSurface( hidden_window );
 				}
 			}
 		}
@@ -249,7 +261,24 @@ bool inCamera(SDL_Rect cam, SDL_Rect pos_object) {
 	
 void setGame(int mapnumber, int sheight, int swidth) {
 	mapid = mapnumber;	
+	
 	loadMap(mapnumber);
+	
+
+	//POS CAPTURE
+	gameviewsize.x = 800;
+	gameviewsize.y = 500;
+	// ZOOM
+	gameviewsize.w = 500;
+	gameviewsize.h = 500;
+	// POS CAM
+	camviewsize.x = 0;
+	camviewsize.y = 0;
+	// TAILLE CAM
+	camviewsize.w = set.width;
+	camviewsize.h = set.height;
+	cam = Camera(set,camviewsize, gameviewsize, screenGame, mainscreen);
+
 	stretchRectGame.x = 0;
 	stretchRectGame.y = 0;
 	stretchRectGame.w = set.width;
@@ -260,19 +289,6 @@ void setGame(int mapnumber, int sheight, int swidth) {
 		printf( "Failed to load GameBG image!\n" );
 	}
 	state = 1;
-
-	//POS CAPTURE
-	testbg.x = 800;
-	testbg.y = 500;
-	// ZOOM
-	testbg.w = 500;
-	testbg.h = 500;
-	// POS CAM
-	testdest.x = 0;
-	testdest.y = 0;
-	// TAILLE CAM
-	testdest.w = set.width;
-	testdest.h = set.height;
 }
 
 SDL_Surface* loadGamePic( std::string path, SDL_Surface*	screen )
