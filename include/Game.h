@@ -7,6 +7,7 @@
 #include <iostream>
 #include <fstream>
 #include "Player.h"
+#include "Enemy.h"
 #include "Camera.h"
 #include "Settings.h"
 #include <SDL.h>
@@ -27,11 +28,13 @@ class Game
     public:
 		
 Player *Players;
+Enemy *Enemyspawn;
 SDL_Window *windows_game;
 SDL_Window *hidden_window;
 int state;
 SDL_Surface *bg_game;
 int nbplayers;
+int nbenemiyspawn;
 int mapid;
 int sizex, sizey;
 SDL_Rect stretchRectGame;
@@ -72,6 +75,11 @@ void updateGame() {
 			Players[playblit].updatePlayer();
 		}
 	}
+	if (nbenemiyspawn > 0) {
+		for (int enblit = 0; enblit < nbenemiyspawn; enblit++) {
+			Enemyspawn[enblit].updateEnemy();
+		}
+	}
 	SDL_BlitScaled(screenGame, &cam.gamesize, cam.camsurf, &cam.camsize);
 	SDL_BlitScaled(screenGame, &fullboardsize, cam.camsurf, &cam.minimapsize);
 	cam.updateCamera(fullboardsize);
@@ -79,6 +87,8 @@ void updateGame() {
 
 void loadMap(int mapnumber) {
 	printf("Loading a map \n");
+	int curplayer = 0;
+	int curen = 0;
 	ifstream fin;
 	switch (mapnumber){
 	case 1:
@@ -130,7 +140,21 @@ void loadMap(int mapnumber) {
 					SDL_Rect pos_player_base;
 					pos_player_base.x=atoi(token[2]);
 					pos_player_base.y=atoi(token[3]);
-					Players[atoi(token[1])-1] = Player(screenGame, pos_player_base, atoi(token[1]));
+					Players[curplayer] = Player(screenGame, pos_player_base, atoi(token[1]));
+					curplayer++;
+				}
+				else if (!strcmp(token[0], "EnemySpawns")){
+					cout << "Enemy: " << token[0] << " nb " << token[1] << endl;
+					nbenemiyspawn = atoi(token[1]);
+					Enemyspawn = new Enemy[atoi(token[1])]; 
+				}
+				else if (!strcmp(token[0], "EnemySpawn")){
+					cout << "Enemy: " << token[0] << " id " << token[1] << " x " << token[3] << " y " << token[4] << " hp " << token[2] << endl;
+					SDL_Rect pos_en_base;
+					pos_en_base.x=atoi(token[3]);
+					pos_en_base.y=atoi(token[4]);
+					Enemyspawn[curen] = Enemy(screenGame, atoi(token[1]), pos_en_base, atoi(token[2]));
+					curen++;
 				}
 				else if (!strcmp(token[0], "Size")){
 					sizex = atoi(token[1]);

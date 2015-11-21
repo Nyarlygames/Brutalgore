@@ -62,6 +62,54 @@ Enemy::Enemy(SDL_Surface* Screen, int createid, SDL_Rect sentpos, int starthealt
 		printf( "Failed to load PNG image!\n", Screen );
 	}
 	break;
+ case 4:
+	img_enemy = loadSurface_enemy( "img\\Enemies\\enemy1.png", Screen );
+	if( img_enemy == NULL )
+	{
+		printf( "Failed to load PNG image!\n", Screen );
+	}
+	img_enemy_dead = loadSurface_enemy( "img\\Enemies\\enemy1_dead.png", Screen );
+	if( img_enemy_dead == NULL )
+	{
+		printf( "Failed to load PNG image!\n", Screen );
+	}
+	break;
+ case 5:
+	img_enemy = loadSurface_enemy( "img\\Enemies\\enemy2.png", Screen );
+	if( img_enemy == NULL )
+	{
+		printf( "Failed to load PNG image!\n", Screen );
+	}
+	img_enemy_dead = loadSurface_enemy( "img\\Enemies\\enemy2_dead.png", Screen );
+	if( img_enemy_dead == NULL )
+	{
+		printf( "Failed to load PNG image!\n", Screen );
+	}
+	break;
+ case 6:
+	img_enemy = loadSurface_enemy( "img\\Enemies\\enemy3.png", Screen );
+	if( img_enemy == NULL )
+	{
+		printf( "Failed to load PNG image!\n", Screen );
+	}
+	img_enemy_dead = loadSurface_enemy( "img\\Enemies\\enemy3_dead.png", Screen );
+	if( img_enemy_dead == NULL )
+	{
+		printf( "Failed to load PNG image!\n", Screen );
+	}
+	break;
+ case 7:
+	img_enemy = loadSurface_enemy( "img\\Enemies\\enemy4.png", Screen );
+	if( img_enemy == NULL )
+	{
+		printf( "Failed to load PNG image!\n", Screen );
+	}
+	img_enemy_dead = loadSurface_enemy( "img\\Enemies\\enemy4_dead.png", Screen );
+	if( img_enemy_dead == NULL )
+	{
+		printf( "Failed to load PNG image!\n", Screen );
+	}
+	break;
  }
 
 screen_enemy = Screen;

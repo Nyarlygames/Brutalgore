@@ -1,23 +1,11 @@
-﻿Build started 21/11/2015 12:07:00.
+﻿Build started 21/11/2015 20:07:01.
      1>Project "D:\Projects\Brutalgore\Brutalgore.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating "Debug\Brutalgore.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
-         d:\Programs\VS2010\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt Camera.cpp Game.cpp MainMenu.cpp main.cpp
-         Camera.cpp
-         Generating Code...
-         Compiling...
-         main.cpp
-         MainMenu.cpp
-     1>d:\projects\brutalgore\include\game.h(104): warning C4996: 'strtok': This function or variable may be unsafe. Consider using strtok_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 d:\programs\vs2010\vc\include\string.h(197) : see declaration of 'strtok'
-     1>d:\projects\brutalgore\include\game.h(109): warning C4996: 'strtok': This function or variable may be unsafe. Consider using strtok_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 d:\programs\vs2010\vc\include\string.h(197) : see declaration of 'strtok'
-         Game.cpp
-     1>d:\projects\brutalgore\include\game.h(104): warning C4996: 'strtok': This function or variable may be unsafe. Consider using strtok_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 d:\programs\vs2010\vc\include\string.h(197) : see declaration of 'strtok'
-     1>d:\projects\brutalgore\include\game.h(109): warning C4996: 'strtok': This function or variable may be unsafe. Consider using strtok_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 d:\programs\vs2010\vc\include\string.h(197) : see declaration of 'strtok'
+         d:\Programs\VS2010\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt Enemy.cpp Player.cpp
+         Player.cpp
+         Enemy.cpp
          Generating Code...
        Link:
          d:\Programs\VS2010\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Projects\Brutalgore\Debug\Brutalgore.exe" /NOLOGO SDL2.lib SDL2main.lib SDL2_image.lib SDL2_ttf.lib SDL2_mixer.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\Brutalgore.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"D:\Projects\Brutalgore\Debug\Brutalgore.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Projects\Brutalgore\Debug\Brutalgore.lib" /MACHINE:X86 Debug\Camera.obj
@@ -41,4 +29,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.46
+Time Elapsed 00:00:00.87

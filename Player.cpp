@@ -40,21 +40,21 @@ Player::Player(SDL_Surface* Screen,SDL_Rect pos_playerX, int id)
  cout << "ID PLAYER : " << id << endl;
  switch (id) {
  case 1 :
-	player_img = loadSurface_player( "img\\p1.jpg", screen );
+	player_img = loadSurface_player( "img\\Players\\p1.jpg", screen );
 	if( player_img == NULL )
 	{
 		printf( "Failed to load PNG image!\n", screen );
 	}
 	break;
  case 2:
-	player_img = loadSurface_player( "img\\player2.png", screen );
+	player_img = loadSurface_player( "img\\Players\\player2.png", screen );
 	if( player_img == NULL )
 	{
 		printf( "Failed to load PNG image!\n", screen );
 	}
 	break;
  case 3:
-	player_img = loadSurface_player( "img\\player3.png", screen );
+	player_img = loadSurface_player( "img\\Players\\player3.png", screen );
 	if( player_img == NULL )
 	{
 		printf( "Failed to load PNG image!\n", screen );
