@@ -74,7 +74,7 @@ void updateGame() {
 	}
 	SDL_BlitScaled(screenGame, &cam.gamesize, cam.camsurf, &cam.camsize);
 	SDL_BlitScaled(screenGame, &fullboardsize, cam.camsurf, &cam.minimapsize);
-	cam.updateCamera();
+	cam.updateCamera(fullboardsize);
 }
 
 void loadMap(int mapnumber) {
@@ -257,12 +257,12 @@ void setGame(int mapnumber, int sheight, int swidth) {
 	loadMap(mapnumber);
 	
 
-	//POS CAPTURE
-	gameviewsize.x = Players[0].pos_player.x;
-	gameviewsize.y = Players[0].pos_player.y;
 	// ZOOM
 	gameviewsize.w = 500;
 	gameviewsize.h = 500;
+	//POS CAPTURE
+	gameviewsize.x = Players[0].pos_player.x - gameviewsize.w;
+	gameviewsize.y = Players[0].pos_player.y - gameviewsize.h;
 	// POS CAM
 	camviewsize.x = 0;
 	camviewsize.y = 0;

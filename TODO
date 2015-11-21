@@ -1,12 +1,15 @@
 Brutalgore TODO List:
-- Missiles killing enemies
+//- Missiles killing enemies
 - Options
-- Game Object handles everything
+//- Game Object handles everything
 - Menu Object (?) handles menus
-- Map creation
+//- Map creation
 - Map editor
 - Animations
-- Hp bar filling
+//- Hp bar filling
+- Enemies moving (AI)
+- Mouse control
+- README / manual
 - Keep the original name ? (Brutal & Gore ?)
 - Particle generation
 - Damage location
