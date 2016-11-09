@@ -18,4 +18,6 @@ Game::Game(SDL_Surface*	Screen, SDL_Window *window, Settings s){
 	windows_game = window;
 	set = s;
 	mainscreen = Screen;
+	setGame(1, s.height, s.width);
 }
+

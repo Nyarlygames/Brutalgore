@@ -188,8 +188,8 @@ int main( int argc, char* args[] )
 		else
 		{	
 			GameObj = Game(background, gWindow, set);
-			MenuObj = MainMenu(background);
-			stateMain=0;
+			//MenuObj = MainMenu(background);
+			//stateMain=0;
 			//Mix_PlayMusic(mus,1); //Music loop=1
 
 			bool quit = false;
@@ -204,23 +204,23 @@ int main( int argc, char* args[] )
 							quit = true;
 							break;
 						case SDL_KEYDOWN :
-							switch (stateMain) {
-							case 0:
-								MenuObj.Player1.player_controls(e);
-								break;
-							case 1:
+						//	switch (stateMain) {
+							//case 0:
+							//	MenuObj.Player1.player_controls(e);
+							//	break;
+						//	case 1:
 								//move first player (multi = later)
-								GameObj.Players[0].player_controls(e);
-								break;
-							default:
-								break;
-							}
+							//	GameObj.Players[0].player_controls(e);
+							//	break;
+							//default:
+							//	break;
+							//}
 							switch( e.key.keysym.sym ){
 								case SDLK_ESCAPE:
 									quit=true;
 									break;
-								case SDLK_g:
-									stateMain = 1;
+								//case SDLK_g:
+								//	stateMain = 1;
 									break;
 								default:
 									break;
@@ -238,7 +238,7 @@ int main( int argc, char* args[] )
 							default:
 								break;
 							}
-							switch (e.button.button) {
+							/*switch (e.button.button) {
 								case SDL_BUTTON_LEFT: 
 								   //printf("click");
 								  break;
@@ -246,10 +246,10 @@ int main( int argc, char* args[] )
 								   //printf("clickdroit");
 								  // GameObj.state = 2;
 							   break;
-							}
+							}*/
 					}
 				}
-
+				/*
 				switch(stateMain) {
 				case 0:
 					switch(MenuObj.state) {
@@ -281,8 +281,12 @@ int main( int argc, char* args[] )
 						break;
 					}
 					break;
-				}
+				case 2:
+					// map editor
+					break;
+				}*/
 				//SDL_UpdateWindowSurfaceRects (gWindow,testrec, 1);
+				GameObj.updateGame();
 				SDL_UpdateWindowSurface( gWindow );
 			}
 		}

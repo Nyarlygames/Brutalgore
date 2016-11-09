@@ -1,17 +1,30 @@
-#ifndef Toolbox_H
-#define Toolbox_H
-
+/*#include <SDL.h>
+#include <SDL_image.h>
 #include <string>
+#include <stdio.h>
 #include <sstream>
 #include <iostream>
-using namespace std;
+#include "include/Sprite.h"
+
+Sprite::Sprite();
+
+Sprite::Sprite(char* url,SDL_Surface* screen) {
+ url = "test";
+};*/
+
 #include <SDL.h>
 #include <SDL_image.h>
-//The surface contained by the window
+#include <string>
+#include <stdio.h>
+#include <sstream>
+#include <iostream>
+#include "include/Sprite.h"
+using namespace std;
 
-extern SDL_Surface* loadSurface( std::string path, SDL_Surface*	screen )
+namespace Sprite
 {
-	//The final optimized image
+	static SDL_Surface* loadSurface( std::string path, SDL_Surface*	screen )
+    {	//The final optimized image
 	SDL_Surface* optimizedSurface = NULL;
 
 	//Load image at specified path
@@ -34,6 +47,5 @@ extern SDL_Surface* loadSurface( std::string path, SDL_Surface*	screen )
 	}
 
 	return optimizedSurface;
+    }
 }
-
-#endif

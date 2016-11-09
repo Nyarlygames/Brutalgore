@@ -15,7 +15,7 @@ class MainMenu
     public:
 SDL_Surface* window;
 SDL_Surface* bg;
-SDL_Rect pos_item_1, pos_item_2, pos_item_3, pos_player1;
+SDL_Rect pos_item_1, pos_item_2, pos_item_3, pos_item_4, pos_player1;
 Enemy *Enemies;
 Player Player1;
 int max_enemies;
@@ -62,16 +62,21 @@ void	setMenu(SDL_Surface	*screen){
 	pos_item_1.y = 20;
 	Enemies = new Enemy[max_enemies];
 	Enemies[0] = Enemy(screen,1,pos_item_1,7);
-	nb_enemies++;
 
+	nb_enemies++;
 	pos_item_2.x = 500;
 	pos_item_2.y = 300;
 	Enemies[1] = Enemy(screen,2, pos_item_2,10);
+
 	nb_enemies++;
-	
 	pos_item_3.x = 600;
 	pos_item_3.y = 20;
 	Enemies[2] = Enemy(screen,3,pos_item_3,20);
+
+	nb_enemies++;
+	pos_item_4.x = 100;
+	pos_item_4.y = 200;
+	Enemies[3] = Enemy(screen,4,pos_item_4,5);
 	
 	pos_player1.x = 50;
 	pos_player1.y = 600;
@@ -121,7 +126,10 @@ void	updateMenu(){
 				state=-1;
 			}
 			else if ((Enemies[i].id == 2) && (Enemies[i].state == 0)){
-				state=1;
+				state=1; //newgame
+			}
+			else if ((Enemies[i].id == 4) && (Enemies[i].state == 0)){
+				state=2; // map editor
 			}
 		}
 	}

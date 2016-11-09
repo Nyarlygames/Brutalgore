@@ -37,7 +37,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>D:\Projects\Brutalgore\include;C:\VS_SDL\include;$(IncludePath)</IncludePath>
+    <IncludePath>D:\Projects\Brutalgore;D:\Projects\Brutalgore\include;C:\VS_SDL\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LibraryPath>C:\VS_SDL\lib\x86;$(LibraryPath)</LibraryPath>

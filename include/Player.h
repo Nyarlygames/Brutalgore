@@ -50,6 +50,7 @@ SDL_Surface* loadSurface_player( std::string path, SDL_Surface*	screen )
 
 	//Load image at specified path
 	SDL_Surface* loadedSurface = IMG_Load( path.c_str() );
+	
 	if( loadedSurface == NULL )
 	{
 		printf( "Unable to load image %s! SDL_image Error: %s\n", path.c_str(), IMG_GetError() );
@@ -62,6 +63,8 @@ SDL_Surface* loadSurface_player( std::string path, SDL_Surface*	screen )
 		{
 			printf( "Unable to optimize image %s! SDL Error: %s\n", path.c_str(), SDL_GetError() );
 		}
+		Uint32 colorkey = SDL_MapRGB( optimizedSurface->format, 255, 255, 255);
+		SDL_SetColorKey(optimizedSurface, SDL_TRUE, colorkey);
 
 		//Get rid of old loaded surface
 		SDL_FreeSurface( loadedSurface );
@@ -77,6 +80,8 @@ SDL_Surface* loadSurface_player( std::string path, SDL_Surface*	screen )
 		if (nb_missiles >= 1){
 			for (int i = 0; i <= nb_missiles-1; i++) {
 				missiles_player[i].updateMissile();
+				if (missiles_player[i].state_missile == 0) 
+					nb_missiles--;
 			}
 		}
 
