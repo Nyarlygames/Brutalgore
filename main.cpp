@@ -96,8 +96,8 @@ bool init()
 	}
 	else
 	{
-		if( SDL_Init(SDL_INIT_AUDIO) < 0 ) exit(1);
-		Mix_OpenAudio(22050,AUDIO_S16SYS,2,640);
+		//if( SDL_Init(SDL_INIT_AUDIO) < 0 ) exit(1);
+	//	Mix_OpenAudio(22050,AUDIO_S16SYS,2,640);
 
 		if (TTF_Init() == -1)
 		{
@@ -142,7 +142,7 @@ bool init()
 	}
 	return success;
 }
-
+/*
 bool loadMedia()
 {
 	bool success = true;
@@ -155,7 +155,7 @@ bool loadMedia()
 	}
 
 	return success;
-}
+}*/
 
 void close()
 {
@@ -163,8 +163,8 @@ void close()
 	SDL_DestroyWindow( gWindow );
 	gWindow = NULL;
 	
-    Mix_FreeMusic( mus );
-    Mix_CloseAudio();
+  //  Mix_FreeMusic( mus );
+  //  Mix_CloseAudio();
 
 	//Quit SDL subsystems
 	IMG_Quit();
@@ -181,12 +181,12 @@ int main( int argc, char* args[] )
 	}
 	else
 	{
-		if( !loadMedia() )
+		/*if( !loadMedia() )
 		{
 			printf( "Failed to load media!\n" );
 		}
 		else
-		{	
+		{*/	
 			GameObj = Game(background, gWindow, set);
 			//MenuObj = MainMenu(background);
 			//stateMain=0;
@@ -289,7 +289,6 @@ int main( int argc, char* args[] )
 				GameObj.updateGame();
 				SDL_UpdateWindowSurface( gWindow );
 			}
-		}
 	}
 	close();
 

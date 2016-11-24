@@ -1,0 +1,9 @@
+D:\Projects\Brutalgore\BrutalEditor\BrutalEditor\bin\Debug\BrutalEditor.exe.config
+D:\Projects\Brutalgore\BrutalEditor\BrutalEditor\bin\Debug\BrutalEditor.exe
+D:\Projects\Brutalgore\BrutalEditor\BrutalEditor\bin\Debug\BrutalEditor.pdb
+D:\Projects\Brutalgore\BrutalEditor\BrutalEditor\obj\Debug\BrutalEditor.csprojResolveAssemblyReference.cache
+D:\Projects\Brutalgore\BrutalEditor\BrutalEditor\obj\Debug\BrutalEditor.BrutalEditor.resources
+D:\Projects\Brutalgore\BrutalEditor\BrutalEditor\obj\Debug\BrutalEditor.Properties.Resources.resources
+D:\Projects\Brutalgore\BrutalEditor\BrutalEditor\obj\Debug\BrutalEditor.csproj.GenerateResource.Cache
+D:\Projects\Brutalgore\BrutalEditor\BrutalEditor\obj\Debug\BrutalEditor.exe
+D:\Projects\Brutalgore\BrutalEditor\BrutalEditor\obj\Debug\BrutalEditor.pdb
